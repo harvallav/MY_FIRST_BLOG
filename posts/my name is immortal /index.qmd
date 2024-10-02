@@ -1,0 +1,34 @@
+---
+title: "coffee"
+author: "harvallav"
+---
+
+## INTRODUCTION
+
+Hello. How are you. If you are reading this, congratulations. You are well versed with all the 26 alphabets in the English language. But do not forget you can still be called an illiterate.
+
+## My first piece of Rcode
+
+```{r}
+#| label: setup
+library(tidyverse)
+library(ggformula)
+library(babynames)
+```
+
+```{r}
+babynames
+```
+
+```{r}
+babynames %>% filter(name=='Anhad')%>%
+gf_line(n ~ year)
+```
+
+Wow, Anhad feels popular but little does he know that he is just common.
+
+```{r}
+babynames %>%  filter(name=='Arvind') %>% 
+gf_line(n ~ year)
+
+```

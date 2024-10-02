@@ -1,0 +1,86 @@
+---
+title: "summaries"
+author: "harvallav"
+---
+
+# INTRO
+
+## In this class I am summarising data. I need coffee and my buddy is dumb.
+
+```{r}
+#| label: setup
+library(tidyverse)
+library(ggformula)
+library(mosaic)
+library(kableExtra)
+```
+
+Now we will read the data
+
+```{r}
+mpg %>%
+  head(10)
+```
+
+```{r}
+glimpse(mpg)
+```
+
+```{r}
+skimr::skim(mpg)
+```
+
+```{r}
+mpg_modified <- mpg %>%
+  dplyr::mutate(
+    cyl = as_factor(cyl),
+    fl = as_factor(fl),
+    drv = as_factor(drv),
+    class = as_factor(class),
+    trans = as_factor(trans)
+  )
+glimpse(mpg_modified)
+```
+
+```{r}
+mpg_modified %>%
+  group_by(cyl) %>%
+  summarize(average_hwy = mean(hwy), count = n()
+```
+
+##analysing math anxiety data
+
+```{r}
+math_anxiety <- read_csv("../../data /MathAnxiety.csv")
+math_anxiety
+
+```
+
+```{r}
+math_anxiety <- read_delim(file = "../../data /MathAnxiety.csv", delim = ";" )
+math_anxiety
+```
+
+
+```{r}
+mpg %>% group_by(manufacturer) %>% summarize(mean_mileage_Manuf2 = mean(cty))
+```
+```{r}
+glimpse(math_anxiety)
+
+```
+```{r}
+skimr::skim(math_anxiety)
+```
+```{r}
+mathmath <- math_anxiety %>% 
+  dplyr::mutate(
+    Gender= as_factor(Gender)
+    
+  )
+glimpse(mathmath)
+```
+```{r}
+math_anxiety %>% group_by(Gender) %>% summarize(MYMEAN=mean(AMAS),MYMEAN2=mean(RCMAS),count=n())
+```
+
