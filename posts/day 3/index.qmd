@@ -1,0 +1,397 @@
+---
+title: "COUNTS"
+author: "Harvallav"
+---
+
+## DAY 3
+
+Hello guys.
+
+```{r}
+knitr::opts_chunk$set(tidy = "formatr", tidy.opts = list(blank = FALSE, width.cutoff = 30))
+library(tidyverse)
+library(mosaic)
+library(ggformula)
+library(skimr)
+```
+
+```{r}
+taxi <- read_csv("https://vincentarelbundock.github.io/Rdatasets/csv/modeldata/taxi.csv")
+taxi
+```
+
+### GLIMPSE, SKIM AND INSPECT !
+
+```{r}
+skimr::skim(taxi)
+```
+
+```{r}
+glimpse(taxi)
+```
+
+```{r}
+inspect(taxi)
+```
+## DATA MUNGING
+We will keep the target variable tip in mind at all times. And convert the dow, local and month variables into factors beforehand.
+
+```{r}
+## Convert `dow`, `local`, and `month` into ordered factors
+taxi_modified <- taxi %>%
+  mutate(
+    dow = factor(dow,
+      levels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+      labels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+      ordered = TRUE
+    ),
+    ##
+    local = factor(local,
+      levels = c("no", "yes"),
+      labels = c("no", "yes"),
+      ordered = TRUE
+    ),
+    ##
+    month = factor(month,
+      levels = c("Jan", "Feb", "Mar", "Apr"),
+      labels = c("Jan", "Feb", "Mar", "Apr"),
+      ordered = TRUE
+    )
+  )
+taxi_modified %>% glimpse()
+```
+
+### QUESTION : Do more people tip than not?
+
+```{r}
+gf_bar(~tip, data = taxi_modified) %>%
+  gf_labs(title = "Plot 1A: Counts of Tips")
+```
+```{r}
+ggplot(taxi_modified) +
+  geom_bar(aes(x = tip)) +
+  labs(title = "Plot 1A: Counts of Tips")
+```
+#### what really is the difference between both the plots ?
+
+ggplot: Great for advanced users who want to create detailed and complex plots with lots of customization options.
+
+ggformula: Ideal for beginners looking for a simpler way to make basic plots quickly, using an easy formula-based approach, but with less customization.
+
+### QUESTION: Does the tip depend upon whether the trip is local or not?
+
+```{r}
+taxi_modified %>% 
+  gf_bar(~ local, fill = ~ tip, 
+         position = "dodge") %>% 
+  gf_labs(title = "Dodged Bar Chart")
+```
+It plots the counts of taxi rides for each local category (like different pickup locations) and uses different colors to represent different tip levels (whether they gave a tip or not).
+
+
+
+```{r}
+## Set graph theme
+# theme_set(new = theme_custom())
+#
+## Showing "per capita" percentages
+## Better labelling of Y-axis
+taxi_modified %>%
+  gf_props(~company,
+    fill = ~tip,
+    position = "fill"
+  ) %>%
+  gf_labs(
+    title = "Plot 2D: Filled Bar Chart",
+    subtitle = "Shows Per group differences in Proportions!"
+  ) %>%
+  gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
+```
+```{r}
+taxi_modified %>%
+  gf_bar(~local,
+    fill = ~tip,
+    position = "stack"
+  ) %>%
+  gf_labs(
+    title = "Plot 2B: Stacked Bar Chart",
+    subtitle = "Can we spot per group differences in proportions??"
+  )
+```
+the graph above is positioning it in stack whereas the one below uses fill for the group differences in proportions.
+```{r}
+## Showing "per capita" percentages
+taxi_modified %>%
+  gf_bar(~local,
+    fill = ~tip,
+    position = "fill"
+  ) %>%
+  gf_labs(
+    title = "Plot 2C: Filled Bar Chart",
+    subtitle = "Shows Per group differences in Proportions!"
+  )
+```
+gf_props() is specifically designed to calculate and display proportions directly so you can use that too , like states below:
+
+```{r}
+## Better labelling of Y-axis
+taxi_modified %>%
+  gf_props(~local,
+    fill = ~tip,
+    position = "fill"
+  ) %>%
+  gf_labs(
+    title = "Plot 2D: Filled Bar Chart",
+    subtitle = "Shows Per group differences in Proportions!"
+  )
+```
+
+### QUESTION: Do some cab company-ies get more tips than others?
+
+```{r}
+
+taxi_modified %>% 
+  gf_bar(~ company, fill = ~ tip, position = "dodge") %>% 
+  gf_labs(title = "Plot 2A: Dodged Bar Chart") %>% 
+  gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
+##
+taxi_modified %>% 
+  gf_bar(~ company, fill = ~ tip, position = "stack") %>% 
+  gf_labs(title = "Plot 2B: Stacked Bar Chart",
+          subtitle = "Can we spot per group differences in proportions??") %>% 
+  gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
+## Showing "per capita" percentages
+taxi_modified %>% 
+  gf_bar(~ company, fill = ~ tip, position = "fill") %>% 
+  gf_labs(title = "Plot 2C: Filled Bar Chart",
+          subtitle = "Shows Per group differences in Proportions!") %>% 
+  gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
+## Showing "per capita" percentages
+## Better labelling of Y-axis
+taxi_modified %>% 
+  gf_props(~ company, fill = ~ tip, position = "fill") %>% 
+  gf_labs(title = "Plot 2D: Filled Bar Chart",
+          subtitle = "Shows Per group differences in Proportions!") %>% 
+  gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
+```
+
+The Dodged Bar Chart compares counts of rides for each taxi company with different tip levels shown side by side, making it easy to see differences between tips.
+
+The Stacked Bar Chart combines these counts into a single bar per company, allowing viewers to assess total rides and the proportion of each tip level within that total.
+
+
+
+### QUESTION: Does a tip depend upon the distance, hour of day, and dow and month?
+
+```{r}
+gf_bar(~ hour, fill = ~ tip, data = taxi_modified) %>%
+  gf_labs(title = "Plot B: Counts of Tips by Hour")
+##
+gf_bar(~ dow, fill = ~ tip, data = taxi_modified) %>%
+  gf_labs(title = "Plot C: Counts of Tips by Day of Week")
+##
+gf_bar(~ month, fill = ~ tip, data = taxi_modified) %>%
+  gf_labs(title = "Plot D: Counts of Tips by Month")
+
+##
+gf_bar(~ month | dow, fill = ~ tip, data = taxi_modified) %>%
+  gf_labs(title = "Plot E: Counts of Tips by Day of Week and Month")
+##
+## This may be too busy a graph...
+gf_bar(~ dow | hour, fill = ~ tip, data = taxi_modified) %>%
+  gf_labs(title = "Plot F: Counts of Tips by Hour and Day of Week",
+          subtitle = "Is this plot arrangement easy to grasp?")
+## This is better!
+gf_bar(~ hour | dow, fill = ~ tip, data = taxi) %>%
+  gf_labs(title = "Plot G: Counts of Tips by Hour and Day of Week",
+          subtitle = "Swapped the Facets")  
+```
+
+
+#### Plot B: Counts of Tips by Hour
+The tip counts are shown in this bar chart throughout the day, with different colors denoting different tip levels. By showing which hours receive higher or lower tips, it assists in identifying patterns in tipping behavior at various times.
+
+#### Plot C: Counts of Tips by Day of Week
+Using color to indicate different tip levels, this chart shows the counts of tips according to the day of the week. It makes it possible to analyze tipping patterns over the course of several days and identify any differences in tipping patterns.
+
+#### Plot D: Counts of Tips by Month
+This chart shows the counts of tips received for each month, with bars filled according to tip levels. It helps visualize seasonal trends in tipping behavior, revealing how tips may vary from month to month.
+
+#### Plot E: Counts of Tips by Day of Week and Month
+This faceted chart displays the counts of tips for each month, separated by day of the week, with colors indicating tip levels. It provides a detailed view of tipping patterns, allowing for comparisons across days and months simultaneously.
+
+#### Plot F: Counts of Tips by Hour and Day of Week
+This chart shows counts of tips based on both hour and day of the week, organized with facets for each hour. It may be visually complex, prompting viewers to consider whether this arrangement effectively conveys the data patterns.
+
+#### Plot G: Counts of Tips by Hour and Day of Week (Swapped Facets)
+This chart is similar to the previous one but swaps the facets, displaying counts of tips by hour across different days of the week. This layout aims to provide clearer insights, making it easier to grasp tipping patterns by hour for each day.
+
+## Plotting Proportions and Percentages using gf_props
+This chart displays the proportions(first graph below) and percentage(second graph after that) of different substance use, categorized by sex, with bars positioned side by side (dodged) for easy comparison. It helps visualize the distribution of substance use across genders, highlighting any differences in proportions between them.
+
+```{r}
+gf_props(~substance,
+  data = mosaicData::HELPrct, fill = ~sex,
+  position = "dodge"
+) %>%
+  gf_labs(title = "Plotting Proportions using gf_props")
+
+```
+```{r}
+gf_percents(~substance,
+  data = mosaicData::HELPrct, fill = ~sex,
+  position = "dodge"
+) %>%
+  gf_refine(
+    scale_y_continuous(
+      labels = scales::label_percent(scale = 1)
+    )
+  ) %>%
+  gf_labs(title = "Plotting Percentages using gf_percents")
+```
+
+
+# TRYING A NEW DATASET (FERTILITY)
+
+## The dataset provides information about individuals, focusing on their demographic characteristics and whether they have children ("morekids").
+
+1)**Gender**: Identifies the gender of the individual (either male or female).
+2)**Age**: Represents the age of the individual.
+3)**Ethnicity**: Indicated by columns like afam, hispanic, and other, showing if the individual belongs to specific ethnic groups.
+4)**Work**: Indicates the individual's work status, represented as a numeric value.(for example,if "work" shows values like 0, 30, or 52, these numbers likely represent different amounts of work hours or a specific status (e.g., 0 might indicate not working, while higher numbers could indicate hours worked or income.)
+
+
+```{r}
+Fertility <- read_csv("../../data /Fertility.csv")
+Fertility
+```
+
+### GLIMPSE, SKIM, INSPECT !
+
+```{r}
+glimpse(Fertility)
+```
+```{r}
+skimr::skim(Fertility)
+```
+```{r}
+inspect(Fertility)
+```
+## DATA MUNGING
+
+
+```{r}
+Fertility_modified <- Fertility %>%
+  mutate(
+    morekids = factor(morekids,
+      levels = c("no", "yes"),
+      labels = c("no", "yes"),
+      ordered = TRUE
+    ),
+    ##
+    gender1 = factor(gender1,
+      levels = c("male", "female"),
+      labels = c("male", "female"),
+      ordered = TRUE
+    ),
+    ##
+    gender2 = factor(gender2,
+      levels = c("male", "female"),
+      labels = c("male", "female"),
+      ordered = TRUE
+    ),
+    ##
+    afam = factor(afam,
+      levels = c("no", "yes"),
+      labels = c("no", "yes"),
+      ordered = TRUE
+    ),
+    ##
+    hispanic = factor(hispanic,
+      levels = c("no", "yes"),
+      labels = c("no", "yes"),
+      ordered = TRUE
+    ),
+    ##
+    other = factor(other,
+      levels = c("no", "yes"),
+      labels = c("no", "yes"),
+      ordered = TRUE
+    )
+  )
+
+Fertility_modified %>% glimpse()
+
+```
+## QUESTION:What is the distribution of individuals with more kids based on their gender?
+```{r}
+Fertilised_modified %>%
+  gf_bar(~ gender1, fill = ~ morekids, position = "dodge") %>%
+  gf_labs(title = "Counts of More Kids by Gender (Gender 1)")
+```
+
+
+## QUESTION: How does the number of individuals with more kids vary across different age groups?
+
+```{r}
+Fertilised_modified %>%
+  mutate(age_group = cut(age, breaks = c(0, 20, 30, 40, 50, 60, 100), 
+                         labels = c("0-20", "21-30", "31-40", "41-50", "51-60", "60+"))) %>%
+  gf_bar(~ age_group, fill = ~ morekids, position = "dodge", 
+         color = "darkblue") %>%  # Change color here
+  gf_labs(title = "Counts of More Kids by Age Group") +
+  scale_fill_manual(values = c("yes" = "lightgreen", "no" = "salmon"))  # Custom colors for morekids
+
+```
+(also experimenting a little with the shade palette)
+
+
+```{r}
+# Dodged Bar Chart for More Kids by Gender
+Fertilised_modified %>% 
+  gf_bar(~ gender1, fill = ~ morekids, position = "dodge") %>% 
+  gf_labs(title = "Plot 1A: Dodged Bar Chart of More Kids by Gender") %>% 
+  gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
+
+# Stacked Bar Chart for More Kids by Gender
+Fertilised_modified %>% 
+  gf_bar(~ gender1, fill = ~ morekids, position = "stack") %>% 
+  gf_labs(title = "Plot 1B: Stacked Bar Chart of More Kids by Gender",
+          subtitle = "Can we spot per group differences in proportions??") %>% 
+  gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
+
+# Filled Bar Chart for More Kids by Gender
+Fertilised_modified %>% 
+  gf_bar(~ gender1, fill = ~ morekids, position = "fill") %>% 
+  gf_labs(title = "Plot 1C: Filled Bar Chart of More Kids by Gender",
+          subtitle = "Shows per group differences in proportions!") %>% 
+  gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
+
+# Showing "per capita" percentages for More Kids by Gender
+Fertilised_modified %>% 
+  gf_props(~ gender1, fill = ~ morekids, position = "fill") %>% 
+  gf_labs(title = "Plot 1D: Filled Bar Chart of More Kids by Gender",
+          subtitle = "Shows per group differences in proportions!") %>% 
+  gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
+
+```
+**Dodged Bar Chart (Plot 1A):**
+
+This allows for a direct comparison of how many males and females fall into each category of morekids.
+
+**Stacked Bar Chart (Plot 1B):**
+
+This provides a clear visual of the total number of respondents per gender while still showing the proportion of those with and without more kids.
+
+**Filled Bar Chart (Plot 1C):**
+
+This chart helps to understand the relative distribution of morekids across genders.
+
+**Filled Bar Chart with Proportions (Plot 1D):**
+
+Similar to Plot 1C, this chart emphasizes the proportions again but might represent the data in a different format, perhaps showing how each gender's total counts break down into those with and without more kids.
+
+
+
+
+

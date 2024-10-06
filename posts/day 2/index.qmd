@@ -1,11 +1,13 @@
 ---
-title: "summaries"
-author: "harvallav"
+title: "SUMMARIES"
+author: "Harvallav"
 ---
 
 # INTRO
 
 ## In this class I am summarising data. I need coffee and my buddy is dumb.
+
+First, install the packages
 
 ```{r}
 #| label: setup
@@ -15,7 +17,17 @@ library(mosaic)
 library(kableExtra)
 ```
 
-Now we will read the data
+### Now we will read the data
+
+We will skim, glimpse, and inspect the data to quickly assess its structure.
+
+#### Why do we do it?
+
+Skim: Provides a high-level summary of the dataset, including statistics and missing values.
+
+Glimpse: Offers a transposed view of the data structure.
+
+Inspect:Perform a more detailed examination of the data.
 
 ```{r}
 mpg %>%
@@ -31,6 +43,14 @@ skimr::skim(mpg)
 ```
 
 ```{r}
+inspect(mpg)
+```
+
+### MUTATE
+
+Now certain variables that must be converted to **factors.**
+
+```{r}
 mpg_modified <- mpg %>%
   dplyr::mutate(
     cyl = as_factor(cyl),
@@ -42,13 +62,153 @@ mpg_modified <- mpg %>%
 glimpse(mpg_modified)
 ```
 
+### lets play with mpg dataset
+
+1.understanding how fuel efficiency varies with the number of cylinders in the vehicles.
+
 ```{r}
-mpg_modified %>%
+mpg %>%
   group_by(cyl) %>%
-  summarize(average_hwy = mean(hwy), count = n()
+  summarize(average_hwy = mean(hwy), count = n())
 ```
 
-##analysing math anxiety data
+2.insights into how fuel efficiency varies with both the number of cylinders and the type of fuel used in vehicles.
+
+```{r}
+mpg %>%
+  group_by(cyl, fl) %>%
+  summarize(average_hwy = mean(hwy), count = n())
+
+```
+
+3.  a comprehensive set of summary statistics (such as mean, median, minimum, maximum, and standard deviation) for highway MPG, segmented by the number of cylinders and fuel type.
+
+```{r}
+mpg%>%
+  mosaic::favstats(hwy ~ cyl + fl, data = .)
+```
+
+# LETS TRY ANOTHER CASE STUDY \_DOCVISITS
+
+This dataset contains information about doctor visits, including demographics and health-related factors for individuals in the UNITED STATES.
+
+```{r}
+docVisits <- read_csv("https://vincentarelbundock.github.io/Rdatasets/csv/AER/DoctorVisits.csv")
+```
+
+This code displays the first 10 rows of the docVisits dataset in a styled table with a caption, enhancing readability and presentation. It uses features like striped rows and hover effects for a more visually appealing format.
+
+**kable_styling**: Applies styling options to the table created by kbl().
+
+**bootstrap_options**: Specifies styling features: "striped": Alternates row colors for better readability. "hover": Highlights rows when hovered over with the mouse. "condensed": Reduces the padding for a more compact table. "responsive": Makes the table adapt to different screen sizes.
+
+**full_width** = F: Sets the table to not take up the full width of the container.
+
+**position** = "center": Centers the table on the page.
+
+```{r}
+docVisits %>%
+  head(10) %>%
+  kbl(
+    caption = "Doctor Visits Dataset",
+    # Add Human Readable Names if desired
+    # col.names(..names that you may want..)
+  ) %>%
+  kable_styling(
+    bootstrap_options = c(
+      "striped", "hover",
+      "condensed", "responsive"
+    ),
+    full_width = F, position = "center"
+  )
+```
+
+Now , let us skim, glimpse and inspect this data set.
+
+```{r}
+glimpse(docVisits)
+```
+
+```{r}
+skimr::skim(docVisits)
+```
+
+```{r}
+inspect(docVisits)
+```
+
+## Lets mutate this
+
+```{r}
+docVisits_modified <- docVisits %>%
+  mutate(
+    gender = as_factor(gender),
+    private = as_factor(private),
+    freepoor = as_factor(freepoor),
+    freerepat = as_factor(freerepat),
+    nchronic = as_factor(nchronic),
+    lchronic = as_factor(lchronic)
+  )
+docVisits_modified
+```
+
+### 1. Extracting Average Visits by Gender
+
+```{r}
+##
+docVisits_modified %>%
+  group_by(gender) %>%
+  summarize(average_visits = mean(visits), count = n())
+```
+
+### 2. Extracting Mean Income and Average Visits by Socioeconomic Status and Chronic Conditions
+
+```{r}
+##
+docVisits_modified %>%
+  group_by(freepoor, nchronic) %>%
+  summarise(
+    mean_income = mean(income),
+    average_visits = mean(visits),
+    count = n()
+  )
+```
+
+### 3. Extracting Descriptive Statistics for Income by Socioeconomic Status and Chronic Conditions
+
+```{r}
+docVisits_modified %>%
+  mosaic::favstats(income ~ freepoor + nchronic, data = .)
+
+```
+
+## Reporting Tables for Data and the Data Schema (mpg)
+
+this code selects the first 10 rows of the mpg dataset, customizes the column names, and formats the data into a visually appealing table with specified styling options. The final output is a clean and organized table displaying key vehicle information, making it easy to read and interpret.
+
+```{r}
+mpg %>%
+  head(10) %>%
+  kbl(
+    col.names = c(
+      "Manufacturer", "Model", "Engine\nDisplacement",
+      "Model\n Year", "Cylinders", "Transmission",
+      "Drivetrain", "City\n Mileage", "Highway\n Mileage",
+      "Fuel", "Class\nOf\nVehicle"
+    ),
+    longtable = FALSE, centering = TRUE,
+    caption = "MPG Dataset"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c(
+      "striped", "hover",
+      "condensed", "responsive"
+    ),
+    full_width = F, position = "center"
+  )
+```
+
+# TRYING MY OWN DATASET (MATH ANXIETY)
 
 ```{r}
 math_anxiety <- read_csv("../../data /MathAnxiety.csv")
@@ -56,31 +216,110 @@ math_anxiety
 
 ```
 
+We can see the data isnt well organised with read cvs. When you use read_delim with a specified delimiter, you are instructing R on how to properly separate the values in your data file.
+
 ```{r}
 math_anxiety <- read_delim(file = "../../data /MathAnxiety.csv", delim = ";" )
 math_anxiety
 ```
 
+### lets glimse, skim and inspect this data set as well.
 
-```{r}
-mpg %>% group_by(manufacturer) %>% summarize(mean_mileage_Manuf2 = mean(cty))
-```
 ```{r}
 glimpse(math_anxiety)
 
 ```
+
+```{r}
+inspect(math_anxiety)
+```
+
 ```{r}
 skimr::skim(math_anxiety)
 ```
+
+#### Now we will mutate the gender and grade(they are qualitative).
+
 ```{r}
-mathmath <- math_anxiety %>% 
-  dplyr::mutate(
-    Gender= as_factor(Gender)
-    
+math_anxiety <- math_anxiety %>%
+  mutate(
+    Gender = as.factor(Gender),
+    Grade = as.factor(Grade)
   )
-glimpse(mathmath)
+
+# View the structure of the modified dataset to confirm changes
+glimpse(math_anxiety)
 ```
+
+So, now we have changed them to factors.
+
+### LET'S PLAY AROUND
+
+This code groups the math_anxiety dataset by gender, then calculates and summarizes the average scores for AMAS and RCMAS along with the count of observations for each gender.
+
 ```{r}
-math_anxiety %>% group_by(Gender) %>% summarize(MYMEAN=mean(AMAS),MYMEAN2=mean(RCMAS),count=n())
+math_anxiety %>% 
+  group_by(Gender) %>% 
+  summarize(AMAS=mean(AMAS),RCMAS=mean(RCMAS),count=n())
+```
+
+```{r}
+math_anxiety %>%
+  group_by(Gender) %>%
+  summarize(Average_AMAS = mean(AMAS), Count = n())
+
+```
+### This data gives us nicely formatted table showing the first 10 rows of the math_anxiety dataset.
+
+It makes a table with six columns:
+
+**Age**: The age of each student. 
+
+**Gender**: Whether the student is a boy or a girl. 
+
+**Grade**: The school grade they are in (e.g., Secondary).
+
+**AMAS Score**: A score measuring math anxiety.
+
+**RCMAS Score**: Another score related to anxiety. 
+
+**Arithmetic Score**: A score showing their arithmetic ability.
+
+```{r}
+math_anxiety %>%
+  head(10) %>%
+  kbl(
+    col.names = c(
+      "Age", "Gender", "Grade",
+      "AMAS Score", "RCMAS Score", "Arithmetic Score"
+    ),
+    longtable = FALSE, centering = TRUE,
+    caption = "Math Anxiety Dataset"
+  ) %>%
+  kable_styling(
+    bootstrap_options = c(
+      "striped", "hover",
+      "condensed", "responsive"
+    ),
+    full_width = FALSE, position = "center"
+  )
+```
+
+
+
+## This code helps us analyze how math anxiety and related scores vary based on gender, providing insights into the data and highlighting potential differences in anxiety levels between boys and girls.
+
+1) FOR AMAS 
+
+```{r}
+ math_anxiety %>%
+  mosaic::favstats(AMAS ~ Gender, data = .)
+```
+
+2) FOR RCMAS 
+
+```{r}
+ math_anxiety %>%
+  mosaic::favstats(RCMAS ~ Gender, data = .)
 ```
 

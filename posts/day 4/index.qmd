@@ -1,0 +1,162 @@
+---
+title: "QUANTITY"
+author: "Harvallav"
+---
+
+## DAY 4
+
+Hello. It is 9:38am.
+
+```{r}
+library(tidyverse)
+library(mosaic)
+library(ggformula)
+library(skimr)
+##
+library(crosstable)
+```
+
+### LET US GLIMSE,SKIM AND INSPECT FIRST.
+
+```{r}
+glimpse(diamonds)
+```
+
+```{r}
+skim(diamonds)
+```
+
+```{r}
+inspect(diamonds)
+```
+
+NOW , **What is the distribution of the target variable** *price*?
+
+```{r}
+##
+gf_histogram(~price, data = diamonds) %>%
+  gf_labs(
+    title = "Plot 1A: Diamond Prices",
+    caption = "ggformula"
+  )
+```
+
+Now, we will take another example but here we will define the bins, example 100.
+
+```{r}
+gf_histogram(~price,
+  data = diamonds,
+  bins = 100
+) %>%
+  gf_labs(
+    title = "Plot 1B: Diamond Prices",
+    caption = "ggformula"
+  )
+```
+
+the first one uses the default number of bins, giving a general view of the price distribution. meanwhile, the second one increases the number of bins to 100, providing a more detailed look at how prices are distributed across finer intervals.
+
+## The histogram is displaying the distribution of diamond prices, which is often right-skewed. This means that there are many diamonds with lower prices, but fewer diamonds at higher prices, leading to a longer tail on the right side:D
+
+wohoo . this is fun .
+
+## DISTRIBUTION OF THE VARIABLE CARAT
+
+```{r}
+diamonds %>% 
+  gf_histogram(~ carat) %>%
+  gf_labs(title = "Plot 2A: Carats of Diamonds",
+          caption = "ggformula")
+## More bins
+diamonds %>% 
+  gf_histogram(~ carat, bins = 100) %>%
+  gf_labs(title = "Plot 2B: Carats of Diamonds",
+          caption = "ggformula")
+```
+
+### WE WILL STUDY THE PRICE DISTRIBUTION WITH COLOR,CUT AND CLARITY
+
+```{r}
+gf_histogram(~ price, fill = ~ cut, data = diamonds) %>%
+  gf_labs(title = "Plot 3A: Diamond Prices",caption = "ggformula") 
+###
+diamonds %>% 
+  gf_histogram(~ price, fill = ~ cut, color = "black", alpha = 0.3) %>%
+  gf_labs(title = "Plot 3B: Prices by Cut",
+          caption = "ggformula")
+###
+diamonds %>% 
+  gf_histogram(~ price, fill = ~ cut, color = "black", alpha = 0.3) %>%
+  gf_facet_wrap(~ cut) %>%
+  gf_labs(title = "Plot 3C: Prices by Filled and Facetted by Cut",
+          caption = "ggformula") %>%
+  gf_theme(theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+###
+diamonds %>% 
+  gf_histogram(~ price, fill = ~ cut, color = "black", alpha = 0.3) %>% 
+  gf_facet_wrap(~ cut, scales = "free_y", nrow = 2) %>%
+  gf_labs(title = "Plot 3D: Prices Filled and Facetted by Cut", 
+          subtitle = "Free y-scale",
+          caption = "ggformula") %>%
+  gf_theme(theme(axis.text.x = element_text(angle = 45, hjust = 1)))
+```
+
+I am impressed ::)))))
+
+# NEW DATA SET
+
+```{r}
+race_df <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-10-26/race.csv")
+rank_df <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-10-26/ultra_rankings.csv")
+```
+
+```{r}
+glimpse(race_df)
+```
+
+```{r}
+glimpse(rank_df)
+```
+
+```{r}
+race_df %>%
+  favstats(~distance, data = .)
+```
+
+```{r}
+##
+race_df %>%
+  favstats(~participants, data = .)
+```
+
+```{r}
+rank_df %>%
+  drop_na() %>%
+  favstats(time_in_seconds ~ gender, data = .)
+```
+
+```{r}
+crosstable(time_in_seconds + age ~ gender, data = rank_df) %>%
+  crosstable::as_flextable()
+```
+
+Which countries host the maximum number of races? Which countries send the maximum number of participants??
+
+```{r}
+race_df %>%
+  count(country) %>%
+  arrange(desc(n))
+```
+
+```{r}
+rank_df %>%
+  count(nationality) %>%
+  arrange(desc(n))
+```
+
+```{r}
+rank_df %>%
+  filter(rank %in% c(1, 2, 3)) %>%
+  count(nationality) %>%
+  arrange(desc(n))
+```
