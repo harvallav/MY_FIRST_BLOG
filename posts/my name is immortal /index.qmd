@@ -1,13 +1,15 @@
 ---
-title: "coffee"
+title: "DATA"
 author: "harvallav"
 ---
 
 ## INTRODUCTION
 
-Hello. How are you. If you are reading this, congratulations. You are well versed with all the 26 alphabets in the English language. But do not forget you can still be called an illiterate.
+Hello. How are you? Let us begin this journey of majdoori together.
 
 ## My first piece of Rcode
+
+First, we are setting up the packages.Well what packages are? they are collections of R functions, data, and documentation that extend the functionality of R.
 
 ```{r}
 #| label: setup
