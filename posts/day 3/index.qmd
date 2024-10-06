@@ -262,20 +262,20 @@ gf_percents(~substance,
 
 
 ```{r}
-Fertility <- read_csv("../../data /Fertility.csv")
+Fertility <- read.csv("../../data /Fertility.csv")
 Fertility
 ```
 
 ### GLIMPSE, SKIM, INSPECT !
 
 ```{r}
-glimpse(Fertility)
+dplyr::glimpse(Fertility)
 ```
 ```{r}
 skimr::skim(Fertility)
 ```
 ```{r}
-inspect(Fertility)
+mosaic::inspect(Fertility)
 ```
 ## DATA MUNGING
 
@@ -325,7 +325,7 @@ Fertility_modified %>% glimpse()
 ```
 ## QUESTION:What is the distribution of individuals with more kids based on their gender?
 ```{r}
-Fertilised_modified %>%
+Fertility_modified %>%
   gf_bar(~ gender1, fill = ~ morekids, position = "dodge") %>%
   gf_labs(title = "Counts of More Kids by Gender (Gender 1)")
 ```
@@ -334,7 +334,7 @@ Fertilised_modified %>%
 ## QUESTION: How does the number of individuals with more kids vary across different age groups?
 
 ```{r}
-Fertilised_modified %>%
+Fertility_modified %>%
   mutate(age_group = cut(age, breaks = c(0, 20, 30, 40, 50, 60, 100), 
                          labels = c("0-20", "21-30", "31-40", "41-50", "51-60", "60+"))) %>%
   gf_bar(~ age_group, fill = ~ morekids, position = "dodge", 
@@ -348,27 +348,27 @@ Fertilised_modified %>%
 
 ```{r}
 # Dodged Bar Chart for More Kids by Gender
-Fertilised_modified %>% 
+Fertility_modified %>% 
   gf_bar(~ gender1, fill = ~ morekids, position = "dodge") %>% 
   gf_labs(title = "Plot 1A: Dodged Bar Chart of More Kids by Gender") %>% 
   gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
 
 # Stacked Bar Chart for More Kids by Gender
-Fertilised_modified %>% 
+Fertility_modified %>% 
   gf_bar(~ gender1, fill = ~ morekids, position = "stack") %>% 
   gf_labs(title = "Plot 1B: Stacked Bar Chart of More Kids by Gender",
           subtitle = "Can we spot per group differences in proportions??") %>% 
   gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
 
 # Filled Bar Chart for More Kids by Gender
-Fertilised_modified %>% 
+Fertility_modified %>% 
   gf_bar(~ gender1, fill = ~ morekids, position = "fill") %>% 
   gf_labs(title = "Plot 1C: Filled Bar Chart of More Kids by Gender",
           subtitle = "Shows per group differences in proportions!") %>% 
   gf_theme(theme(axis.text.x = element_text(size = 6, angle = 45, hjust = 1)))
 
 # Showing "per capita" percentages for More Kids by Gender
-Fertilised_modified %>% 
+Fertility_modified %>% 
   gf_props(~ gender1, fill = ~ morekids, position = "fill") %>% 
   gf_labs(title = "Plot 1D: Filled Bar Chart of More Kids by Gender",
           subtitle = "Shows per group differences in proportions!") %>% 
