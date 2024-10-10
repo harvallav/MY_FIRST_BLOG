@@ -269,19 +269,20 @@ math_anxiety %>%
   summarize(Average_AMAS = mean(AMAS), Count = n())
 
 ```
+
 ### This data gives us nicely formatted table showing the first 10 rows of the math_anxiety dataset.
 
 It makes a table with six columns:
 
-**Age**: The age of each student. 
+**Age**: The age of each student.
 
-**Gender**: Whether the student is a boy or a girl. 
+**Gender**: Whether the student is a boy or a girl.
 
 **Grade**: The school grade they are in (e.g., Secondary).
 
 **AMAS Score**: A score measuring math anxiety.
 
-**RCMAS Score**: Another score related to anxiety. 
+**RCMAS Score**: Another score related to anxiety.
 
 **Arithmetic Score**: A score showing their arithmetic ability.
 
@@ -305,21 +306,18 @@ math_anxiety %>%
   )
 ```
 
-
-
 ## This code helps us analyze how math anxiety and related scores vary based on gender, providing insights into the data and highlighting potential differences in anxiety levels between boys and girls.
 
-1) FOR AMAS 
+1)  FOR AMAS
 
 ```{r}
  math_anxiety %>%
   mosaic::favstats(AMAS ~ Gender, data = .)
 ```
 
-2) FOR RCMAS 
+2)  FOR RCMAS
 
 ```{r}
  math_anxiety %>%
   mosaic::favstats(RCMAS ~ Gender, data = .)
 ```
-
