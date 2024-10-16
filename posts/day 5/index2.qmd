@@ -5,6 +5,8 @@ author: "harvallav"
 
 ## Hello
 
+This is a tricky chapter.
+
 ```{r}
 library(tidyverse) # Tidy data processing and plotting
 library(ggformula) # Formula based plots
