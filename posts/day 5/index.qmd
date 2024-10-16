@@ -1,0 +1,134 @@
+---
+title: "groups"
+author: "harvallav"
+---
+
+```{r}
+library(tidyverse)
+library(skimr)
+library(mosaic)
+library(ggformula)
+library(palmerpenguins)
+```
+
+```{r}
+wages <- read_csv("https://vincentarelbundock.github.io/Rdatasets/csv/stevedata/gss_wages.csv")
+```
+
+```{r}
+glimpse(wages)
+```
+
+```{r}
+library(skimr)
+skimr::skim(wages)
+```
+
+```{r}
+inspect(wages)
+```
+
+```{r}
+wages_clean <-
+  wages %>%
+  tidyr::drop_na(realrinc) # choose column or leave blank to choose all
+```
+
+```{r}
+wages_clean %>%
+  gf_boxplot(realrinc ~ "Income") %>% # Dummy X-axis "variable"
+  gf_labs(
+    title = "Plot 1A: Income has a skewed distribution",
+    subtitle = "Many outliers on the high side"
+  )
+```
+
+```{r}
+wages_clean %>%
+  gf_boxplot(gender ~ realrinc) %>%
+  gf_labs(title = "Plot 2A: Income by Gender")
+```
+
+```{r}
+wages_clean %>%
+  gf_boxplot(gender ~ log10(realrinc)) %>%
+  gf_labs(title = "Plot 2B: Log(Income) by Gender")
+```
+
+```{r}
+wages_clean %>%
+  gf_boxplot(gender ~ realrinc, fill = ~gender) %>%
+  gf_refine(scale_x_log10()) %>%
+  gf_labs(title = "Plot 2C: Income filled by Gender, log scale")
+```
+
+```{r}
+wages_clean %>%
+  gf_boxplot(educcat ~ realrinc) %>%
+  gf_labs(title = "Plot 3A: Income by Education Category")
+
+```
+
+```{r}
+wages_clean %>%
+  gf_boxplot(educcat ~ log10(realrinc)) %>%
+  gf_labs(title = "Plot 3B: Log(Income) by Education Category")
+
+```
+
+```{r}
+wages_clean %>%
+  gf_boxplot(
+    reorder(educcat, realrinc, FUN = median) ~ log(realrinc),
+    fill = ~educcat,
+    alpha = 0.3
+  ) %>%
+  gf_labs(title = "Plot 3C: Log(Income) by Education Category, sorted") %>%
+  gf_labs(
+    x = "Log Income",
+    y = "Education Category"
+  )
+```
+
+```{r}
+wages_clean %>%
+  gf_boxplot(reorder(educcat, realrinc, FUN = median) ~ realrinc,
+    fill = ~educcat,
+    alpha = 0.5
+  ) %>%
+  gf_refine(scale_x_log10()) %>%
+  gf_labs(
+    title = "Plot 3D: Income by Education Category, sorted",
+    subtitle = "Log Income"
+  ) %>%
+  gf_labs(
+    x = "Income",
+    y = "Education Category"
+  )
+```
+
+```{r}
+
+#
+wages %>% 
+  drop_na() %>% 
+  gf_boxplot(reorder(educcat, realrinc) ~ log10(realrinc),
+             fill = ~ educcat, 
+             alpha = 0.5) %>% 
+  gf_facet_wrap(vars(childs)) %>% 
+  gf_refine(scale_fill_brewer(type = "qual", palette = "Dark2")) %>% 
+  gf_labs(title = "Plot 4A: Log Income by Education Category and Family Size", x = "Log income", y = "No. of Children")
+##
+wages %>% 
+  drop_na() %>% 
+  mutate(childs = as_factor(childs)) %>% 
+  gf_boxplot(childs ~ log10(realrinc),
+             group = ~ childs,
+             fill = ~ childs, 
+             alpha = 0.5) %>% 
+  gf_facet_wrap(~ gender) %>% 
+  gf_refine(scale_fill_brewer(type = "qual", palette = "Set3")) %>% 
+  gf_labs(title = "Plot 4B: Log Income by Gender and Family Size",
+          x = "Log income",
+          y = "No. of Children")
+```
