@@ -3,6 +3,8 @@ title: "Hearing Loss in Children(epic fail hogya)"
 author: "Harvallav"
 ---
 
+
+
 # **Hearing Loss in Children**
 
 ## INTRODUCTION
@@ -10,6 +12,8 @@ author: "Harvallav"
 This study looks at how children who experience Otitis Media with Effusion (OME), a condition where fluid builds up in the middle ear, might face hearing difficulties as adults. Researchers monitor these children over time to see if they develop problems with binaural hearing, which is the ability to detect where sounds come from and how loud they are. During hearing tests, children listen to two loudspeakers: one plays just noise, and the other plays a Test Signal mixed with noise. There are two types of Test Signals: one sounds like noise, while the other is more distinct. Children are expected to turn toward the loudspeaker with the Test Signal and correctly identify it at least 75% of the time across multiple tests, which indicates how well they can process sounds in noisy environments
 
 ## INSTALLING THE PACKAGES
+
+
 
 ```{r}
 library(tidyverse)
@@ -30,6 +34,8 @@ ome
 ```{r}
 skim(ome)
 ```
+
+
 
 # Data Dictionary for Auditory Testing Results
 
@@ -61,6 +67,8 @@ The dataset primarily features **Arabica** coffee (97.9%), with significant cont
 
 In hearing tests on people with varying levels of OME infection in their childhood, what is the effect of using distinct types of Test Signal on successful (face) orientation ?
 
+
+
 ```{r}
 ome <- ome %>%
   mutate(
@@ -77,9 +85,13 @@ glimpse(ome)
 ome
 ```
 
+
+
 SO, the formatted dataset on the website had another column called success rate. to create that let us mutate it again so that we have a picture perfect graph like arvinds.\
 \
 now we have an additional column success_rate, which represents the percentage of successful responses for each individual.
+
+
 
 ```{r}
 ome <- ome %>%
@@ -113,7 +125,11 @@ print(ome)
 
 ```
 
+
+
 well what is even happening here lol. this graph isnt happening for me
+
+
 
 ```{r}
 library(ggformula)
@@ -140,3 +156,4 @@ gf_boxplot(success_rate ~ OME | Noise, data = ome) %>%
 
 
 ```
+

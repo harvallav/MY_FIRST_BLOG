@@ -19,6 +19,8 @@ library(mosaic)
 library(skimr)
 library(ggformula)
 library(ggbump)
+library(ggplot2)
+library(ggbump)
 ```
 
 ```{r}
@@ -159,7 +161,7 @@ glimpse(coffee_ratings)
 # Observations
 
 | **Observation** | **Details** |
-|----|----|
+|------------------------------------|------------------------------------|
 | **Variety of Coffee Types** | The dataset includes different types of coffee, like Arabica and Robusta, showing a wide range of options for coffee lovers. |
 | **Quality Ratings** | Each coffee batch has several ratings (like aroma and flavor), which helps evaluate how good the coffee is. |
 | **Global Sourcing** | The dataset features coffee from various countries, highlighting the international nature of coffee production. |
@@ -174,55 +176,83 @@ inspect(coffee_ratings)
 ```
 
 ```{r}
-skim(coffee_ratings)
+skimr::skim(coffee_ratings)
 ```
 
-## Lets do some data munging and cleaning of this data
+# Lets do some data munging and cleaning of this data
 
-This code groups the coffee_ratings dataset by country_of_origin and calculates the average values for various coffee attributes, including total_cup_points, aroma, flavor, aftertaste, acidity, and body, while ignoring any missing values. The resulting summarized data is stored in the coffee_modified variable.
+## First breadcrumb
+
+-   It counts how many coffee entries exist for each country of origin in the `coffee_ratings` dataset.
+
+-   It organizes these counts in descending order, making it easy to identify which countries have the highest number of entries in the dataset.
 
 ```{r}
+coffee_ratings %>% 
+  count(country_of_origin) %>% 
+  arrange(desc(n))
+```
 
-coffee_modified <- coffee_ratings %>% 
-  group_by(country_of_origin) %>%
+The code below creates a new data frame, coffee_mod, from the coffee_ratings dataset. It converts the country_of_origin column to a factor and scales several numerical attributes (including total_cup_points, aroma, flavor, aftertaste, acidity, and body) by dividing them by 100. This transformation helps to standardize the values for further analysis or visualization.
+
+```{r}
+coffee_mod <- coffee_ratings %>%
+  ##drop_na() %>% 
+  mutate (
+    country_of_origin = as_factor(country_of_origin),
+    total_cup_points = total_cup_points/100,
+    aroma = aroma/100,
+    flavor = flavor/100,
+    aftertaste = aftertaste/100,
+    acidity = acidity/100,
+    body = body/100
+  )
+coffee_mod
+```
+
+```{r}
+library(dplyr)
+
+coffee_new <- coffee_mod %>% 
+  group_by(country_of_origin) %>% 
   summarize(
-    total_cup_points = mean(total_cup_points, na.rm = TRUE),
+    total_cup_points = mean(total_cup_points, na.rm = TRUE),  
     aroma = mean(aroma, na.rm = TRUE),
     flavor = mean(flavor, na.rm = TRUE),
     aftertaste = mean(aftertaste, na.rm = TRUE),
     acidity = mean(acidity, na.rm = TRUE),
     body = mean(body, na.rm = TRUE)
   )
-
-
-coffee_modified
-
+coffee_new
 ```
 
+## Third Breadcrumb
+
+The code creates a new data frame, coffee_haha, that summarizes the mean values of different coffee characteristics for each country of origin. It identifies and displays the top five countries with the highest average total cup points, along with their mean scores for aroma, flavor, aftertaste, acidity, and body.
+
 ```{r}
-coffee_mod <- coffee_modified %>%
-  group_by(country_of_origin) %>%
-  summarize(
-    total_points_mean = mean(total_cup_points, na.rm = TRUE),
-    aroma_mean = mean(aroma, na.rm = TRUE),
-    flavor_mean = mean(flavor, na.rm = TRUE),
-    aftertaste_mean = mean(aftertaste, na.rm = TRUE),
-    acidity_mean = mean(acidity, na.rm = TRUE),
-    body_mean = mean(body, na.rm = TRUE)
-  ) %>%
-  arrange(desc(total_points_mean)) %>%
-  head(5)
 
-coffee_mod
-
+coffee_haha <- coffee_mod %>%
+  group_by(country_of_origin) %>% 
+  summarize(total_points_mean = mean(total_cup_points), 
+             aroma_mean = mean(aroma), 
+             flavor_mean = mean(flavor), 
+             aftertaste_mean = mean(aftertaste), 
+             acidity_mean = mean(acidity), 
+             body_mean = mean(body)
+             ) %>% 
+  arrange(desc(total_points_mean)) %>% head(5)
+##
+coffee_haha
 ```
 
-The code groups the coffee_modified dataset by country_of_origin and calculates the average scores for several coffee attributes, such as total cup points, aroma, and flavor. It then sorts the results in descending order based on the average total cup points and selects the top 5 countries. The final summary is stored in coffee_mod.
+## Fourth Breadcrumb
 
-phew , lets make the other changes as well like we need them .
+The code creates a new data frame, coffee_hihi, that ranks the average scores for total cup points, aroma, flavor, aftertaste, acidity, and body for the top five countries based on their mean scores. It removes the original mean value columns, resulting in a cleaner data frame focused solely on the ranks.
 
 ```{r}
-coffee_modc <- coffee_mod %>%
+
+coffee_hihi <- coffee_haha %>% 
   mutate(
     total_points_rank = rank(total_points_mean),
     aroma_rank = rank(aroma_mean),
@@ -230,53 +260,54 @@ coffee_modc <- coffee_mod %>%
     aftertaste_rank = rank(aftertaste_mean),
     acidity_rank = rank(acidity_mean),
     body_rank = rank(body_mean)
-  ) %>%
-  select(total_points_mean, aroma_rank, flavor_rank, aftertaste_rank, acidity_rank, body_rank)
-
-coffee_modc
+  ) %>% 
+  select(-total_points_mean, -aroma_mean, -flavor_mean, -aftertaste_mean, -acidity_mean, -body_mean)
+##
+coffee_hihi
 ```
+
+## Fifth Breadcrumb
+
+The code takes the coffee_hihi data frame and reshapes it into a long format, creating a new data frame called coffee_final. In coffee_final, each row corresponds to a specific rank for a coffee parameter (total points, aroma, flavor, etc.) associated with a country, which facilitates further analysis or visualization.
 
 ```{r}
-coffee_modc <- coffee_mod %>%
-  mutate(
-    total_points_rank = rank(total_points_mean, ties.method = "first"),  # Change here
-    aroma_rank = rank(aroma_mean, ties.method = "first"),                # Change here
-    flavor_rank = rank(flavor_mean, ties.method = "first"),              # Change here
-    aftertaste_rank = rank(aftertaste_mean, ties.method = "first"),      # Change here
-    acidity_rank = rank(acidity_mean, ties.method = "first"),            # Change here
-    body_rank = rank(body_mean, ties.method = "first")                   # Change here
-  ) %>%
-  select(total_points_mean, aroma_rank, flavor_rank, aftertaste_rank, acidity_rank, body_rank)
 
-coffee_modc
-
+coffee_final <- coffee_hihi %>% 
+  pivot_longer( 
+    cols = c(total_points_rank, aroma_rank, flavor_rank, aftertaste_rank, acidity_rank, body_rank),
+    cols_vary = "fastest",
+    names_to = "parameter",
+    values_to = "ranks")
+##
+coffee_final
 ```
 
-I dont know why this is reverse here and not 1-5. I tried asking chatgpt, but I will leave it here as it really isnt bothering my graphs and data.
-
-The reason you see only 5 rows in the coffee_mod dataset is due to the head(5) function, which limits the output to the top 5 entries after sorting by the average total cup points(in the previous one). The conversion from means to ranks provides a clear, ordinal representation of how each country's coffee attributes compare relative to each other, making it easier to identify which countries perform better or worse in each category.
-
-### now building the graph
-
-I had created alot of wrong graphs to get this one right and I did not have group=country which gave me a graph with just dots and multiple errors.
+## BUILDING THE GRAPH
 
 ```{r}
 library(ggplot2)
 library(ggbump)
 
-coffee_ratings %>%
-  ggplot(aes(x = attribute, y = rank, color = country,group=country)) +
-  geom_bump(size = 2) +  # Add lines for rank progression
-  geom_point(size = 6, shape = 21) +  # Add points at each rank
-  xlab("Coffee Attribute") +
-  ylab("Rank") +
-  scale_color_manual(values = c("Ethiopia" = "#00AFBB", 
-                                "Japan" = "#E7B800", 
-                                "Kenya" = "#FC4E07", 
-                                "Papua New Guinea" = "#7D3C98", 
-                                "United States" = "#4CAF50")) +
-  theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ggplot(coffee_final, aes(x = parameter, y = ranks, color = country_of_origin, group = country_of_origin)) +
+  geom_bump(size = 1) +  
+  geom_point(size = 4) +  
+  scale_x_discrete(
+    limits = c("acidity_rank", "aftertaste_rank", "aroma_rank", "body_rank", "total_points_rank", "flavor_rank"),
+    labels = c("Acidity", "Aftertaste", "Aroma", "Body", "Total", "Flavor")
+  ) + 
+  labs(title = "Coffee Parameter Ranks by Country of Origin",
+       x = "Coffee Parameters",
+       y = "Rank",
+       color = "Country of Origin") +
+  scale_color_manual(values = c(
+    "Ethiopia" = "#00AFBB", 
+    "Japan" = "#E7B800", 
+    "Kenya" = "#FC4E07", 
+    "Papua New Guinea" = "#7D3C98", 
+    "United States" = "#4CAF50"
+  )) +  # Define colors for each country
+  theme_minimal() +  # Use a minimal theme
+  theme(axis.text.x = element_text(angle = 0, hjust = 0.1))
 
 ```
 
@@ -321,3 +352,5 @@ This hypothesis would drive the researchers to compare coffee from multiple coun
 I found this dataset really interesting because I used to be a big coffee fan—unfortunately, I can't drink it anymore due to medical reasons. Still, coffee is such a fascinating creation. Working with this bump chart brought back memories of my love for it. At first, I ran into an error while trying to create the chart, but after some troubleshooting, I realized I needed to add `group=country` for it to work properly. It was a satisfying fix and made the chart even more interesting to look at.
 
 This bump chart compares coffee rankings from different countries across various attributes like aroma and flavor. The `x` axis represents the coffee attributes, while the `y` axis shows the rank (lower is better). Each country is color-coded, and lines connect the ranks for each attribute, showing how each country’s coffee performs across all attributes. You can follow each country's line to see how its rank changes attribute by attribute.
+
+latest edit:This dataset sucked me up but it works. thankyou.FINALLYYY. I had to do it thrice to get it right. 
