@@ -36,7 +36,7 @@ skim(ome)
 ### Quantitative Data Dictionary
 
 | Variable | Type | Description | Data Type |
-|-----------------|-----------------|-------------------|--------------------|
+|------------------|------------------|------------------|-------------------|
 | rownames | dbl | A unique number for each row in the dataset. | Quantitative |
 | ID | dbl | A number identifying each participant in the study. | Quantitative |
 | Age | dbl | The age of the participant in years during testing. | Quantitative |
@@ -47,7 +47,7 @@ skim(ome)
 ### Qualitative Data Dictionary
 
 | Variable | Type | Description | Data Type |
-|-----------------|-----------------|-------------------|--------------------|
+|------------------|------------------|------------------|-------------------|
 | OME | chr | The severity of Otitis Media with Effusion, categorized as 'low,' 'medium,' or 'high.' | Qualitative |
 | Noise | chr | The type of background noise during the tests, either 'coherent' or 'incoherent.' | Qualitative |
 
@@ -112,7 +112,8 @@ ome <- data.frame(
 print(ome)
 
 ```
-well what is even happening here lol. this graph isnt happening for me 
+
+well what is even happening here lol. this graph isnt happening for me
 
 ```{r}
 library(ggformula)
@@ -139,5 +140,3 @@ gf_boxplot(success_rate ~ OME | Noise, data = ome) %>%
 
 
 ```
-
-
