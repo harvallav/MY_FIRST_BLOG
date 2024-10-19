@@ -8,7 +8,7 @@
 
 <meta name="author" content="Harvallav">
 
-<title>Coffee Flavours – MY_FIRST_BLOG</title>
+<title>Coffee Flavours(A2) – MY_FIRST_BLOG</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -148,7 +148,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Coffee Flavours</h1>
+      <h1 class="title">Coffee Flavours(A2)</h1>
                       </div>
   </div>
     
@@ -247,7 +247,9 @@ The following object is masked from 'package:mosaic':
     n_missing</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggformula)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbump)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbump)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbump)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>coffee_ratings <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../../data /coffee_ratings.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -286,9 +288,1152 @@ num (14): total_cup_points, aroma, flavor, aftertaste, acidity, body, balanc...
 #   uniformity &lt;dbl&gt;, clean_cup &lt;dbl&gt;, sweetness &lt;dbl&gt;, cupper_points &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
-
-
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(coffee_ratings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,339
+Columns: 43
+$ total_cup_points      &lt;dbl&gt; 9058, 8992, 8975, 8900, 8883, 8883, 8875, 8867, …
+$ species               &lt;chr&gt; "Arabica", "Arabica", "Arabica", "Arabica", "Ara…
+$ owner                 &lt;chr&gt; "metad plc", "metad plc", "grounds for health ad…
+$ country_of_origin     &lt;chr&gt; "Ethiopia", "Ethiopia", "Guatemala", "Ethiopia",…
+$ farm_name             &lt;chr&gt; "metad plc", "metad plc", "san marcos barrancas …
+$ lot_number            &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ mill                  &lt;chr&gt; "metad plc", "metad plc", NA, "wolensu", "metad …
+$ ico_number            &lt;chr&gt; "2014/2015", "2014/2015", NA, NA, "2014/2015", N…
+$ company               &lt;chr&gt; "metad agricultural developmet plc", "metad agri…
+$ altitude              &lt;chr&gt; "1950-2200", "1950-2200", "1600 - 1800 m", "1800…
+$ region                &lt;chr&gt; "guji-hambela", "guji-hambela", NA, "oromia", "g…
+$ producer              &lt;chr&gt; "METAD PLC", "METAD PLC", NA, "Yidnekachew Dabes…
+$ number_of_bags        &lt;dbl&gt; 300, 300, 5, 320, 300, 100, 100, 300, 300, 50, 3…
+$ bag_weight            &lt;chr&gt; "60 kg", "60 kg", "1", "60 kg", "60 kg", "30 kg"…
+$ in_country_partner    &lt;chr&gt; "METAD Agricultural Development plc", "METAD Agr…
+$ harvest_year          &lt;chr&gt; "2014", "2014", NA, "2014", "2014", "2013", "201…
+$ grading_date          &lt;chr&gt; "April 4th, 2015", "April 4th, 2015", "May 31st,…
+$ owner_1               &lt;chr&gt; "metad plc", "metad plc", "Grounds for Health Ad…
+$ variety               &lt;chr&gt; NA, "Other", "Bourbon", NA, "Other", NA, "Other"…
+$ processing_method     &lt;chr&gt; "Washed / Wet", "Washed / Wet", NA, "Natural / D…
+$ aroma                 &lt;dbl&gt; 867, 875, 842, 817, 825, 858, 842, 825, 867, 808…
+$ flavor                &lt;dbl&gt; 883, 867, 850, 858, 850, 842, 850, 833, 867, 858…
+$ aftertaste            &lt;dbl&gt; 867, 850, 842, 842, 825, 842, 833, 850, 858, 850…
+$ acidity               &lt;dbl&gt; 875, 858, 842, 842, 850, 850, 850, 842, 842, 850…
+$ body                  &lt;dbl&gt; 850, 842, 833, 850, 842, 825, 825, 833, 833, 767…
+$ balance               &lt;dbl&gt; 842, 842, 842, 825, 833, 833, 825, 850, 842, 842…
+$ uniformity            &lt;dbl&gt; 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, …
+$ clean_cup             &lt;dbl&gt; 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, …
+$ sweetness             &lt;dbl&gt; 1000, 1000, 1000, 1000, 1000, 1000, 1000, 933, 9…
+$ cupper_points         &lt;dbl&gt; 875, 858, 925, 867, 858, 833, 850, 900, 867, 850…
+$ moisture              &lt;chr&gt; "0,12", "0,12", "0,00", "0,11", "0,12", "0,11", …
+$ category_one_defects  &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ quakers               &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, …
+$ color                 &lt;chr&gt; "Green", "Green", NA, "Green", "Green", "Bluish-…
+$ category_two_defects  &lt;dbl&gt; 0, 1, 0, 2, 2, 1, 0, 0, 0, 4, 1, 0, 0, 2, 2, 0, …
+$ expiration            &lt;chr&gt; "April 3rd, 2016", "April 3rd, 2016", "May 31st,…
+$ certification_body    &lt;chr&gt; "METAD Agricultural Development plc", "METAD Agr…
+$ certification_address &lt;chr&gt; "309fcf77415a3661ae83e027f7e5f05dad786e44", "309…
+$ certification_contact &lt;chr&gt; "19fef5a731de2db57d16da10287413f5f99bc2dd", "19f…
+$ unit_of_measurement   &lt;chr&gt; "m", "m", "m", "m", "m", "m", "m", "m", "m", "m"…
+$ altitude_low_meters   &lt;dbl&gt; 19500000, 19500000, 16000000, 18000000, 19500000…
+$ altitude_high_meters  &lt;dbl&gt; 22000000, 22000000, 18000000, 22000000, 22000000…
+$ altitude_mean_meters  &lt;dbl&gt; 20750000, 20750000, 17000000, 20000000, 20750000…</code></pre>
+</div>
+</div>
 </section>
+</section>
+<section id="data-dictionary" class="level1">
+<h1>Data Dictionary</h1>
+<section id="qualitative-variables" class="level3">
+<h3 class="anchored" data-anchor-id="qualitative-variables">Qualitative Variables</h3>
+<ol type="1">
+<li><p><strong>species (</strong><chr>): The species of the coffee plant.<br>
+<em>Example</em>: “Arabica”, “Robusta”</chr></p></li>
+<li><p><strong>owner (</strong><chr>): The name of the company or person who owns the coffee farm or mill.<br>
+<em>Example</em>: “Farm Co.”, “John Doe”</chr></p></li>
+<li><p><strong>country_of_origin (</strong><chr>): The country where the coffee is grown.<br>
+<em>Example</em>: “Colombia”, “Ethiopia”</chr></p></li>
+<li><p><strong>farm_name (</strong><chr>): The name of the farm where the coffee is produced.<br>
+<em>Example</em>: “La Esperanza”, “Koppi Coffee”</chr></p></li>
+<li><p><strong>lot_number (</strong><chr>): The unique identifier for the batch of coffee.<br>
+<em>Example</em>: “LOT123”, “BATCH456”</chr></p></li>
+<li><p><strong>mill (</strong><chr>): The name of the mill where the coffee is processed.<br>
+<em>Example</em>: “ABC Mill”, “XYZ Coffee Processing”</chr></p></li>
+<li><p><strong>ico_number (</strong><chr>): International Coffee Organization (ICO) identification number.<br>
+<em>Example</em>: “ICO123456”, “ICO654321”</chr></p></li>
+<li><p><strong>company (</strong><chr>): Name of the company associated with the coffee.<br>
+<em>Example</em>: “Coffee Inc.”, “Java Co.”</chr></p></li>
+<li><p><strong>region (</strong><chr>): The region within the country where the coffee is grown.<br>
+<em>Example</em>: “Antioquia”, “Sidamo”</chr></p></li>
+<li><p><strong>producer (</strong><chr>): The name of the producer or farmer responsible for growing the coffee.<br>
+<em>Example</em>: “Maria Rodriguez”, “Paul Smith”</chr></p></li>
+<li><p><strong>bag_weight (</strong><chr>): The weight of the bag used for shipping the coffee.<br>
+<em>Example</em>: “60 kg”, “70 kg”</chr></p></li>
+<li><p><strong>color (</strong><chr>): The color of the coffee beans after roasting.<br>
+<em>Example</em>: “Light Brown”, “Dark Brown”</chr></p></li>
+<li><p><strong>grading_date (</strong><chr>): The date on which the coffee was graded.<br>
+<em>Example</em>: “2023-05-10”, “2023-06-15”</chr></p></li>
+<li><p><strong>processing_method (</strong><chr>): The method used to process the coffee (e.g., washed, natural).<br>
+<em>Example</em>: “Washed”, “Natural”</chr></p></li>
+<li><p><strong>owner_type (</strong><chr>): Whether the owner is an individual, company, cooperative, etc.<br>
+<em>Example</em>: “Cooperative”, “Individual”</chr></p></li>
+<li><p><strong>batch_id (</strong><chr>): Unique identifier for the coffee batch.<br>
+<em>Example</em>: “BATCH001”, “BATCH002”</chr></p></li>
+<li><p><strong>seller (</strong><chr>): Name of the seller or exporter.<br>
+<em>Example</em>: “Global Coffee Traders”, “Local Roasters”</chr></p></li>
+<li><p><strong>transportation_type (</strong><chr>): The method of transportation used for shipping the coffee.<br>
+<em>Example</em>: “Air”, “Sea”</chr></p></li>
+<li><p><strong>shipping_date (</strong><chr>): The date on which the coffee was shipped.<br>
+<em>Example</em>: “2023-07-01”, “2023-07-15”</chr></p></li>
+<li><p><strong>transaction_id (</strong><chr>): Unique identifier for the coffee transaction.<br>
+<em>Example</em>: “TRANS001”, “TRANS002”</chr></p></li>
+</ol>
+</section>
+<section id="quantitative-variables" class="level3">
+<h3 class="anchored" data-anchor-id="quantitative-variables">Quantitative Variables</h3>
+<ol type="1">
+<li><p><strong>total_cup_points (</strong><dbl>): Total score given to the coffee based on different attributes, on a scale out of 100.<br>
+<em>Example</em>: 85.5, 92.0</dbl></p></li>
+<li><p><strong>altitude (</strong><num>): The altitude at which the coffee is grown, which can influence flavor.<br>
+<em>Example</em>: 1200, 1500 (in meters)</num></p></li>
+<li><p><strong>number_of_bags (</strong><dbl>): The number of bags produced in this batch of coffee.<br>
+<em>Example</em>: 50, 100</dbl></p></li>
+<li><p><strong>category_one_defects (</strong><dbl>): The number of primary defects found in the coffee batch.<br>
+<em>Example</em>: 2, 5</dbl></p></li>
+<li><p><strong>quakers (</strong><dbl>): The number of unripe coffee beans, also known as quakers.<br>
+<em>Example</em>: 10, 15</dbl></p></li>
+<li><p><strong>category_two_defects (</strong><dbl>): The number of secondary defects found in the coffee batch.<br>
+<em>Example</em>: 3, 8</dbl></p></li>
+<li><p><strong>aroma (</strong><num>): A rating of the coffee’s aroma (scale 1-10).<br>
+<em>Example</em>: 7.5, 8.0</num></p></li>
+<li><p><strong>flavor (</strong><num>): A rating of the coffee’s flavor (scale 1-10).<br>
+<em>Example</em>: 9.0, 6.5</num></p></li>
+<li><p><strong>aftertaste (</strong><num>): A rating of the coffee’s aftertaste (scale 1-10).<br>
+<em>Example</em>: 8.5, 7.0</num></p></li>
+<li><p><strong>acidity (</strong><num>): A rating of the coffee’s acidity (scale 1-10).<br>
+<em>Example</em>: 6.0, 9.0</num></p></li>
+<li><p><strong>body (</strong><num>): A rating of the coffee’s body (scale 1-10).<br>
+<em>Example</em>: 8.0, 7.5</num></p></li>
+<li><p><strong>balance (</strong><num>): A rating of how balanced the coffee’s attributes are (scale 1-10).<br>
+<em>Example</em>: 9.0, 8.0</num></p></li>
+<li><p><strong>uniformity (</strong><num>): A rating of the consistency of the coffee’s attributes across multiple samples (scale 1-10).<br>
+<em>Example</em>: 8.0, 9.0</num></p></li>
+<li><p><strong>clean_cup (</strong><num>): A rating of how clean and free of defects the coffee is (scale 1-10).<br>
+<em>Example</em>: 9.5, 8.5</num></p></li>
+<li><p><strong>sweetness (</strong><num>): A rating of the coffee’s sweetness (scale 1-10).<br>
+<em>Example</em>: 7.0, 8.5</num></p></li>
+<li><p><strong>cupper_points (</strong><num>): A rating given by the cupper (the person tasting and rating the coffee) (scale 1-10).<br>
+<em>Example</em>: 8.0, 9.0</num></p></li>
+<li><p><strong>moisture (</strong><num>): The moisture content of the coffee beans (percentage).<br>
+<em>Example</em>: 12.5, 11.0</num></p></li>
+<li><p><strong>bean_size (</strong><num>): The size of the coffee beans (in mm).<br>
+<em>Example</em>: 8.5, 9.0</num></p></li>
+<li><p><strong>cup_score (</strong><num>): Overall score of the coffee based on the combination of different attributes.<br>
+<em>Example</em>: 85.0, 90.0</num></p></li>
+<li><p><strong>packaging_quality (</strong><num>): The quality of the coffee’s packaging (scale 1-10).<br>
+<em>Example</em>: 9.0, 7.5</num></p></li>
+</ol>
+</section>
+</section>
+<section id="observations" class="level1">
+<h1>Observations</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Observation</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Variety of Coffee Types</strong></td>
+<td>The dataset includes different types of coffee, like Arabica and Robusta, showing a wide range of options for coffee lovers.</td>
+</tr>
+<tr class="even">
+<td><strong>Quality Ratings</strong></td>
+<td>Each coffee batch has several ratings (like aroma and flavor), which helps evaluate how good the coffee is.</td>
+</tr>
+<tr class="odd">
+<td><strong>Global Sourcing</strong></td>
+<td>The dataset features coffee from various countries, highlighting the international nature of coffee production.</td>
+</tr>
+<tr class="even">
+<td><strong>Defect Tracking</strong></td>
+<td>The dataset includes information about defects in the coffee, helping to monitor quality and ensure good products.</td>
+</tr>
+<tr class="odd">
+<td><strong>Processing Methods</strong></td>
+<td>Different methods used to process coffee (like washed or natural) are listed, showing how these methods can affect flavor.</td>
+</tr>
+<tr class="even">
+<td><strong>Altitude Impact</strong></td>
+<td>The altitude at which the coffee is grown is recorded, as this can influence the taste of the coffee.</td>
+</tr>
+<tr class="odd">
+<td><strong>Transaction Details</strong></td>
+<td>Each coffee sale has a unique ID, making it easy to track where the coffee comes from and how it was sold.</td>
+</tr>
+<tr class="even">
+<td><strong>Focus on Sustainability</strong></td>
+<td>The dataset includes information about the type of owner (individual, cooperative, etc.), which may indicate a focus on sustainable and ethical sourcing.</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(coffee_ratings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+categorical variables:  
+                    name     class levels    n missing
+1                species character      2 1339       0
+2                  owner character    315 1332       7
+3      country_of_origin character     36 1338       1
+4              farm_name character    571  980     359
+5             lot_number character    227  276    1063
+6                   mill character    460 1024     315
+7             ico_number character    847 1188     151
+8                company character    281 1130     209
+9               altitude character    396 1113     226
+10                region character    356 1280      59
+11              producer character    691 1108     231
+12            bag_weight character     56 1339       0
+13    in_country_partner character     27 1339       0
+14          harvest_year character     46 1292      47
+15          grading_date character    567 1339       0
+16               owner_1 character    319 1332       7
+17               variety character     29 1113     226
+18     processing_method character      5 1169     170
+19              moisture character     23 1339       0
+20                 color character      4 1121     218
+21            expiration character    566 1339       0
+22    certification_body character     26 1339       0
+23 certification_address character     32 1339       0
+24 certification_contact character     29 1339       0
+25   unit_of_measurement character      2 1339       0
+                                    distribution
+1  Arabica (97.9%), Robusta (2.1%)              
+2  juan luis alvarado romero (11.6%) ...        
+3  Mexico (17.6%), Colombia (13.7%) ...         
+4  various (4.8%), rio verde (2.3%) ...         
+5  1 (6.5%), 020/17 (2.2%) ...                  
+6  beneficio ixchel (8.8%) ...                  
+7  0 (6.5%), Taiwan (2.6%) ...                  
+8  unex guatemala, s.a. (7.6%) ...              
+9  1100 (3.9%), 1200 (3.8%) ...                 
+10 huila (8.8%), oriente (6.2%) ...             
+11 La Plata (2.7%) ...                          
+12 1 kg (24.7%), 60 kg (19.1%) ...              
+13 Specialty Coffee Association (23.4%) ...     
+14 2012 (27.4%), 2014 (18%) ...                 
+15 July 11th, 2012 (1.9%) ...                   
+16 Juan Luis Alvarado Romero (11.6%) ...        
+17 Caturra (23%), Bourbon (20.3%) ...           
+18 Washed / Wet (69.7%) ...                     
+19 0,11 (28.6%), 0,12 (22%) ...                 
+20 Green (77.6%), Bluish-Green (10.2%) ...      
+21 December 26th, 2014 (1.9%) ...               
+22 Specialty Coffee Association (23.4%) ...     
+23  (%) ...                                     
+24  (%) ...                                     
+25 m (86.4%), ft (13.6%)                        
+
+quantitative variables:  
+                   name   class   min       Q1   median       Q3        max
+1      total_cup_points numeric     0     8108     8250     8367       9058
+2        number_of_bags numeric     0       14      175      275       1062
+3                 aroma numeric     0      742      758      775        875
+4                flavor numeric     0      733      758      775        883
+5            aftertaste numeric     0      725      742      758        867
+6               acidity numeric     0      733      758      775        875
+7                  body numeric     0      733      750      767        858
+8               balance numeric     0      733      750      775        875
+9            uniformity numeric     0     1000     1000     1000       1000
+10            clean_cup numeric     0     1000     1000     1000       1000
+11            sweetness numeric     0     1000     1000     1000       1000
+12        cupper_points numeric     0      725      750      775       1000
+13 category_one_defects numeric     0        0        0        0         63
+14              quakers numeric     0        0        0        0         11
+15 category_two_defects numeric     0        0        2        4         55
+16  altitude_low_meters numeric 10000 11000000 13106400 16000000 1901640000
+17 altitude_high_meters numeric 10000 11000000 13500000 16500000 1901640000
+18 altitude_mean_meters numeric 10000 11000000 13106400 16000000 1901640000
+           mean           sd    n missing
+1  8.208985e+03 3.500575e+02 1339       0
+2  1.541830e+02 1.299872e+02 1339       0
+3  7.566706e+02 3.775600e+01 1339       0
+4  7.520426e+02 3.984421e+01 1339       0
+5  7.401083e+02 4.044634e+01 1339       0
+6  7.535706e+02 3.798267e+01 1339       0
+7  7.517498e+02 3.700639e+01 1339       0
+8  7.518013e+02 4.089433e+01 1339       0
+9  9.834877e+02 5.545906e+01 1339       0
+10 9.835108e+02 7.639459e+01 1339       0
+11 9.856692e+02 6.161020e+01 1339       0
+12 7.503376e+02 4.734643e+01 1339       0
+13 4.794623e-01 2.549683e+00 1339       0
+14 1.733931e-01 8.321210e-01 1338       1
+15 3.556385e+00 5.312541e+00 1339       0
+16 1.750713e+07 8.669441e+07 1109     230
+17 1.799348e+07 8.668806e+07 1109     230
+18 1.775031e+07 8.668626e+07 1109     230</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>skimr<span class="sc">::</span><span class="fu">skim</span>(coffee_ratings)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">coffee_ratings</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">1339</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">43</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 11%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">empty</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: right;">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">species</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">owner</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">315</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">country_of_origin</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">farm_name</td>
+<td style="text-align: right;">359</td>
+<td style="text-align: right;">0.73</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">571</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">lot_number</td>
+<td style="text-align: right;">1063</td>
+<td style="text-align: right;">0.21</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">227</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mill</td>
+<td style="text-align: right;">315</td>
+<td style="text-align: right;">0.76</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">460</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ico_number</td>
+<td style="text-align: right;">151</td>
+<td style="text-align: right;">0.89</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">847</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">company</td>
+<td style="text-align: right;">209</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">281</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">altitude</td>
+<td style="text-align: right;">226</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">396</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">region</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">0.96</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">356</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">producer</td>
+<td style="text-align: right;">231</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">691</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bag_weight</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">in_country_partner</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">harvest_year</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">0.96</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">grading_date</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">567</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">owner_1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0.99</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">319</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">variety</td>
+<td style="text-align: right;">226</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">processing_method</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">0.87</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">moisture</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">color</td>
+<td style="text-align: right;">218</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">expiration</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">566</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">certification_body</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">certification_address</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">certification_contact</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">unit_of_measurement</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 9%">
+<col style="width: 5%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">total_cup_points</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">8208.99</td>
+<td style="text-align: right;">350.06</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">8108</td>
+<td style="text-align: right;">8250</td>
+<td style="text-align: right;">8367</td>
+<td style="text-align: right;">9058</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">number_of_bags</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">154.18</td>
+<td style="text-align: right;">129.99</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">1062</td>
+<td style="text-align: left;">▇▇▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aroma</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">756.67</td>
+<td style="text-align: right;">37.76</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">742</td>
+<td style="text-align: right;">758</td>
+<td style="text-align: right;">775</td>
+<td style="text-align: right;">875</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">flavor</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">752.04</td>
+<td style="text-align: right;">39.84</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">733</td>
+<td style="text-align: right;">758</td>
+<td style="text-align: right;">775</td>
+<td style="text-align: right;">883</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">aftertaste</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">740.11</td>
+<td style="text-align: right;">40.45</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">725</td>
+<td style="text-align: right;">742</td>
+<td style="text-align: right;">758</td>
+<td style="text-align: right;">867</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">acidity</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">753.57</td>
+<td style="text-align: right;">37.98</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">733</td>
+<td style="text-align: right;">758</td>
+<td style="text-align: right;">775</td>
+<td style="text-align: right;">875</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">body</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">751.75</td>
+<td style="text-align: right;">37.01</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">733</td>
+<td style="text-align: right;">750</td>
+<td style="text-align: right;">767</td>
+<td style="text-align: right;">858</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">balance</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">751.80</td>
+<td style="text-align: right;">40.89</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">733</td>
+<td style="text-align: right;">750</td>
+<td style="text-align: right;">775</td>
+<td style="text-align: right;">875</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">uniformity</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">983.49</td>
+<td style="text-align: right;">55.46</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">clean_cup</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">983.51</td>
+<td style="text-align: right;">76.39</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">sweetness</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">985.67</td>
+<td style="text-align: right;">61.61</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: left;">▁▁▁▁▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cupper_points</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">750.34</td>
+<td style="text-align: right;">47.35</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">725</td>
+<td style="text-align: right;">750</td>
+<td style="text-align: right;">775</td>
+<td style="text-align: right;">1000</td>
+<td style="text-align: left;">▁▁▁▇▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">category_one_defects</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">2.55</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">quakers</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">0.17</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">category_two_defects</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">3.56</td>
+<td style="text-align: right;">5.31</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">altitude_low_meters</td>
+<td style="text-align: right;">230</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">17507133.15</td>
+<td style="text-align: right;">86694405.45</td>
+<td style="text-align: right;">10000</td>
+<td style="text-align: right;">11000000</td>
+<td style="text-align: right;">13106400</td>
+<td style="text-align: right;">16000000</td>
+<td style="text-align: right;">1901640000</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">altitude_high_meters</td>
+<td style="text-align: right;">230</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">17993477.75</td>
+<td style="text-align: right;">86688057.71</td>
+<td style="text-align: right;">10000</td>
+<td style="text-align: right;">11000000</td>
+<td style="text-align: right;">13500000</td>
+<td style="text-align: right;">16500000</td>
+<td style="text-align: right;">1901640000</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">altitude_mean_meters</td>
+<td style="text-align: right;">230</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">17750305.45</td>
+<td style="text-align: right;">86686260.80</td>
+<td style="text-align: right;">10000</td>
+<td style="text-align: right;">11000000</td>
+<td style="text-align: right;">13106400</td>
+<td style="text-align: right;">16000000</td>
+<td style="text-align: right;">1901640000</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="lets-do-some-data-munging-and-cleaning-of-this-data" class="level1">
+<h1>Lets do some data munging and cleaning of this data</h1>
+<section id="first-breadcrumb" class="level2">
+<h2 class="anchored" data-anchor-id="first-breadcrumb">First breadcrumb</h2>
+<ul>
+<li><p>It counts how many coffee entries exist for each country of origin in the <code>coffee_ratings</code> dataset.</p></li>
+<li><p>It organizes these counts in descending order, making it easy to identify which countries have the highest number of entries in the dataset.</p></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>coffee_ratings <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(country_of_origin) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 37 × 2
+   country_of_origin                n
+   &lt;chr&gt;                        &lt;int&gt;
+ 1 Mexico                         236
+ 2 Colombia                       183
+ 3 Guatemala                      181
+ 4 Brazil                         132
+ 5 Taiwan                          75
+ 6 United States (Hawaii)          73
+ 7 Honduras                        53
+ 8 Costa Rica                      51
+ 9 Ethiopia                        44
+10 Tanzania, United Republic Of    40
+# ℹ 27 more rows</code></pre>
+</div>
+</div>
+<p>The code below creates a new data frame, coffee_mod, from the coffee_ratings dataset. It converts the country_of_origin column to a factor and scales several numerical attributes (including total_cup_points, aroma, flavor, aftertaste, acidity, and body) by dividing them by 100. This transformation helps to standardize the values for further analysis or visualization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>coffee_mod <span class="ot">&lt;-</span> coffee_ratings <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="do">##drop_na() %&gt;% </span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span> (</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">country_of_origin =</span> <span class="fu">as_factor</span>(country_of_origin),</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_cup_points =</span> total_cup_points<span class="sc">/</span><span class="dv">100</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">aroma =</span> aroma<span class="sc">/</span><span class="dv">100</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">flavor =</span> flavor<span class="sc">/</span><span class="dv">100</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">aftertaste =</span> aftertaste<span class="sc">/</span><span class="dv">100</span>,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">acidity =</span> acidity<span class="sc">/</span><span class="dv">100</span>,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">body =</span> body<span class="sc">/</span><span class="dv">100</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>coffee_mod</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,339 × 43
+   total_cup_points species owner   country_of_origin farm_name lot_number mill 
+              &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;fct&gt;             &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt;
+ 1             90.6 Arabica metad … Ethiopia          "metad p… &lt;NA&gt;       meta…
+ 2             89.9 Arabica metad … Ethiopia          "metad p… &lt;NA&gt;       meta…
+ 3             89.8 Arabica ground… Guatemala         "san mar… &lt;NA&gt;       &lt;NA&gt; 
+ 4             89   Arabica yidnek… Ethiopia          "yidneka… &lt;NA&gt;       wole…
+ 5             88.8 Arabica metad … Ethiopia          "metad p… &lt;NA&gt;       meta…
+ 6             88.8 Arabica ji-ae … Brazil             &lt;NA&gt;     &lt;NA&gt;       &lt;NA&gt; 
+ 7             88.8 Arabica hugo v… Peru               &lt;NA&gt;     &lt;NA&gt;       hvc  
+ 8             88.7 Arabica ethiop… Ethiopia          "aolme"   &lt;NA&gt;       c.p.…
+ 9             88.4 Arabica ethiop… Ethiopia          "aolme"   &lt;NA&gt;       c.p.…
+10             88.2 Arabica diamon… Ethiopia          "tulla c… &lt;NA&gt;       tull…
+# ℹ 1,329 more rows
+# ℹ 36 more variables: ico_number &lt;chr&gt;, company &lt;chr&gt;, altitude &lt;chr&gt;,
+#   region &lt;chr&gt;, producer &lt;chr&gt;, number_of_bags &lt;dbl&gt;, bag_weight &lt;chr&gt;,
+#   in_country_partner &lt;chr&gt;, harvest_year &lt;chr&gt;, grading_date &lt;chr&gt;,
+#   owner_1 &lt;chr&gt;, variety &lt;chr&gt;, processing_method &lt;chr&gt;, aroma &lt;dbl&gt;,
+#   flavor &lt;dbl&gt;, aftertaste &lt;dbl&gt;, acidity &lt;dbl&gt;, body &lt;dbl&gt;, balance &lt;dbl&gt;,
+#   uniformity &lt;dbl&gt;, clean_cup &lt;dbl&gt;, sweetness &lt;dbl&gt;, cupper_points &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>coffee_new <span class="ot">&lt;-</span> coffee_mod <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_of_origin) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_cup_points =</span> <span class="fu">mean</span>(total_cup_points, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),  </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">aroma =</span> <span class="fu">mean</span>(aroma, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">flavor =</span> <span class="fu">mean</span>(flavor, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">aftertaste =</span> <span class="fu">mean</span>(aftertaste, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">acidity =</span> <span class="fu">mean</span>(acidity, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">body =</span> <span class="fu">mean</span>(body, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>coffee_new</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 37 × 7
+   country_of_origin      total_cup_points aroma flavor aftertaste acidity  body
+   &lt;fct&gt;                             &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+ 1 Ethiopia                           85.5  7.90   8.01       7.89    8.04  7.92
+ 2 Guatemala                          81.8  7.54   7.49       7.27    7.60  7.48
+ 3 Brazil                             82.4  7.55   7.57       7.44    7.51  7.54
+ 4 Peru                               82.5  7.69   7.66       7.54    7.70  7.80
+ 5 United States                      84.4  7.83   7.99       7.85    7.94  7.84
+ 6 United States (Hawaii)             81.8  7.57   7.58       7.50    7.62  7.63
+ 7 Indonesia                          82.6  7.65   7.57       7.42    7.49  7.63
+ 8 China                              82.9  7.64   7.63       7.48    7.58  7.57
+ 9 Costa Rica                         82.8  7.67   7.54       7.53    7.57  7.54
+10 Mexico                             80.9  7.46   7.38       7.23    7.43  7.38
+# ℹ 27 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="third-breadcrumb" class="level2">
+<h2 class="anchored" data-anchor-id="third-breadcrumb">Third Breadcrumb</h2>
+<p>The code creates a new data frame, coffee_haha, that summarizes the mean values of different coffee characteristics for each country of origin. It identifies and displays the top five countries with the highest average total cup points, along with their mean scores for aroma, flavor, aftertaste, acidity, and body.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>coffee_haha <span class="ot">&lt;-</span> coffee_mod <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(country_of_origin) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_points_mean =</span> <span class="fu">mean</span>(total_cup_points), </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">aroma_mean =</span> <span class="fu">mean</span>(aroma), </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">flavor_mean =</span> <span class="fu">mean</span>(flavor), </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">aftertaste_mean =</span> <span class="fu">mean</span>(aftertaste), </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">acidity_mean =</span> <span class="fu">mean</span>(acidity), </span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">body_mean =</span> <span class="fu">mean</span>(body)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>             ) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(total_points_mean)) <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">5</span>)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>coffee_haha</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 7
+  country_of_origin total_points_mean aroma_mean flavor_mean aftertaste_mean
+  &lt;fct&gt;                         &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;
+1 Papua New Guinea               85.8       8.33        8.42            7.83
+2 Ethiopia                       85.5       7.90        8.01            7.89
+3 Japan                          84.7       7.75        7.75            7.75
+4 United States                  84.4       7.83        7.99            7.85
+5 Kenya                          84.3       7.79        7.78            7.71
+# ℹ 2 more variables: acidity_mean &lt;dbl&gt;, body_mean &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="fourth-breadcrumb" class="level2">
+<h2 class="anchored" data-anchor-id="fourth-breadcrumb">Fourth Breadcrumb</h2>
+<p>The code creates a new data frame, coffee_hihi, that ranks the average scores for total cup points, aroma, flavor, aftertaste, acidity, and body for the top five countries based on their mean scores. It removes the original mean value columns, resulting in a cleaner data frame focused solely on the ranks.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>coffee_hihi <span class="ot">&lt;-</span> coffee_haha <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_points_rank =</span> <span class="fu">rank</span>(total_points_mean),</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">aroma_rank =</span> <span class="fu">rank</span>(aroma_mean),</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">flavor_rank =</span> <span class="fu">rank</span>(flavor_mean),</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">aftertaste_rank =</span> <span class="fu">rank</span>(aftertaste_mean),</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">acidity_rank =</span> <span class="fu">rank</span>(acidity_mean),</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">body_rank =</span> <span class="fu">rank</span>(body_mean)</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>total_points_mean, <span class="sc">-</span>aroma_mean, <span class="sc">-</span>flavor_mean, <span class="sc">-</span>aftertaste_mean, <span class="sc">-</span>acidity_mean, <span class="sc">-</span>body_mean)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>coffee_hihi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 7
+  country_of_origin total_points_rank aroma_rank flavor_rank aftertaste_rank
+  &lt;fct&gt;                         &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;
+1 Papua New Guinea                  5          5           5               3
+2 Ethiopia                          4          4           4               5
+3 Japan                             3          1           1               2
+4 United States                     2          3           3               4
+5 Kenya                             1          2           2               1
+# ℹ 2 more variables: acidity_rank &lt;dbl&gt;, body_rank &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="fifth-breadcrumb" class="level2">
+<h2 class="anchored" data-anchor-id="fifth-breadcrumb">Fifth Breadcrumb</h2>
+<p>The code takes the coffee_hihi data frame and reshapes it into a long format, creating a new data frame called coffee_final. In coffee_final, each row corresponds to a specific rank for a coffee parameter (total points, aroma, flavor, etc.) associated with a country, which facilitates further analysis or visualization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>coffee_final <span class="ot">&lt;-</span> coffee_hihi <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>( </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">c</span>(total_points_rank, aroma_rank, flavor_rank, aftertaste_rank, acidity_rank, body_rank),</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols_vary =</span> <span class="st">"fastest"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"parameter"</span>,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"ranks"</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="do">##</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>coffee_final</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 30 × 3
+   country_of_origin parameter         ranks
+   &lt;fct&gt;             &lt;chr&gt;             &lt;dbl&gt;
+ 1 Papua New Guinea  total_points_rank     5
+ 2 Papua New Guinea  aroma_rank            5
+ 3 Papua New Guinea  flavor_rank           5
+ 4 Papua New Guinea  aftertaste_rank       3
+ 5 Papua New Guinea  acidity_rank          5
+ 6 Papua New Guinea  body_rank             4
+ 7 Ethiopia          total_points_rank     4
+ 8 Ethiopia          aroma_rank            4
+ 9 Ethiopia          flavor_rank           4
+10 Ethiopia          aftertaste_rank       5
+# ℹ 20 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="building-the-graph" class="level2">
+<h2 class="anchored" data-anchor-id="building-the-graph">BUILDING THE GRAPH</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggbump)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(coffee_final, <span class="fu">aes</span>(<span class="at">x =</span> parameter, <span class="at">y =</span> ranks, <span class="at">color =</span> country_of_origin, <span class="at">group =</span> country_of_origin)) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bump</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span>  </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span>  </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="st">"acidity_rank"</span>, <span class="st">"aftertaste_rank"</span>, <span class="st">"aroma_rank"</span>, <span class="st">"body_rank"</span>, <span class="st">"total_points_rank"</span>, <span class="st">"flavor_rank"</span>),</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Acidity"</span>, <span class="st">"Aftertaste"</span>, <span class="st">"Aroma"</span>, <span class="st">"Body"</span>, <span class="st">"Total"</span>, <span class="st">"Flavor"</span>)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Coffee Parameter Ranks by Country of Origin"</span>,</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Coffee Parameters"</span>,</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Rank"</span>,</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Country of Origin"</span>) <span class="sc">+</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Ethiopia"</span> <span class="ot">=</span> <span class="st">"#00AFBB"</span>, </span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Japan"</span> <span class="ot">=</span> <span class="st">"#E7B800"</span>, </span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Kenya"</span> <span class="ot">=</span> <span class="st">"#FC4E07"</span>, </span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Papua New Guinea"</span> <span class="ot">=</span> <span class="st">"#7D3C98"</span>, </span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"United States"</span> <span class="ot">=</span> <span class="st">"#4CAF50"</span></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  )) <span class="sc">+</span>  <span class="co"># Define colors for each country</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span>  <span class="co"># Use a minimal theme</span></span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">0</span>, <span class="at">hjust =</span> <span class="fl">0.1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index2_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="lets-talk-about-this-graph" class="level1">
+<h1>Lets talk about this graph!</h1>
+<section id="what-is-this-graph" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-this-graph">1) What is this graph ?</h2>
+<p>this is a BUMP CHART ! A bump chart is used to visualize changes in rank over time or across different categories. In this case, it shows how the rank of different countries’ coffee changes across various coffee attributes.</p>
+</section>
+<section id="identify-the-variables-used-for-various-geometrical-aspects-x-y-fill.-name-the-variables-appropriately." class="level2">
+<h2 class="anchored" data-anchor-id="identify-the-variables-used-for-various-geometrical-aspects-x-y-fill.-name-the-variables-appropriately.">2)Identify the variables used for various geometrical aspects (x, y, fill…). Name the variables appropriately.</h2>
+<ol type="1">
+<li><p><strong>X-axis :</strong> Shows the <strong>coffee attributes</strong> (like aroma, flavor, acidity) along the horizontal line.</p></li>
+<li><p><strong>Y-axis:</strong> Shows the <strong>rank</strong> of each country’s coffee for each attribute on the vertical line (lower rank means better performance).</p></li>
+<li><p><strong>Color :</strong> Each <strong>country</strong> (like Ethiopia, Japan, Kenya) gets a different color, so it’s easy to tell them apart in the chart.</p></li>
+<li><p><strong>Group:</strong> This groups the data by <strong>country</strong>, making sure the lines connect the rank points for the same country across attributes.</p></li>
+<li><p><strong>Line Thickness :</strong>Sets the thickness of the lines that show how a country’s rank changes from one attribute to another.</p></li>
+<li><p><strong>Point Size :</strong> Controls the size of the points that represent each country’s rank on the chart.</p></li>
+<li><p><strong>Point Shape :</strong> This gives the points a specific shape with a filled color and a border.</p></li>
+</ol>
+</section>
+<section id="what-research-activity-might-have-been-carried-out-to-obtain-the-data-graphed-here-provide-some-details." class="level2">
+<h2 class="anchored" data-anchor-id="what-research-activity-might-have-been-carried-out-to-obtain-the-data-graphed-here-provide-some-details.">3) What research activity might have been carried out to obtain the data graphed here? Provide some details.</h2>
+<p>The data shown in the bump chart likely came from a detailed coffee-tasting research process, known as <strong>cupping</strong>. Researchers would have gathered coffee samples from different countries, such as Ethiopia and Kenya, and evaluated them based on key attributes like aroma, flavor, and aftertaste. Expert tasters, or <strong>cuppers</strong>, rated each coffee, and these ratings were compared to rank the coffees for each attribute. It’s fascinating to imagine how the taste of coffee, grown in different environments and processed in unique ways, can be quantified and ranked. This chart reflects the diversity and complexity of global coffee, turning sensory experiences into data that tells a story of flavor, quality, and origin. or maybe a coffee lover like me did all this as a fun thing !</p>
+</section>
+<section id="what-might-have-been-the-hypothesisresearch-question-to-which-the-response-was-chart" class="level2">
+<h2 class="anchored" data-anchor-id="what-might-have-been-the-hypothesisresearch-question-to-which-the-response-was-chart">4)What might have been the Hypothesis/Research Question to which the response was Chart?</h2>
+<p><strong>“How do coffees from different countries rank across various sensory attributes?”</strong></p>
+<p>or</p>
+<p><strong>“Is there a difference in the quality and ranking of coffee attributes (such as aroma, flavor, acidity) across countries like Ethiopia, Kenya, and Japan?”</strong></p>
+<p>This hypothesis would drive the researchers to compare coffee from multiple countries based on specific attributes, resulting in a visualization that shows how each country’s coffee performs across different qualities.</p>
+</section>
+</section>
+<section id="my-story" class="level1">
+<h1>My story</h1>
+<p>I found this dataset really interesting because I used to be a big coffee fan—unfortunately, I can’t drink it anymore due to medical reasons. Still, coffee is such a fascinating creation. Working with this bump chart brought back memories of my love for it. At first, I ran into an error while trying to create the chart, but after some troubleshooting, I realized I needed to add <code>group=country</code> for it to work properly. It was a satisfying fix and made the chart even more interesting to look at.</p>
+<p>This bump chart compares coffee rankings from different countries across various attributes like aroma and flavor. The <code>x</code> axis represents the coffee attributes, while the <code>y</code> axis shows the rank (lower is better). Each country is color-coded, and lines connect the ranks for each attribute, showing how each country’s coffee performs across all attributes. You can follow each country’s line to see how its rank changes attribute by attribute.</p>
+<p>latest edit:This dataset sucked me up but it works. thankyou.FINALLYYY. I had to do it thrice to get it right.</p>
+
+
 </section>
 
 </main> <!-- /main -->
