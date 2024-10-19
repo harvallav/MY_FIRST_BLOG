@@ -1,0 +1,323 @@
+---
+title: "Coffee Flavours(A2)"
+author: "Harvallav"
+---
+
+# **Coffee Flavours**
+
+Coffee with Hansel and Gretel
+
+## INTRODUCTION
+
+This dataset pertains to scores various types of coffees on parameters such as aroma, flavour, after-taste etc.
+
+## Setting up R Packages
+
+```{r}
+library(tidyverse)
+library(mosaic)
+library(skimr)
+library(ggformula)
+library(ggbump)
+```
+
+```{r}
+coffee_ratings <- read_delim("../../data /coffee_ratings.csv")
+coffee_ratings
+```
+
+```{r}
+glimpse(coffee_ratings)
+```
+
+# Data Dictionary
+
+### Qualitative Variables
+
+1.  **species (**<chr>): The species of the coffee plant.\
+    *Example*: "Arabica", "Robusta"
+
+2.  **owner (**<chr>): The name of the company or person who owns the coffee farm or mill.\
+    *Example*: "Farm Co.", "John Doe"
+
+3.  **country_of_origin (**<chr>): The country where the coffee is grown.\
+    *Example*: "Colombia", "Ethiopia"
+
+4.  **farm_name (**<chr>): The name of the farm where the coffee is produced.\
+    *Example*: "La Esperanza", "Koppi Coffee"
+
+5.  **lot_number (**<chr>): The unique identifier for the batch of coffee.\
+    *Example*: "LOT123", "BATCH456"
+
+6.  **mill (**<chr>): The name of the mill where the coffee is processed.\
+    *Example*: "ABC Mill", "XYZ Coffee Processing"
+
+7.  **ico_number (**<chr>): International Coffee Organization (ICO) identification number.\
+    *Example*: "ICO123456", "ICO654321"
+
+8.  **company (**<chr>): Name of the company associated with the coffee.\
+    *Example*: "Coffee Inc.", "Java Co."
+
+9.  **region (**<chr>): The region within the country where the coffee is grown.\
+    *Example*: "Antioquia", "Sidamo"
+
+10. **producer (**<chr>): The name of the producer or farmer responsible for growing the coffee.\
+    *Example*: "Maria Rodriguez", "Paul Smith"
+
+11. **bag_weight (**<chr>): The weight of the bag used for shipping the coffee.\
+    *Example*: "60 kg", "70 kg"
+
+12. **color (**<chr>): The color of the coffee beans after roasting.\
+    *Example*: "Light Brown", "Dark Brown"
+
+13. **grading_date (**<chr>): The date on which the coffee was graded.\
+    *Example*: "2023-05-10", "2023-06-15"
+
+14. **processing_method (**<chr>): The method used to process the coffee (e.g., washed, natural).\
+    *Example*: "Washed", "Natural"
+
+15. **owner_type (**<chr>): Whether the owner is an individual, company, cooperative, etc.\
+    *Example*: "Cooperative", "Individual"
+
+16. **batch_id (**<chr>): Unique identifier for the coffee batch.\
+    *Example*: "BATCH001", "BATCH002"
+
+17. **seller (**<chr>): Name of the seller or exporter.\
+    *Example*: "Global Coffee Traders", "Local Roasters"
+
+18. **transportation_type (**<chr>): The method of transportation used for shipping the coffee.\
+    *Example*: "Air", "Sea"
+
+19. **shipping_date (**<chr>): The date on which the coffee was shipped.\
+    *Example*: "2023-07-01", "2023-07-15"
+
+20. **transaction_id (**<chr>): Unique identifier for the coffee transaction.\
+    *Example*: "TRANS001", "TRANS002"
+
+### Quantitative Variables
+
+1.  **total_cup_points (**<dbl>): Total score given to the coffee based on different attributes, on a scale out of 100.\
+    *Example*: 85.5, 92.0
+
+2.  **altitude (**<num>): The altitude at which the coffee is grown, which can influence flavor.\
+    *Example*: 1200, 1500 (in meters)
+
+3.  **number_of_bags (**<dbl>): The number of bags produced in this batch of coffee.\
+    *Example*: 50, 100
+
+4.  **category_one_defects (**<dbl>): The number of primary defects found in the coffee batch.\
+    *Example*: 2, 5
+
+5.  **quakers (**<dbl>): The number of unripe coffee beans, also known as quakers.\
+    *Example*: 10, 15
+
+6.  **category_two_defects (**<dbl>): The number of secondary defects found in the coffee batch.\
+    *Example*: 3, 8
+
+7.  **aroma (**<num>): A rating of the coffee's aroma (scale 1-10).\
+    *Example*: 7.5, 8.0
+
+8.  **flavor (**<num>): A rating of the coffee's flavor (scale 1-10).\
+    *Example*: 9.0, 6.5
+
+9.  **aftertaste (**<num>): A rating of the coffee's aftertaste (scale 1-10).\
+    *Example*: 8.5, 7.0
+
+10. **acidity (**<num>): A rating of the coffee's acidity (scale 1-10).\
+    *Example*: 6.0, 9.0
+
+11. **body (**<num>): A rating of the coffee's body (scale 1-10).\
+    *Example*: 8.0, 7.5
+
+12. **balance (**<num>): A rating of how balanced the coffee's attributes are (scale 1-10).\
+    *Example*: 9.0, 8.0
+
+13. **uniformity (**<num>): A rating of the consistency of the coffee's attributes across multiple samples (scale 1-10).\
+    *Example*: 8.0, 9.0
+
+14. **clean_cup (**<num>): A rating of how clean and free of defects the coffee is (scale 1-10).\
+    *Example*: 9.5, 8.5
+
+15. **sweetness (**<num>): A rating of the coffee's sweetness (scale 1-10).\
+    *Example*: 7.0, 8.5
+
+16. **cupper_points (**<num>): A rating given by the cupper (the person tasting and rating the coffee) (scale 1-10).\
+    *Example*: 8.0, 9.0
+
+17. **moisture (**<num>): The moisture content of the coffee beans (percentage).\
+    *Example*: 12.5, 11.0
+
+18. **bean_size (**<num>): The size of the coffee beans (in mm).\
+    *Example*: 8.5, 9.0
+
+19. **cup_score (**<num>): Overall score of the coffee based on the combination of different attributes.\
+    *Example*: 85.0, 90.0
+
+20. **packaging_quality (**<num>): The quality of the coffee's packaging (scale 1-10).\
+    *Example*: 9.0, 7.5
+
+# Observations
+
+| **Observation** | **Details** |
+|----|----|
+| **Variety of Coffee Types** | The dataset includes different types of coffee, like Arabica and Robusta, showing a wide range of options for coffee lovers. |
+| **Quality Ratings** | Each coffee batch has several ratings (like aroma and flavor), which helps evaluate how good the coffee is. |
+| **Global Sourcing** | The dataset features coffee from various countries, highlighting the international nature of coffee production. |
+| **Defect Tracking** | The dataset includes information about defects in the coffee, helping to monitor quality and ensure good products. |
+| **Processing Methods** | Different methods used to process coffee (like washed or natural) are listed, showing how these methods can affect flavor. |
+| **Altitude Impact** | The altitude at which the coffee is grown is recorded, as this can influence the taste of the coffee. |
+| **Transaction Details** | Each coffee sale has a unique ID, making it easy to track where the coffee comes from and how it was sold. |
+| **Focus on Sustainability** | The dataset includes information about the type of owner (individual, cooperative, etc.), which may indicate a focus on sustainable and ethical sourcing. |
+
+```{r}
+inspect(coffee_ratings)
+```
+
+```{r}
+skim(coffee_ratings)
+```
+
+## Lets do some data munging and cleaning of this data
+
+This code groups the coffee_ratings dataset by country_of_origin and calculates the average values for various coffee attributes, including total_cup_points, aroma, flavor, aftertaste, acidity, and body, while ignoring any missing values. The resulting summarized data is stored in the coffee_modified variable.
+
+```{r}
+
+coffee_modified <- coffee_ratings %>% 
+  group_by(country_of_origin) %>%
+  summarize(
+    total_cup_points = mean(total_cup_points, na.rm = TRUE),
+    aroma = mean(aroma, na.rm = TRUE),
+    flavor = mean(flavor, na.rm = TRUE),
+    aftertaste = mean(aftertaste, na.rm = TRUE),
+    acidity = mean(acidity, na.rm = TRUE),
+    body = mean(body, na.rm = TRUE)
+  )
+
+
+coffee_modified
+
+```
+
+```{r}
+coffee_mod <- coffee_modified %>%
+  group_by(country_of_origin) %>%
+  summarize(
+    total_points_mean = mean(total_cup_points, na.rm = TRUE),
+    aroma_mean = mean(aroma, na.rm = TRUE),
+    flavor_mean = mean(flavor, na.rm = TRUE),
+    aftertaste_mean = mean(aftertaste, na.rm = TRUE),
+    acidity_mean = mean(acidity, na.rm = TRUE),
+    body_mean = mean(body, na.rm = TRUE)
+  ) %>%
+  arrange(desc(total_points_mean)) %>%
+  head(5)
+
+coffee_mod
+
+```
+
+The code groups the coffee_modified dataset by country_of_origin and calculates the average scores for several coffee attributes, such as total cup points, aroma, and flavor. It then sorts the results in descending order based on the average total cup points and selects the top 5 countries. The final summary is stored in coffee_mod.
+
+phew , lets make the other changes as well like we need them .
+
+```{r}
+coffee_modc <- coffee_mod %>%
+  mutate(
+    total_points_rank = rank(total_points_mean),
+    aroma_rank = rank(aroma_mean),
+    flavor_rank = rank(flavor_mean),
+    aftertaste_rank = rank(aftertaste_mean),
+    acidity_rank = rank(acidity_mean),
+    body_rank = rank(body_mean)
+  ) %>%
+  select(total_points_mean, aroma_rank, flavor_rank, aftertaste_rank, acidity_rank, body_rank)
+
+coffee_modc
+```
+
+```{r}
+coffee_modc <- coffee_mod %>%
+  mutate(
+    total_points_rank = rank(total_points_mean, ties.method = "first"),  # Change here
+    aroma_rank = rank(aroma_mean, ties.method = "first"),                # Change here
+    flavor_rank = rank(flavor_mean, ties.method = "first"),              # Change here
+    aftertaste_rank = rank(aftertaste_mean, ties.method = "first"),      # Change here
+    acidity_rank = rank(acidity_mean, ties.method = "first"),            # Change here
+    body_rank = rank(body_mean, ties.method = "first")                   # Change here
+  ) %>%
+  select(total_points_mean, aroma_rank, flavor_rank, aftertaste_rank, acidity_rank, body_rank)
+
+coffee_modc
+
+```
+
+I dont know why this is reverse here and not 1-5. I tried asking chatgpt, but I will leave it here as it really isnt bothering my graphs and data.
+
+The reason you see only 5 rows in the coffee_mod dataset is due to the head(5) function, which limits the output to the top 5 entries after sorting by the average total cup points(in the previous one). The conversion from means to ranks provides a clear, ordinal representation of how each country's coffee attributes compare relative to each other, making it easier to identify which countries perform better or worse in each category.
+
+### now building the graph
+
+I had created alot of wrong graphs to get this one right and I did not have group=country which gave me a graph with just dots and multiple errors.
+
+```{r}
+library(ggplot2)
+library(ggbump)
+
+coffee_ratings %>%
+  ggplot(aes(x = attribute, y = rank, color = country,group=country)) +
+  geom_bump(size = 2) +  # Add lines for rank progression
+  geom_point(size = 6, shape = 21) +  # Add points at each rank
+  xlab("Coffee Attribute") +
+  ylab("Rank") +
+  scale_color_manual(values = c("Ethiopia" = "#00AFBB", 
+                                "Japan" = "#E7B800", 
+                                "Kenya" = "#FC4E07", 
+                                "Papua New Guinea" = "#7D3C98", 
+                                "United States" = "#4CAF50")) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+# Lets talk about this graph!
+
+## 1) What is this graph ?
+
+this is a BUMP CHART ! A bump chart is used to visualize changes in rank over time or across different categories. In this case, it shows how the rank of different countries' coffee changes across various coffee attributes.
+
+## 2)Identify the variables used for various geometrical aspects (x, y, fill…). Name the variables appropriately.
+
+1.  **X-axis :** Shows the **coffee attributes** (like aroma, flavor, acidity) along the horizontal line.
+
+2.  **Y-axis:** Shows the **rank** of each country’s coffee for each attribute on the vertical line (lower rank means better performance).
+
+3.  **Color :** Each **country** (like Ethiopia, Japan, Kenya) gets a different color, so it's easy to tell them apart in the chart.
+
+4.  **Group:** This groups the data by **country**, making sure the lines connect the rank points for the same country across attributes.
+
+5.  **Line Thickness :**Sets the thickness of the lines that show how a country's rank changes from one attribute to another.
+
+6.  **Point Size :** Controls the size of the points that represent each country’s rank on the chart.
+
+7.  **Point Shape :** This gives the points a specific shape with a filled color and a border.
+
+## 3) What research activity might have been carried out to obtain the data graphed here? Provide some details.
+
+The data shown in the bump chart likely came from a detailed coffee-tasting research process, known as **cupping**. Researchers would have gathered coffee samples from different countries, such as Ethiopia and Kenya, and evaluated them based on key attributes like aroma, flavor, and aftertaste. Expert tasters, or **cuppers**, rated each coffee, and these ratings were compared to rank the coffees for each attribute. It’s fascinating to imagine how the taste of coffee, grown in different environments and processed in unique ways, can be quantified and ranked. This chart reflects the diversity and complexity of global coffee, turning sensory experiences into data that tells a story of flavor, quality, and origin. or maybe a coffee lover like me did all this as a fun thing !
+
+## 4)What might have been the Hypothesis/Research Question to which the response was Chart?
+
+**"How do coffees from different countries rank across various sensory attributes?"**
+
+or
+
+**"Is there a difference in the quality and ranking of coffee attributes (such as aroma, flavor, acidity) across countries like Ethiopia, Kenya, and Japan?"**
+
+This hypothesis would drive the researchers to compare coffee from multiple countries based on specific attributes, resulting in a visualization that shows how each country’s coffee performs across different qualities.
+
+# My story
+
+I found this dataset really interesting because I used to be a big coffee fan—unfortunately, I can't drink it anymore due to medical reasons. Still, coffee is such a fascinating creation. Working with this bump chart brought back memories of my love for it. At first, I ran into an error while trying to create the chart, but after some troubleshooting, I realized I needed to add `group=country` for it to work properly. It was a satisfying fix and made the chart even more interesting to look at.
+
+This bump chart compares coffee rankings from different countries across various attributes like aroma and flavor. The `x` axis represents the coffee attributes, while the `y` axis shows the rank (lower is better). Each country is color-coded, and lines connect the ranks for each attribute, showing how each country’s coffee performs across all attributes. You can follow each country's line to see how its rank changes attribute by attribute.

@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="harvallav">
+
+<title>ikea – MY_FIRST_BLOG</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">MY_FIRST_BLOG</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">ikea</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>harvallav </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="ikea-furniture" class="level1">
+<h1>IKEA FURNITURE</h1>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This dataset provides an insightful look into IKEA furniture prices, thoughtfully modified to allow for smooth analysis and visualization. It covers a range of categories and includes details like availability in different colors, offering a refined glimpse into IKEA’s product offerings.</p>
+<section id="installing-r-packages" class="level3">
+<h3 class="anchored" data-anchor-id="installing-r-packages">INSTALLING R packages</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mosaic)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'mosaic':
+  method                           from   
+  fortify.SpatialPolygonsDataFrame ggplot2
+
+The 'mosaic' package masks several functions from core packages in order to add 
+additional features.  The original behavior of these functions should not be affected by this.
+
+Attaching package: 'mosaic'
+
+The following object is masked from 'package:Matrix':
+
+    mean
+
+The following objects are masked from 'package:dplyr':
+
+    count, do, tally
+
+The following object is masked from 'package:purrr':
+
+    cross
+
+The following object is masked from 'package:ggplot2':
+
+    stat
+
+The following objects are masked from 'package:stats':
+
+    binom.test, cor, cor.test, cov, fivenum, IQR, median, prop.test,
+    quantile, sd, t.test, var
+
+The following objects are masked from 'package:base':
+
+    max, mean, min, prod, range, sample, sum</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(skimr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'skimr'
+
+The following object is masked from 'package:mosaic':
+
+    n_missing</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggformula)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 method overwritten by 'GGally':
+  method from   
+  +.gg   ggplot2</code></pre>
+</div>
+</div>
+<p>To begin, download the IKEA modified dataset and ensure it is saved in your working directory. Once ready, you can seamlessly read the file into R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ikea_modified <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../../Irritating_R_Stuff/MY_FIRST_BLOG/data /ikea_modified.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 3211 Columns: 15
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ";"
+chr (8): name, category, old_price, link, other_colors, short_description, d...
+dbl (5): item_id, depth, height, width, category_total
+num (1): price
+lgl (1): sellable_online
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ikea_modified</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3,211 × 15
+    item_id name     category price old_price sellable_online link  other_colors
+      &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;     &lt;lgl&gt;           &lt;chr&gt; &lt;chr&gt;       
+ 1 29123958 MINNEN   Beds (2…  3950 SR 445    TRUE            http… No          
+ 2 49278341 BRIMNES  Beds (2…  8950 SR 925    TRUE            http… No          
+ 3 50461230 SMÅGÖRA  Beds (2…  5950 No old p… TRUE            http… No          
+ 4 89326463 PLATSA   Beds (2… 21110 SR 2,205  TRUE            http… No          
+ 5 50468953 VATTVIK… Beds (2…  9950 No old p… TRUE            http… No          
+ 6 69326609 SLÄKT    Beds (2…  5400 No old p… FALSE           http… No          
+ 7 59099136 BRIMNES  Beds (2…  7950 No old p… TRUE            http… Yes         
+ 8 40395245 NEIDEN   Beds (2…   990 No old p… TRUE            http… No          
+ 9 69277307 LEIRVIK  Beds (2… 11950 No old p… TRUE            http… Yes         
+10 70395239 NEIDEN   Beds (2…  1990 No old p… TRUE            http… No          
+# ℹ 3,201 more rows
+# ℹ 7 more variables: short_description &lt;chr&gt;, designer &lt;chr&gt;, depth &lt;dbl&gt;,
+#   height &lt;dbl&gt;, width &lt;dbl&gt;, price_usd &lt;chr&gt;, category_total &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ikea_modified)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3,211
+Columns: 15
+$ item_id           &lt;dbl&gt; 29123958, 49278341, 50461230, 89326463, 50468953, 69…
+$ name              &lt;chr&gt; "MINNEN", "BRIMNES", "SMÅGÖRA", "PLATSA", "VATTVIKEN…
+$ category          &lt;chr&gt; "Beds (208)", "Beds (208)", "Beds (208)", "Beds (208…
+$ price             &lt;dbl&gt; 3950, 8950, 5950, 21110, 9950, 5400, 7950, 990, 1195…
+$ old_price         &lt;chr&gt; "SR 445", "SR 925", "No old price", "SR 2,205", "No …
+$ sellable_online   &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRU…
+$ link              &lt;chr&gt; "https://www.ikea.com/sa/en/p/minnen-ext-bed-frame-w…
+$ other_colors      &lt;chr&gt; "No", "No", "No", "No", "No", "No", "Yes", "No", "Ye…
+$ short_description &lt;chr&gt; "Ext bed frame with slatted bed base, 80x200 cm", "B…
+$ designer          &lt;chr&gt; "IKEA of Sweden/Tina Christensen", "IKEA of Sweden/K…
+$ depth             &lt;dbl&gt; NA, 54, NA, 40, 83, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ height            &lt;dbl&gt; NA, 110, 79, 43, 86, NA, 111, NA, NA, NA, NA, NA, NA…
+$ width             &lt;dbl&gt; 85, 96, 66, 140, 92, 91, 146, 94, 188, 144, 154, 144…
+$ price_usd         &lt;chr&gt; "106,650", "241,650", "160,650", "569,970", "268,650…
+$ category_total    &lt;dbl&gt; 208, 208, 208, 208, 208, 208, 208, 208, 208, 208, 20…</code></pre>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="ikea-dataset-dictionary" class="level1">
+<h1>IKEA Dataset Dictionary</h1>
+<p>This dataset contains 3,211 rows and 15 columns, providing detailed information about IKEA furniture items, including prices, categories, and other attributes.</p>
+<section id="columns" class="level2">
+<h2 class="anchored" data-anchor-id="columns">Columns</h2>
+<section id="qualitative-variables" class="level3">
+<h3 class="anchored" data-anchor-id="qualitative-variables">Qualitative Variables</h3>
+<ol type="1">
+<li><p><strong>name</strong> (<code>&lt;chr&gt;</code>): Name of the furniture item.<br>
+Example: “MINNEN”, “BRIMNES”</p></li>
+<li><p><strong>category</strong> (<code>&lt;chr&gt;</code>): Category of the furniture item, with the total number of items in each category in parentheses.<br>
+Example: “Beds (208)”</p></li>
+<li><p><strong>old_price</strong> (<code>&lt;chr&gt;</code>): Previous price of the item (if applicable), otherwise “No old price”.<br>
+Example: “SR 445”, “No old price”</p></li>
+<li><p><strong>sellable_online</strong> (<code>&lt;lgl&gt;</code>): Indicates whether the item is available for online purchase (TRUE/FALSE).<br>
+Example: TRUE, FALSE</p></li>
+<li><p><strong>link</strong> (<code>&lt;chr&gt;</code>): URL to the product page on IKEA’s website.<br>
+Example: “<a href="https://www.ikea.com/sa/en/p/minnen-ext-bed-frame-with-slatted-bed-base-white-s29123958/%22">https://www.ikea.com/sa/en/p/minnen-ext-bed-frame-with-slatted-bed-base-white-s29123958/”</a></p></li>
+<li><p><strong>other_colors</strong> (<code>&lt;chr&gt;</code>): Indicates whether the product is available in other colors (Yes/No).<br>
+Example: “No”, “Yes”</p></li>
+<li><p><strong>short_description</strong> (<code>&lt;chr&gt;</code>): Brief description of the product, including dimensions.<br>
+Example: “Ext bed frame with slatted bed base, 80x200 cm”</p></li>
+<li><p><strong>designer</strong> (<code>&lt;chr&gt;</code>): Name(s) of the product designer(s).<br>
+Example: “IKEA of Sweden/Tina Christensen”</p></li>
+</ol>
+</section>
+<section id="quantitative-variables" class="level3">
+<h3 class="anchored" data-anchor-id="quantitative-variables">Quantitative Variables</h3>
+<ol type="1">
+<li><p><strong>item_id</strong> (<code>&lt;dbl&gt;</code>): Unique identifier for each product.<br>
+Example: 29123958, 49278341</p></li>
+<li><p><strong>price</strong> (<code>&lt;dbl&gt;</code>): Current price of the furniture item.<br>
+Example: 3950, 8950</p></li>
+<li><p><strong>depth</strong> (<code>&lt;dbl&gt;</code>): Depth of the item in centimeters (if available).<br>
+Example: 54, 83</p></li>
+<li><p><strong>height</strong> (<code>&lt;dbl&gt;</code>): Height of the item in centimeters (if available).<br>
+Example: 110, 79</p></li>
+<li><p><strong>width</strong> (<code>&lt;dbl&gt;</code>): Width of the item in centimeters.<br>
+Example: 85, 96</p></li>
+<li><p><strong>price_usd</strong> (<code>&lt;chr&gt;</code>): Price of the item converted to USD.<br>
+Example: “106,650”, “241,650”</p></li>
+<li><p><strong>category_total</strong> (<code>&lt;dbl&gt;</code>): Total number of items in the category.<br>
+Example: 208</p></li>
+</ol>
+</section>
+</section>
+</section>
+<section id="observations" class="level1">
+<h1>Observations</h1>
+<section id="observation-table" class="level2">
+<h2 class="anchored" data-anchor-id="observation-table">Observation Table</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 69%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Observation</strong></th>
+<th><strong>Details</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Wide Range of Products</strong></td>
+<td>The dataset includes many different types of furniture, like beds and storage units, showing IKEA’s large variety of products.</td>
+</tr>
+<tr class="even">
+<td><strong>Different Price Levels</strong></td>
+<td>The prices vary a lot between products. Some items also show old prices, which might mean there were discounts or price changes.</td>
+</tr>
+<tr class="odd">
+<td><strong>Online Availability</strong></td>
+<td>Most items can be bought online, but a few cannot, suggesting that not everything is available for online purchase.</td>
+</tr>
+<tr class="even">
+<td><strong>Focus on Design</strong></td>
+<td>Each item lists the designer’s name, which shows that IKEA puts effort into creating stylish, well-designed products.</td>
+</tr>
+<tr class="odd">
+<td><strong>Product Sizes</strong></td>
+<td>The sizes (depth, height, width) are available for most items, but some are missing, meaning not all products have full size details.</td>
+</tr>
+<tr class="even">
+<td><strong>Color Choices</strong></td>
+<td>Some products come in different colors, while others do not, showing that IKEA offers customization options for certain items.</td>
+</tr>
+<tr class="odd">
+<td><strong>International Appeal</strong></td>
+<td>The prices are also shown in USD, which means the products are available in different countries, making IKEA a global brand.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="lets-replicate-the-data-set" class="level1">
+<h1>LET’S REPLICATE THE DATA SET</h1>
+<p>How does the price distribution of IKEA furniture vary across different categories, and is there a relationship between price and the availability of multiple color options?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggridges)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ikea_modified, <span class="fu">aes</span>(<span class="at">x =</span> price, <span class="at">y =</span> category, <span class="at">fill =</span> other_colors)) <span class="sc">+</span> </span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density_ridges</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">scale =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>dollar) <span class="sc">+</span> </span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Price (USD)"</span>, <span class="at">y =</span> <span class="st">""</span>, <span class="at">fill =</span> <span class="st">"Are they available in other colors?"</span>) <span class="sc">+</span> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"No"</span> <span class="ot">=</span> <span class="st">"purple"</span>, <span class="st">"Yes"</span> <span class="ot">=</span> <span class="st">"green"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Picking joint bandwidth of 0.182</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="lets-break-down-and-understand-this-graph-in-detail" class="level2">
+<h2 class="anchored" data-anchor-id="lets-break-down-and-understand-this-graph-in-detail">Let’s Break down and understand this graph in detail</h2>
+<section id="so-what-type-of-graph-is-this" class="level3">
+<h3 class="anchored" data-anchor-id="so-what-type-of-graph-is-this">1)So what type of graph is this ?</h3>
+</section>
+</section>
+<section id="a-density-plot" class="level2">
+<h2 class="anchored" data-anchor-id="a-density-plot">A DENSITY PLOT !</h2>
+<p>A density plot is a smooth, visually appealing way to show how data is spread out over a range of values. Imagine you have a bunch of points (like test scores or heights), and you want to see where most of them are concentrated. Instead of showing each point individually, a density plot draws a smooth curve over the data. The taller the curve in certain areas, the more data points there are in that range. It’s like a more polished version of a histogram, but without the jagged bars—it gives you a clear picture of the “shape” of your data and where the values tend to cluster.</p>
+</section>
+<section id="what-variables-have-been-used-in-the-chart" class="level2">
+<h2 class="anchored" data-anchor-id="what-variables-have-been-used-in-the-chart">2) What variables have been used in the chart?</h2>
+<p>The chart uses three main variables:</p>
+<ul>
+<li><p><strong>Price</strong>: Shown on the x-axis, this represents the cost of items in USD.</p></li>
+<li><p><strong>Category</strong>: Displayed on the y-axis, this shows different product categories.</p></li>
+<li><p><strong>Other colors</strong>: This determines the fill color of the ridgelines, showing whether an item comes in multiple colors (“Yes”) or only one color (“No”).</p></li>
+</ul>
+</section>
+<section id="what-can-you-say-about-the-scale-on-the-x-axis" class="level2">
+<h2 class="anchored" data-anchor-id="what-can-you-say-about-the-scale-on-the-x-axis">3)What can you say about the scale on the X-axis?</h2>
+<p>The x-axis in this chart is using something called a <strong>logarithmic scale</strong>. Normally, on a regular scale, the numbers are spaced out evenly, like 1, 2, 3, 4, and so on. But with a <strong>logarithmic scale</strong>, the numbers grow much faster, like 10, 100, 1,000. This is helpful when the data has a big range of values, like prices that can be very low or very high.</p>
+<p>By using this scale, we <strong>compress the larger numbers</strong> so they don’t take up too much space, and <strong>spread out the smaller numbers</strong> so we can see the patterns more clearly. If we didn’t do this, the really expensive items might make the cheaper ones hard to spot on the chart.</p>
+</section>
+<section id="what-can-you-say-about-prices-of-items-that-are-available-in-a-single-color-versus-those-available-in-more-than-one-color" class="level2">
+<h2 class="anchored" data-anchor-id="what-can-you-say-about-prices-of-items-that-are-available-in-a-single-color-versus-those-available-in-more-than-one-color">4)What can you say about prices of items that are available in a single color versus those available in more than one color?</h2>
+<p>Both types of items—whether they come in one color or many—can have prices that overlap. But items with more color options usually have a wider spread of prices. Items available in more than one color (green) tend to have a wider range of prices, possibly because they offer more models or features. In contrast, single-color items (purple) usually stick to a narrower price range, likely reflecting more specific or niche products.</p>
+</section>
+<section id="what-is-a-good-hypothesis-to-interpret-the-double-humped-nature-of-some-of-the-curves" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-good-hypothesis-to-interpret-the-double-humped-nature-of-some-of-the-curves">5) What is a good hypothesis to interpret the double-humped nature of some of the curves?</h2>
+<p>A good hypothesis for the double-humped (bimodal) curves is that there are two distinct groups of products within the same category. This could be because the category includes both low-end and high-end versions, older discounted models and newer premium ones, or basic and advanced configurations. Essentially, the two peaks likely represent different product tiers or versions.</p>
+<p>Oh here is another kind of a graph which is a VIOLIN PLOT that I came across and I found it cool so I thought Why not make it here? It also has a box plot in the middle .<br>
+The width of the “violin” at any point represents the <strong>density</strong> of the data at that price range. Wider sections indicate where more data points (prices) are concentrated.The <strong>narrower</strong> parts show where there are fewer data points.The violin is symmetric, so the data on both sides is the same.<br>
+</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_violin</span>(price <span class="sc">~</span> category, <span class="at">data =</span> ikea_modified, <span class="at">fill =</span> <span class="sc">~</span> other_colors, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>          <span class="at">draw_quantiles =</span> <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>), <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_boxplot</span>(price <span class="sc">~</span> category, <span class="at">data =</span> ikea_modified, <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">fill =</span> <span class="st">"white"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_y_log10</span>(<span class="at">labels =</span> scales<span class="sc">::</span>dollar)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_labs</span>(<span class="at">x =</span> <span class="st">"Category"</span>, <span class="at">y =</span> <span class="st">"Price (USD)"</span>, <span class="at">fill =</span> <span class="st">"Available in other colors?"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_refine</span>(<span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"No"</span> <span class="ot">=</span> <span class="st">"purple"</span>, <span class="st">"Yes"</span> <span class="ot">=</span> <span class="st">"green"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="my-story" class="level2">
+<h2 class="anchored" data-anchor-id="my-story">My Story</h2>
+<p>I finally got this graph to work after countless trials and errors with the other datasets. It felt like I visited an IKEA store in my class for the first time — a bit of a mess at first, but then surprisingly impressive. IKEA’s a smart brand. It looks cost-efficient on the surface, but when you take a step back, you realize it’s not all that budget-friendly. Still, I had fun working with the dataset. Since something was finally clicking, I decided to experiment a bit more and created a violin plot with a box and whiskers.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

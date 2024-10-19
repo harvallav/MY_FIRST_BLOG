@@ -1,0 +1,158 @@
+---
+title: "valentines (A2)"
+author: "harvallav"
+---
+
+# **Valentine’s Day Spending**
+
+This dataset pertains to spending on gifts by various people for Valentine’s Day.
+
+LETS PUSH SOME PACKAGES AND THEN READ THE DATA !
+
+```{r}
+library(tidyverse)
+library(mosaic)
+library(skimr)
+library(ggformula)
+library(ggprism)
+```
+
+```{r}
+gifts_age <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2024/2024-02-13/gifts_age.csv")
+glimpse(gifts_age)
+```
+
+Now , age is a character string here . First let us mutate that and get a clean and nice data to work with.
+
+```{r}
+valentines <- gifts_age %>% 
+  mutate(
+    Age = as_factor(Age)
+  )
+inspect(valentines)
+```
+
+# DATA DICTIONARY
+
+### Qualitative Variables
+
+1.  **Age** (<chr>): The age group of respondents.\
+    *Example*: "18-24", "25-34", "35-44", "45-54", "55-64", "65+"
+
+### Quantitative Variables
+
+1.  **SpendingCelebrating** (<dbl>): Average amount spent by each age group on celebrations.\
+    *Example*: 51, 40, 31, 19, 18, 13
+
+2.  **Candy** (<dbl>): Average amount spent by each age group on candy.\
+    *Example*: 70, 62, 58, 60, 50, 42
+
+3.  **Flowers** (<dbl>): Average amount spent by each age group on flowers.\
+    *Example*: 50, 44, 41, 37, 32, 25
+
+4.  **Jewelry** (<dbl>): Average amount spent by each age group on jewelry.\
+    *Example*: 33, 34, 29, 20, 13, 8
+
+5.  **GreetingCards** (<dbl>): Average amount spent by each age group on greeting cards.\
+    *Example*: 33, 33, 42, 42, 43, 44
+
+6.  **EveningOut** (<dbl>): Average amount spent by each age group on evenings out.\
+    *Example*: 41, 37, 30, 31, 29, 24
+
+7.  **Clothing** (<dbl>): Average amount spent by each age group on clothing.\
+    *Example*: 33, 27, 26, 20, 19, 12
+
+8.  **GiftCards** (<dbl>): Average amount spent by each age group on gift cards.\
+    *Example*: 23, 19, 22, 23, 20, 20
+
+## OBSERVATION 
+
+| **Observation** | **Details** |
+|--------------------|----------------------------------------------------|
+| **Age Groups** | Data includes six age groups from 18-24 to 65+, showing spending trends by age. |
+| **Spending on Celebrations** | Younger people spend more on celebrations than older groups. |
+| **Candy Purchases** | Candy spending is higher among younger age groups. |
+| **Flowers** | Flower purchases decrease with age. |
+| **Jewelry** | Younger people spend more on jewelry than older individuals. |
+| **Greeting Cards** | Spending on greeting cards is steady across all age groups. |
+| **Evenings Out** | Younger people spend more on evenings out compared to older groups. |
+| **Clothing** | Clothing spending declines as age increases. |
+| **Gift Cards** | Gift card spending is fairly consistent across all age groups. |
+
+```{r}
+
+gift_age <- data.frame(
+  Age = factor(rep(c("18-24", "25-34", "35-44", "45-54", "55-64", "65+"), each = 7)),
+  item = rep(c("Candy", "Flowers", "Jewelry", "GreetingCards", "EveningOut", "Clothing", "GiftCards"), times = 6),
+  spending = c(70, 50, 33, 33, 41, 33, 23, 62, 44, 34, 33, 37, 27, 19, 58, 41, 29, 42, 30, 26, 22, 
+               60, 37, 20, 42, 31, 20, 23, 50, 32, 13, 43, 29, 19, 20, 42, 25, 8, 44, 24, 12, 20)
+)
+
+
+gf_line(spending ~ Age, 
+        color = ~ item, 
+        group = ~ item, 
+        data = gift_age) %>%
+  gf_point(spending ~ Age, 
+           color = ~ item, 
+           shape = ~ item, 
+           size = 3, 
+           data = gift_age) %>%
+  gf_labs(x = "Age Group", 
+          y = "Amount Spent on Gifts", 
+          title = "Valentine's Day Spending by Age and Gift Type", 
+          color = "Gift Type", 
+          shape = "Gift Type") +
+  theme(legend.position = "right")
+
+```
+
+# lets study this graph 
+
+## 1) What kind of a graph is this ?
+
+This graph is a **multi-line plot** with points, designed to visualize the amount of money different age groups spend on various Valentine's Day gifts.
+
+Each line shows the relationship between age groups and the amount spent on a particular type of gift. Line graphs are ideal for showing changes over time or, in this case, across age groups, making it easy to compare different items side-by-side.\
+
+## 2)Identify the variables used for various geometrical aspects (x, y, fill…). Name the variables appropriately.
+
+-   **X-axis:** Represents the **age groups** (like "18-24", "25-34", etc.) along the horizontal line, showing how spending varies across different ages.
+
+-   **Y-axis:** Displays the **amount spent on gifts** in dollars on the vertical line, indicating the spending behavior for each age group.
+
+-   **Color:** Each **gift type** (such as Candy, Flowers, Jewelry) is represented by a different color, making it easy to differentiate between the various categories.
+
+-   **Shape:** Points for each gift type have unique shapes, further distinguishing them visually on the plot.
+
+-   **Group:** The data is grouped by **gift type**, ensuring that the lines connect spending points for the same gift across different age groups.
+
+-   **Size:** All points are set to a **fixed size** of 3, helping them stand out against the background without varying their visibility.
+
+## 3) What research activity might have been carried out to obtain the data graphed here? Provide some details.
+
+The data shown in the graph likely comes from a survey about spending on Valentine’s Day gifts. Researchers created a simple questionnaire asking people from various age groups, like "18-24" and "25-34", how much they plan to spend on gifts like Candy, Flowers, Jewelry, and more.
+
+To get a good mix of responses, the survey might have been shared online through social media and shopping websites or even done in person at busy stores. Once the answers were collected, the researchers analyzed the data to see how much different age groups spend on each type of gift.
+
+It’s interesting to think about how personal feelings and traditions around giving gifts can be turned into numbers. This graph shows the spending trends among different ages, highlighting how people celebrate love in different ways.
+
+## 4) What pre-processing of the data was required to create the chart?
+
+To create the chart, the data underwent several pre-processing steps: duplicates and missing values were removed, ensuring a clean dataset. The Age variable was formatted as a factor for proper ordering, and the spending amounts were confirmed to be numeric. The data was structured in a long format to represent each combination of age group and gift type effectively. Finally, outliers were checked to maintain accuracy in the visualization.
+
+## 5) What might be the Hypothesis / Research Question, based on the Chart?
+
+How does spending on Valentine’s Day gifts vary across different age groups?
+
+or
+
+Which gift types are most popular among different age demographics during Valentine’s Day?
+
+What if we explored how generational trends shape Valentine’s Day spending? For instance, do millennials prioritize experiences over traditional gifts, while older generations lean toward classic tokens of affection like jewelry? Additionally, how much do social media trends influence younger consumers’ spending on popular gifts? Examining these questions could uncover fascinating insights into the emotional drivers behind gift choices and how cultural backgrounds affect spending behaviors.
+
+# My Story 
+
+When I created the line and scatter plots, I got really excited about how I could use different shapes to represent various gift. I wonder what will I have to do to use emojis. I tried doing that but I think that requires some specific libraries.
+
+I discovered fascinating trends, such as how younger individuals tended to spend more on experiences and trendy gifts, while older generations favored classic tokens of affection

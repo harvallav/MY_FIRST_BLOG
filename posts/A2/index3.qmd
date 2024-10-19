@@ -1,0 +1,170 @@
+---
+title: "ikea (A2)"
+author: "harvallav"
+---
+
+# IKEA FURNITURE
+
+## Introduction
+
+This dataset provides an insightful look into IKEA furniture prices, thoughtfully modified to allow for smooth analysis and visualization. It covers a range of categories and includes details like availability in different colors, offering a refined glimpse into IKEA’s product offerings.
+
+### INSTALLING R packages
+
+```{r}
+library(tidyverse)
+library(mosaic)
+library(skimr)
+library(ggformula)
+library(GGally)
+```
+
+To begin, download the IKEA modified dataset and ensure it is saved in your working directory. Once ready, you can seamlessly read the file into R.
+
+```{r}
+ikea_modified <- read_delim("../../Irritating_R_Stuff/MY_FIRST_BLOG/data /ikea_modified.csv")
+ikea_modified
+
+```
+
+```{r}
+glimpse(ikea_modified)
+
+```
+
+# IKEA Dataset Dictionary
+
+This dataset contains 3,211 rows and 15 columns, providing detailed information about IKEA furniture items, including prices, categories, and other attributes.
+
+## Columns
+
+### Qualitative Variables
+
+1.  **name** (<chr>): Name of the furniture item.\
+    *Example*: "MINNEN", "BRIMNES"
+
+2.  **category** (<chr>): Category of the furniture item, with the total number of items in each category in parentheses.\
+    *Example*: "Beds (208)"
+
+3.  **old_price** (<chr>): Previous price of the item (if applicable), otherwise "No old price".\
+    *Example*: "SR 445", "No old price"
+
+4.  **sellable_online** (<lgl>): Indicates whether the item is available for online purchase (TRUE/FALSE).\
+    *Example*: TRUE, FALSE
+
+5.  **link** (<chr>): URL to the product page on IKEA's website.\
+    *Example*: "[https://www.ikea.com/sa/en/p/minnen-ext-bed-frame-with-slatted-bed-base-white-s29123958/"](https://www.ikea.com/sa/en/p/minnen-ext-bed-frame-with-slatted-bed-base-white-s29123958/%22)
+
+6.  **other_colors** (<chr>): Indicates whether the product is available in other colors (Yes/No).\
+    *Example*: "No", "Yes"
+
+7.  **short_description** (<chr>): Brief description of the product, including dimensions.\
+    *Example*: "Ext bed frame with slatted bed base, 80x200 cm"
+
+8.  **designer** (<chr>): Name(s) of the product designer(s).\
+    *Example*: "IKEA of Sweden/Tina Christensen"
+
+### Quantitative Variables
+
+1.  **item_id** (<dbl>): Unique identifier for each product.\
+    *Example*: 29123958, 49278341
+
+2.  **price** (<dbl>): Current price of the furniture item.\
+    *Example*: 3950, 8950
+
+3.  **depth** (<dbl>): Depth of the item in centimeters (if available).\
+    *Example*: 54, 83
+
+4.  **height** (<dbl>): Height of the item in centimeters (if available).\
+    *Example*: 110, 79
+
+5.  **width** (<dbl>): Width of the item in centimeters.\
+    *Example*: 85, 96
+
+6.  **price_usd** (<chr>): Price of the item converted to USD.\
+    *Example*: "106,650", "241,650"
+
+7.  **category_total** (<dbl>): Total number of items in the category.\
+    *Example*: 208
+
+# Observations
+
+## Observation Table
+
+| **Observation** | **Details** |
+|------------------------|-----------------------------------------------|
+| **Wide Range of Products** | The dataset includes many different types of furniture, like beds and storage units, showing IKEA's large variety of products. |
+| **Different Price Levels** | The prices vary a lot between products. Some items also show old prices, which might mean there were discounts or price changes. |
+| **Online Availability** | Most items can be bought online, but a few cannot, suggesting that not everything is available for online purchase. |
+| **Focus on Design** | Each item lists the designer's name, which shows that IKEA puts effort into creating stylish, well-designed products. |
+| **Product Sizes** | The sizes (depth, height, width) are available for most items, but some are missing, meaning not all products have full size details. |
+| **Color Choices** | Some products come in different colors, while others do not, showing that IKEA offers customization options for certain items. |
+| **International Appeal** | The prices are also shown in USD, which means the products are available in different countries, making IKEA a global brand. |
+
+# LET'S REPLICATE THE DATA SET
+
+How does the price distribution of IKEA furniture vary across different categories, and is there a relationship between price and the availability of multiple color options?
+
+```{r}
+
+library(ggplot2)
+library(ggridges)
+
+ggplot(ikea_modified, aes(x = price, y = category, fill = other_colors)) + 
+  geom_density_ridges(alpha = 0.4, scale = 1) + 
+  scale_x_log10(labels = scales::dollar) + 
+  labs(x = "Price (USD)", y = "", fill = "Are they available in other colors?") + 
+  scale_fill_manual(values = c("No" = "purple", "Yes" = "green"))
+
+```
+
+## Let's Break down and understand this graph in detail
+
+### 1)So what type of graph is this ?
+
+## A DENSITY PLOT !
+
+A density plot is a smooth, visually appealing way to show how data is spread out over a range of values. Imagine you have a bunch of points (like test scores or heights), and you want to see where most of them are concentrated. Instead of showing each point individually, a density plot draws a smooth curve over the data. The taller the curve in certain areas, the more data points there are in that range. It’s like a more polished version of a histogram, but without the jagged bars—it gives you a clear picture of the "shape" of your data and where the values tend to cluster.
+
+## 2) What variables have been used in the chart?
+
+The chart uses three main variables:
+
+-   **Price**: Shown on the x-axis, this represents the cost of items in USD.
+
+-   **Category**: Displayed on the y-axis, this shows different product categories.
+
+-   **Other colors**: This determines the fill color of the ridgelines, showing whether an item comes in multiple colors ("Yes") or only one color ("No").
+
+## 3)What can you say about the scale on the X-axis?
+
+The x-axis in this chart is using something called a **logarithmic scale**. Normally, on a regular scale, the numbers are spaced out evenly, like 1, 2, 3, 4, and so on. But with a **logarithmic scale**, the numbers grow much faster, like 10, 100, 1,000. This is helpful when the data has a big range of values, like prices that can be very low or very high.
+
+By using this scale, we **compress the larger numbers** so they don’t take up too much space, and **spread out the smaller numbers** so we can see the patterns more clearly. If we didn’t do this, the really expensive items might make the cheaper ones hard to spot on the chart.
+
+## 4)What can you say about prices of items that are available in a single color versus those available in more than one color?
+
+Both types of items—whether they come in one color or many—can have prices that overlap. But items with more color options usually have a wider spread of prices. Items available in more than one color (green) tend to have a wider range of prices, possibly because they offer more models or features. In contrast, single-color items (purple) usually stick to a narrower price range, likely reflecting more specific or niche products.
+
+## 5) What is a good hypothesis to interpret the double-humped nature of some of the curves?
+
+A good hypothesis for the double-humped (bimodal) curves is that there are two distinct groups of products within the same category. This could be because the category includes both low-end and high-end versions, older discounted models and newer premium ones, or basic and advanced configurations. Essentially, the two peaks likely represent different product tiers or versions.
+
+Oh here is another kind of a graph which is a VIOLIN PLOT that I came across and I found it cool so I thought Why not make it here? It also has a box plot in the middle .\
+The width of the "violin" at any point represents the **density** of the data at that price range. Wider sections indicate where more data points (prices) are concentrated.The **narrower** parts show where there are fewer data points.The violin is symmetric, so the data on both sides is the same.\
+
+```{r}
+
+gf_violin(price ~ category, data = ikea_modified, fill = ~ other_colors, 
+          draw_quantiles = c(0.25, 0.5, 0.75), alpha = 0.6) %>%
+  gf_boxplot(price ~ category, data = ikea_modified, width = 0.1, fill = "white", color = "black", alpha = 0.3) %>%
+  gf_refine(scale_y_log10(labels = scales::dollar)) %>%
+  gf_labs(x = "Category", y = "Price (USD)", fill = "Available in other colors?") %>%
+  gf_refine(scale_fill_manual(values = c("No" = "purple", "Yes" = "green"))) %>%
+  gf_theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+## My Story
+
+I finally got this graph to work after countless trials and errors with the other datasets. It felt like I visited an IKEA store in my class for the first time — a bit of a mess at first, but then surprisingly impressive. IKEA’s a smart brand. It looks cost-efficient on the surface, but when you take a step back, you realize it’s not all that budget-friendly. Still, I had fun working with the dataset. Since something was finally clicking, I decided to experiment a bit more and created a violin plot with a box and whiskers.
