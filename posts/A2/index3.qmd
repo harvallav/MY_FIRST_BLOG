@@ -92,7 +92,7 @@ This dataset contains 3,211 rows and 15 columns, providing detailed information 
 ## Observation Table
 
 | **Observation** | **Details** |
-|------------------------|-----------------------------------------------|
+|----|----|
 | **Wide Range of Products** | The dataset includes many different types of furniture, like beds and storage units, showing IKEA's large variety of products. |
 | **Different Price Levels** | The prices vary a lot between products. Some items also show old prices, which might mean there were discounts or price changes. |
 | **Online Availability** | Most items can be bought online, but a few cannot, suggesting that not everything is available for online purchase. |

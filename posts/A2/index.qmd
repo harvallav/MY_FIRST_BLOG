@@ -65,10 +65,10 @@ inspect(valentines)
 8.  **GiftCards** (<dbl>): Average amount spent by each age group on gift cards.\
     *Example*: 23, 19, 22, 23, 20, 20
 
-## OBSERVATION 
+## OBSERVATION
 
 | **Observation** | **Details** |
-|--------------------|----------------------------------------------------|
+|----|----|
 | **Age Groups** | Data includes six age groups from 18-24 to 65+, showing spending trends by age. |
 | **Spending on Celebrations** | Younger people spend more on celebrations than older groups. |
 | **Candy Purchases** | Candy spending is higher among younger age groups. |
@@ -107,7 +107,7 @@ gf_line(spending ~ Age,
 
 ```
 
-# lets study this graph 
+# lets study this graph
 
 ## 1) What kind of a graph is this ?
 
@@ -151,7 +151,7 @@ Which gift types are most popular among different age demographics during Valent
 
 What if we explored how generational trends shape Valentine’s Day spending? For instance, do millennials prioritize experiences over traditional gifts, while older generations lean toward classic tokens of affection like jewelry? Additionally, how much do social media trends influence younger consumers’ spending on popular gifts? Examining these questions could uncover fascinating insights into the emotional drivers behind gift choices and how cultural backgrounds affect spending behaviors.
 
-# My Story 
+# My Story
 
 When I created the line and scatter plots, I got really excited about how I could use different shapes to represent various gift. I wonder what will I have to do to use emojis. I tried doing that but I think that requires some specific libraries.
 
