@@ -23,6 +23,11 @@ babynames
 ```
 
 ```{r}
+glimpse(babynames)
+```
+
+
+```{r}
 babynames %>% filter(name=='Anhad')%>%
 gf_line(n ~ year)
 ```

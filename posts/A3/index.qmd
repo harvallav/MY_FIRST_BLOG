@@ -1,0 +1,44 @@
+---
+title: "tip data"
+author: "harvallav"
+---
+
+```{r}
+library(tidyverse)
+library(mosaic)
+library(skimr)
+library(ggformula)
+library(crosstable)
+```
+
+```{r}
+tip <-read_csv("../../data /tip.csv")
+tip 
+```
+
+```{r}
+tip %>% crosstable(Tip~Preferance ) %>% as_flextable
+```
+
+```{r}
+mosaic::t.test(Tip~ Preferance,data=tip) %>% 
+                 broom::tidy()
+```
+
+```{r}
+tip2 <- tip %>% 
+  mutate(
+    Preferance = as_factor(Preferance)
+  )
+glimpse(tip2)
+```
+
+```{r}
+gf_histogram(~ Tip, fill = ~ Preferance, data = tip)%>%
+  gf_labs(title = "TIP v/s PREFERANCE", caption="ggformula")
+```
+
+```{r}
+gf_histogram(~ Tip| ~ Preferance, data = tip2)%>%
+  gf_labs(title = "TIP v/s PREFERANCE", caption="ggformula")
+```
