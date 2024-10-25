@@ -108,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -172,7 +172,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#intro" id="toc-intro" class="nav-link active" data-scroll-target="#intro">INTRO</a>
+  <ul>
+  <li><a href="#in-this-class-i-am-summarising-data.-i-need-coffee-and-my-buddy-is-dumb." id="toc-in-this-class-i-am-summarising-data.-i-need-coffee-and-my-buddy-is-dumb." class="nav-link" data-scroll-target="#in-this-class-i-am-summarising-data.-i-need-coffee-and-my-buddy-is-dumb.">In this class I am summarising data. I need coffee and my buddy is dumb.</a>
+  <ul class="collapse">
+  <li><a href="#now-we-will-read-the-data" id="toc-now-we-will-read-the-data" class="nav-link" data-scroll-target="#now-we-will-read-the-data">Now we will read the data</a>
+  <ul class="collapse">
+  <li><a href="#why-do-we-do-it" id="toc-why-do-we-do-it" class="nav-link" data-scroll-target="#why-do-we-do-it">Why do we do it?</a></li>
+  </ul></li>
+  <li><a href="#mutate" id="toc-mutate" class="nav-link" data-scroll-target="#mutate">MUTATE</a></li>
+  <li><a href="#lets-play-with-mpg-dataset" id="toc-lets-play-with-mpg-dataset" class="nav-link" data-scroll-target="#lets-play-with-mpg-dataset">lets play with mpg dataset</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#lets-try-another-case-study-_docvisits" id="toc-lets-try-another-case-study-_docvisits" class="nav-link" data-scroll-target="#lets-try-another-case-study-_docvisits">LETS TRY ANOTHER CASE STUDY _DOCVISITS</a>
+  <ul>
+  <li><a href="#lets-mutate-this" id="toc-lets-mutate-this" class="nav-link" data-scroll-target="#lets-mutate-this">Lets mutate this</a>
+  <ul class="collapse">
+  <li><a href="#extracting-average-visits-by-gender" id="toc-extracting-average-visits-by-gender" class="nav-link" data-scroll-target="#extracting-average-visits-by-gender">1. Extracting Average Visits by Gender</a></li>
+  <li><a href="#extracting-mean-income-and-average-visits-by-socioeconomic-status-and-chronic-conditions" id="toc-extracting-mean-income-and-average-visits-by-socioeconomic-status-and-chronic-conditions" class="nav-link" data-scroll-target="#extracting-mean-income-and-average-visits-by-socioeconomic-status-and-chronic-conditions">2. Extracting Mean Income and Average Visits by Socioeconomic Status and Chronic Conditions</a></li>
+  <li><a href="#extracting-descriptive-statistics-for-income-by-socioeconomic-status-and-chronic-conditions" id="toc-extracting-descriptive-statistics-for-income-by-socioeconomic-status-and-chronic-conditions" class="nav-link" data-scroll-target="#extracting-descriptive-statistics-for-income-by-socioeconomic-status-and-chronic-conditions">3. Extracting Descriptive Statistics for Income by Socioeconomic Status and Chronic Conditions</a></li>
+  </ul></li>
+  <li><a href="#reporting-tables-for-data-and-the-data-schema-mpg" id="toc-reporting-tables-for-data-and-the-data-schema-mpg" class="nav-link" data-scroll-target="#reporting-tables-for-data-and-the-data-schema-mpg">Reporting Tables for Data and the Data Schema (mpg)</a></li>
+  </ul></li>
+  <li><a href="#trying-my-own-dataset-math-anxiety" id="toc-trying-my-own-dataset-math-anxiety" class="nav-link" data-scroll-target="#trying-my-own-dataset-math-anxiety">TRYING MY OWN DATASET (MATH ANXIETY)</a>
+  <ul>
+  <li><a href="#lets-glimse-skim-and-inspect-this-data-set-as-well." id="toc-lets-glimse-skim-and-inspect-this-data-set-as-well." class="nav-link" data-scroll-target="#lets-glimse-skim-and-inspect-this-data-set-as-well.">lets glimse, skim and inspect this data set as well.</a>
+  <ul class="collapse">
+  <li><a href="#now-we-will-mutate-the-gender-and-gradethey-are-qualitative." id="toc-now-we-will-mutate-the-gender-and-gradethey-are-qualitative." class="nav-link" data-scroll-target="#now-we-will-mutate-the-gender-and-gradethey-are-qualitative.">Now we will mutate the gender and grade(they are qualitative).</a></li>
+  </ul></li>
+  <li><a href="#lets-play-around" id="toc-lets-play-around" class="nav-link" data-scroll-target="#lets-play-around">LET’S PLAY AROUND</a></li>
+  <li><a href="#this-data-gives-us-nicely-formatted-table-showing-the-first-10-rows-of-the-math_anxiety-dataset." id="toc-this-data-gives-us-nicely-formatted-table-showing-the-first-10-rows-of-the-math_anxiety-dataset." class="nav-link" data-scroll-target="#this-data-gives-us-nicely-formatted-table-showing-the-first-10-rows-of-the-math_anxiety-dataset.">This data gives us nicely formatted table showing the first 10 rows of the math_anxiety dataset.</a></li>
+  <li><a href="#this-code-helps-us-analyze-how-math-anxiety-and-related-scores-vary-based-on-gender-providing-insights-into-the-data-and-highlighting-potential-differences-in-anxiety-levels-between-boys-and-girls." id="toc-this-code-helps-us-analyze-how-math-anxiety-and-related-scores-vary-based-on-gender-providing-insights-into-the-data-and-highlighting-potential-differences-in-anxiety-levels-between-boys-and-girls." class="nav-link" data-scroll-target="#this-code-helps-us-analyze-how-math-anxiety-and-related-scores-vary-based-on-gender-providing-insights-into-the-data-and-highlighting-potential-differences-in-anxiety-levels-between-boys-and-girls.">This code helps us analyze how math anxiety and related scores vary based on gender, providing insights into the data and highlighting potential differences in anxiety levels between boys and girls.</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 

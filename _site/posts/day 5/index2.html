@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -170,7 +170,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#hello" id="toc-hello" class="nav-link active" data-scroll-target="#hello">Hello</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -178,6 +186,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<section id="hello" class="level2">
+<h2 class="anchored" data-anchor-id="hello">Hello</h2>
+<p>This is a tricky chapter.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse) <span class="co"># Tidy data processing and plotting</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -288,12 +299,14 @@ The following object is masked from 'package:dplyr':
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(easystats) <span class="co"># Easy Statistical Analysis and Charts</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code># Attaching packages: easystats 0.7.3
-✔ bayestestR  0.14.0   ✔ correlation 0.8.5 
+<pre><code># Attaching packages: easystats 0.7.3 (red = needs update)
+✖ bayestestR  0.14.0   ✔ correlation 0.8.5 
 ✔ datawizard  0.13.0   ✔ effectsize  0.8.9 
 ✔ insight     0.20.5   ✔ modelbased  0.8.8 
-✔ performance 0.12.3   ✔ parameters  0.22.2
-✔ report      0.5.9    ✔ see         0.9.0 </code></pre>
+✖ performance 0.12.3   ✖ parameters  0.22.2
+✔ report      0.5.9    ✔ see         0.9.0 
+
+Restart the R-Session and update packages with `easystats::easystats_update()`.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(correlation) <span class="co"># Different Types of Correlations</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># From the easystats collection of packages</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -684,6 +697,7 @@ $ OpeningWeekend    &lt;dbl&gt; 13.27, 52.57, 31.60, 169.19, 26.25, 5.83, 26.04,
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

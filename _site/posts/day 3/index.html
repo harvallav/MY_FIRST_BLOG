@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -170,7 +170,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#day-3" id="toc-day-3" class="nav-link active" data-scroll-target="#day-3">DAY 3</a>
+  <ul>
+  <li><a href="#glimpse-skim-and-inspect" id="toc-glimpse-skim-and-inspect" class="nav-link" data-scroll-target="#glimpse-skim-and-inspect">GLIMPSE, SKIM AND INSPECT !</a></li>
+  </ul></li>
+  <li><a href="#data-munging" id="toc-data-munging" class="nav-link" data-scroll-target="#data-munging">DATA MUNGING</a>
+  <ul>
+  <li><a href="#question-do-more-people-tip-than-not" id="toc-question-do-more-people-tip-than-not" class="nav-link" data-scroll-target="#question-do-more-people-tip-than-not">QUESTION : Do more people tip than not?</a>
+  <ul class="collapse">
+  <li><a href="#what-really-is-the-difference-between-both-the-plots" id="toc-what-really-is-the-difference-between-both-the-plots" class="nav-link" data-scroll-target="#what-really-is-the-difference-between-both-the-plots">what really is the difference between both the plots ?</a></li>
+  </ul></li>
+  <li><a href="#question-does-the-tip-depend-upon-whether-the-trip-is-local-or-not" id="toc-question-does-the-tip-depend-upon-whether-the-trip-is-local-or-not" class="nav-link" data-scroll-target="#question-does-the-tip-depend-upon-whether-the-trip-is-local-or-not">QUESTION: Does the tip depend upon whether the trip is local or not?</a></li>
+  <li><a href="#question-do-some-cab-company-ies-get-more-tips-than-others" id="toc-question-do-some-cab-company-ies-get-more-tips-than-others" class="nav-link" data-scroll-target="#question-do-some-cab-company-ies-get-more-tips-than-others">QUESTION: Do some cab company-ies get more tips than others?</a></li>
+  <li><a href="#question-does-a-tip-depend-upon-the-distance-hour-of-day-and-dow-and-month" id="toc-question-does-a-tip-depend-upon-the-distance-hour-of-day-and-dow-and-month" class="nav-link" data-scroll-target="#question-does-a-tip-depend-upon-the-distance-hour-of-day-and-dow-and-month">QUESTION: Does a tip depend upon the distance, hour of day, and dow and month?</a>
+  <ul class="collapse">
+  <li><a href="#plot-b-counts-of-tips-by-hour" id="toc-plot-b-counts-of-tips-by-hour" class="nav-link" data-scroll-target="#plot-b-counts-of-tips-by-hour">Plot B: Counts of Tips by Hour</a></li>
+  <li><a href="#plot-c-counts-of-tips-by-day-of-week" id="toc-plot-c-counts-of-tips-by-day-of-week" class="nav-link" data-scroll-target="#plot-c-counts-of-tips-by-day-of-week">Plot C: Counts of Tips by Day of Week</a></li>
+  <li><a href="#plot-d-counts-of-tips-by-month" id="toc-plot-d-counts-of-tips-by-month" class="nav-link" data-scroll-target="#plot-d-counts-of-tips-by-month">Plot D: Counts of Tips by Month</a></li>
+  <li><a href="#plot-e-counts-of-tips-by-day-of-week-and-month" id="toc-plot-e-counts-of-tips-by-day-of-week-and-month" class="nav-link" data-scroll-target="#plot-e-counts-of-tips-by-day-of-week-and-month">Plot E: Counts of Tips by Day of Week and Month</a></li>
+  <li><a href="#plot-f-counts-of-tips-by-hour-and-day-of-week" id="toc-plot-f-counts-of-tips-by-hour-and-day-of-week" class="nav-link" data-scroll-target="#plot-f-counts-of-tips-by-hour-and-day-of-week">Plot F: Counts of Tips by Hour and Day of Week</a></li>
+  <li><a href="#plot-g-counts-of-tips-by-hour-and-day-of-week-swapped-facets" id="toc-plot-g-counts-of-tips-by-hour-and-day-of-week-swapped-facets" class="nav-link" data-scroll-target="#plot-g-counts-of-tips-by-hour-and-day-of-week-swapped-facets">Plot G: Counts of Tips by Hour and Day of Week (Swapped Facets)</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#plotting-proportions-and-percentages-using-gf_props" id="toc-plotting-proportions-and-percentages-using-gf_props" class="nav-link" data-scroll-target="#plotting-proportions-and-percentages-using-gf_props">Plotting Proportions and Percentages using gf_props</a></li>
+  <li><a href="#trying-a-new-dataset-fertility" id="toc-trying-a-new-dataset-fertility" class="nav-link" data-scroll-target="#trying-a-new-dataset-fertility">TRYING A NEW DATASET (FERTILITY)</a>
+  <ul>
+  <li><a href="#the-dataset-provides-information-about-individuals-focusing-on-their-demographic-characteristics-and-whether-they-have-children-morekids." id="toc-the-dataset-provides-information-about-individuals-focusing-on-their-demographic-characteristics-and-whether-they-have-children-morekids." class="nav-link" data-scroll-target="#the-dataset-provides-information-about-individuals-focusing-on-their-demographic-characteristics-and-whether-they-have-children-morekids.">The dataset provides information about individuals, focusing on their demographic characteristics and whether they have children (“morekids”).</a>
+  <ul class="collapse">
+  <li><a href="#glimpse-skim-inspect" id="toc-glimpse-skim-inspect" class="nav-link" data-scroll-target="#glimpse-skim-inspect">GLIMPSE, SKIM, INSPECT !</a></li>
+  </ul></li>
+  <li><a href="#data-munging-1" id="toc-data-munging-1" class="nav-link" data-scroll-target="#data-munging-1">DATA MUNGING</a></li>
+  <li><a href="#questionwhat-is-the-distribution-of-individuals-with-more-kids-based-on-their-gender" id="toc-questionwhat-is-the-distribution-of-individuals-with-more-kids-based-on-their-gender" class="nav-link" data-scroll-target="#questionwhat-is-the-distribution-of-individuals-with-more-kids-based-on-their-gender">QUESTION:What is the distribution of individuals with more kids based on their gender?</a></li>
+  <li><a href="#question-how-does-the-number-of-individuals-with-more-kids-vary-across-different-age-groups" id="toc-question-how-does-the-number-of-individuals-with-more-kids-vary-across-different-age-groups" class="nav-link" data-scroll-target="#question-how-does-the-number-of-individuals-with-more-kids-vary-across-different-age-groups">QUESTION: How does the number of individuals with more kids vary across different age groups?</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
