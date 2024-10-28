@@ -1,7 +1,17 @@
 ---
-title: "tip data"
+title: "TIPS (A3)"
 author: "harvallav"
 ---
+
+# TIP TADKA
+
+## A Flavorful Comparison Between Veg and Non-Veg Diners
+
+### Introduction
+
+In this data set we are exploring if vegetarians the real kanjoos, or do the meat-eaters hold the crown? To settle it, we’ll dive into those Swiggy, Zomato, and Dining Out bills and pull out the ultimate truth .
+
+### Setting up the packages
 
 ```{r}
 library(tidyverse)
@@ -9,36 +19,115 @@ library(mosaic)
 library(skimr)
 library(ggformula)
 library(crosstable)
+library(readr)
 ```
+
+### Reading the data
 
 ```{r}
 tip <-read_csv("../../data /tip.csv")
 tip 
 ```
 
+This data provides information on individuals' names, genders, dietary preferences (veg or non-veg), and the tips they’ve given.
+
+## Let's Make a Histogram for this dataset first
+
+```{r}
+gf_histogram(~ Tip| ~ Preferance, data = tip2)%>%
+  gf_labs(title = "TIP v/s PREFERANCE", caption="ggformula")
+```
+
+By splitting the histogram by dietary preference, it allows for a comparative analysis of how tips vary within each group, making it easier to see distributions, frequencies, and any notable trends in tipping behavior.\
+However, histograms primarily show the frequency of observations within specific ranges and do not provide a direct comparison of averages between groups.
+
+Let us try making a cross table.
+
+## Making a CROSS TABLE
+
+This is a cross table, often used to summarize and compare key statistics for different groups within a dataset, such as minimum and maximum values, median with interquartile range (IQR), mean with standard deviation (std), and count (N) along with missing values (NA) for each category.\
+
 ```{r}
 tip %>% crosstable(Tip~Preferance ) %>% as_flextable
 ```
+
+### What is Happening Here?
+
+The data presents a cross table summarizing tipping patterns among two groups: vegetarians and non-vegetarians.
+
+### Inferences from This Data
+
+1)**Min / Max**: Shows the minimum and maximum tip values for non-vegetarians (0 and 50) and vegetarians (0 and 100).
+
+2)**Med \[IQR\]**: Shows the median tip and IQR for each group. Both groups have a median tip of 0, with an IQR ranging from 0 to 20.
+
+3)**Mean (std)**: Shows the average tip and its variability. Non-vegetarians have a mean tip of 10.0 with a standard deviation of 12.9, while vegetarians have a slightly higher mean of 12.3 with a standard deviation of 21.9, indicating more variability in the vegetarian group.
+
+NOW, from what I understand so far,\
+Although the average tip for non-vegetarians (10.0) is lower than that for vegetarians (12.3), this does not establish that non-vegetarians tip more. Instead, it suggests the opposite. To prove non-vegetarians tip more, you would expect their average to be higher.\
+The standard deviation indicates that the vegetarian group has more variability in tipping. This variability means that while their average is higher, there may be some individuals giving very high tips that affect the mean.\
+
+The cross table gives a helpful summary of the data, but to make strong conclusions about how dietary preferences affect tipping, we need to do more detailed statistical analysis.
+
+## Let's do the T-test
 
 ```{r}
 mosaic::t.test(Tip~ Preferance,data=tip) %>% 
                  broom::tidy()
 ```
 
-```{r}
-tip2 <- tip %>% 
-  mutate(
-    Preferance = as_factor(Preferance)
-  )
-glimpse(tip2)
-```
+The t-test checks whether there is a statistically significant difference in the average tips given by vegetarians and non-vegetarians.
+
+### What is happening here ?
+
+A **chai test**, just kidding.
+
+Think of a t-test like brewing chai. When you make chai, you combine ingredients like tea leaves, milk, sugar, and spices. The resulting flavor depends on the balance of these ingredients.
+
+In the same way, a t-test combines data from two groups (like vegetarians and non-vegetarians) to see if their average tips differ significantly. Just as you assess the taste of chai by comparing it to plain tea, the t-test assesses whether the differences in averages are strong enough to be meaningful, rather than just a result of random variations.
+
+So, just as a good chai highlights the right balance of flavors, a t-test helps identify whether the differences between groups are noteworthy or simply due to chance.
+
+### Inferences from This Data
+
+1)**Means**:Vegetarians: Average tip of 10. Non-vegetarians: Average tip of approximately 12.33. 2) **T-Statistic**:The t-statistic is approximately -0.50, indicating that the observed difference in means is relatively small compared to the variability within the groups.\
+3) **P-Value**:The p-value is 0.617, which is significantly higher than the common alpha level of 0.05. This suggests that the difference in average tips between vegetarians and non-vegetarians is not statistically significant.\
+4) **Confidence Interval**:The 95% confidence interval for the difference in means ranges from approximately -11.66 to 6.99. This interval includes zero, further indicating that there is no statistically significant difference between the two groups.
+
+*The results suggest that there is no strong evidence to support the claim that non-vegetarians give higher average tips than vegetarians. The lack of statistical significance (high p-value and confidence interval including zero) indicates that any observed differences in average tips could be due to random chance rather than a true effect related to dietary preference. Thus, dietary preference does not appear to have a meaningful impact on tipping behavior based on this dataset.*
+
+
+
+# Let us try a few more tests 
+
+## The Density Plot 
 
 ```{r}
-gf_histogram(~ Tip, fill = ~ Preferance, data = tip)%>%
-  gf_labs(title = "TIP v/s PREFERANCE", caption="ggformula")
+tip %>%
+  gf_density(
+    ~ Tip,
+    fill = ~ Preferance,  
+    alpha = 0.5,
+    title = "Tip Amount Densities",
+    subtitle = "Vegetarians vs Non-Vegetarians"
+  ) 
+  
 ```
+## Let's do a Shapiro-Wilk test
+
+
+
 
 ```{r}
-gf_histogram(~ Tip| ~ Preferance, data = tip2)%>%
-  gf_labs(title = "TIP v/s PREFERANCE", caption="ggformula")
+veg_tip <- tip %>%
+filter (Preferance== "Veg") %>%
+select (Tip)
+
+shapiro.test(veg_tip$Tip)
+
 ```
+
+
+
+## Lets do the Permutation test 
+
