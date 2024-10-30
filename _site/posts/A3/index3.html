@@ -101,6 +101,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<link href="../../site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+<script src="../../site_libs/tabwid-1.1.3/tabwid.js"></script>
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -179,9 +181,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
-  <li><a href="#setting-up-the-packages" id="toc-setting-up-the-packages" class="nav-link" data-scroll-target="#setting-up-the-packages">Setting up the packages</a></li>
   <li><a href="#reading-the-data" id="toc-reading-the-data" class="nav-link" data-scroll-target="#reading-the-data">Reading the data</a></li>
   </ul></li>
+  <li><a href="#lets-make-a-histogram-for-this-dataset-first" id="toc-lets-make-a-histogram-for-this-dataset-first" class="nav-link" data-scroll-target="#lets-make-a-histogram-for-this-dataset-first">Let’s Make a Histogram for this dataset first</a></li>
+  <li><a href="#making-a-cross-table" id="toc-making-a-cross-table" class="nav-link" data-scroll-target="#making-a-cross-table">Making a CROSS TABLE</a>
+  <ul class="collapse">
+  <li><a href="#what-is-happening-here" id="toc-what-is-happening-here" class="nav-link" data-scroll-target="#what-is-happening-here">What is Happening Here?</a></li>
+  <li><a href="#inferences-from-this-data" id="toc-inferences-from-this-data" class="nav-link" data-scroll-target="#inferences-from-this-data">Inferences from This Data</a></li>
+  </ul></li>
+  <li><a href="#lets-do-the-t-test" id="toc-lets-do-the-t-test" class="nav-link" data-scroll-target="#lets-do-the-t-test">Let’s do the T-test</a></li>
+  </ul></li>
+  <li><a href="#let-us-try-a-few-more-tests" id="toc-let-us-try-a-few-more-tests" class="nav-link" data-scroll-target="#let-us-try-a-few-more-tests">Let us try a few more tests</a>
+  <ul>
+  <li><a href="#the-density-plot" id="toc-the-density-plot" class="nav-link" data-scroll-target="#the-density-plot">The Density Plot</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -198,8 +210,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>In a world where digital wallets reign supreme, the age-old debate of who holds the purse strings—guys or gals—still ignites curiosity. So, let’s dive into the numbers and see if the guys really do have more “Chick-Chang” than the gals!</p>
-<section id="setting-up-the-packages" class="level3">
-<h3 class="anchored" data-anchor-id="setting-up-the-packages">Setting up the packages</h3>
+<p><img src="money.jpg" class="img-fluid"> ### Setting up the packages</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -271,7 +282,6 @@ The following object is masked from 'package:purrr':
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
 <section id="reading-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="reading-the-data">Reading the data</h3>
 <div class="cell">
@@ -316,9 +326,84 @@ $ Money_spent &lt;dbl&gt; 150, 240, 382, 60, 68, 300, 270, 190, 300, 0, 250, 85,
 $ ...5        &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</code></pre>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="lets-make-a-histogram-for-this-dataset-first" class="level2">
+<h2 class="anchored" data-anchor-id="lets-make-a-histogram-for-this-dataset-first">Let’s Make a Histogram for this dataset first</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>(<span class="sc">~</span> Money_spent <span class="sc">|</span> <span class="er">~</span> Gender, <span class="at">data =</span> money) <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_labs</span>(<span class="at">title =</span> <span class="st">"MONEY SPENT v/s GENDER"</span>, <span class="at">caption =</span> <span class="st">"ggformula"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="making-a-cross-table" class="level2">
+<h2 class="anchored" data-anchor-id="making-a-cross-table">Making a CROSS TABLE</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>money<span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">crosstable</span>(Money_spent <span class="sc">~</span> Gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_flextable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-3c7d5182{table-layout:auto;}.cl-3c79d016{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3c79d020{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3c7b1976{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3c7b1977{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3c7b27fe{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3c7b27ff{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3c7b2800{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3c7b2801{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3c7b2802{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-3c7d5182"><thead><tr style="overflow-wrap:break-word;"><th rowspan="2" class="cl-3c7b27fe"><p class="cl-3c7b1976"><span class="cl-3c79d016">label</span></p></th><th rowspan="2" class="cl-3c7b27fe"><p class="cl-3c7b1976"><span class="cl-3c79d016">variable</span></p></th><th colspan="2" class="cl-3c7b27ff"><p class="cl-3c7b1976"><span class="cl-3c79d016">Gender</span></p></th></tr><tr style="overflow-wrap:break-word;"><th class="cl-3c7b2800"><p class="cl-3c7b1976"><span class="cl-3c79d016">Female</span></p></th><th class="cl-3c7b2800"><p class="cl-3c7b1976"><span class="cl-3c79d016">Male</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td rowspan="4" class="cl-3c7b2801"><p class="cl-3c7b1977"><span class="cl-3c79d020">Money_spent</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">Min / Max</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">0 / 1.3e+04</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">0 / 1.0e+04</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">Med [IQR]</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">280.0 [85.0;500.0]</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">250.0 [150.0;842.0]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">Mean (std)</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">693.3 (2035.8)</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">748.6 (1636.5)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3c7b2801"><p class="cl-3c7b1977"><span class="cl-3c79d020">N (NA)</span></p></td><td class="cl-3c7b2801"><p class="cl-3c7b1977"><span class="cl-3c79d020">41 (0)</span></p></td><td class="cl-3c7b2801"><p class="cl-3c7b1977"><span class="cl-3c79d020">41 (0)</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<section id="what-is-happening-here" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-happening-here">What is Happening Here?</h3>
+<p>The data presents a cross table summarizing spending patterns among two groups: females and males. The table outlines the minimum, maximum, median, interquartile range (IQR), mean, and standard deviation of the money spent by each gender.</p>
+</section>
+<section id="inferences-from-this-data" class="level3">
+<h3 class="anchored" data-anchor-id="inferences-from-this-data">Inferences from This Data</h3>
+<p>1)<strong>Min / Max</strong>: The minimum and maximum amounts spent are summarized as follows: Females: Minimum of 0 and a maximum of 13,000. Males: Minimum of 0 and a maximum of 10,000. This indicates that while both groups have spent nothing (0), females have a wider range of maximum spending compared to males.</p>
+<p>3)<strong>Med [IQR]</strong>: The median spending and IQR for each gender are as follows: Females: Median spending of 280.0 with an IQR ranging from 85.0 to 500.0. Males: Median spending of 250.0 with an IQR ranging from 150.0 to 842.0. Both groups have similar medians, with females spending slightly more. The IQR suggests that the middle 50% of female spenders have a smaller range than that of males.</p>
+<p>4)<strong>Mean (std)</strong>: The average spending and its variability are: Females: Mean spending of 693.3 with a standard deviation of 2,035.8. Males: Mean spending of 748.6 with a standard deviation of 1,636.5.</p>
+<p><strong>The average spending for males is slightly higher than for females. The higher standard deviation for females indicates more variability in spending, meaning that while the average is lower, there may be some individuals who spend significantly more, skewing the mean.</strong></p>
+</section>
+</section>
+<section id="lets-do-the-t-test" class="level2">
+<h2 class="anchored" data-anchor-id="lets-do-the-t-test">Let’s do the T-test</h2>
+<p>(to understand this test refer to the tips(a3) blog)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>mosaic<span class="sc">::</span><span class="fu">t.test</span>(Money_spent <span class="sc">~</span> Gender, <span class="at">data =</span> money) <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 10
+  estimate estimate1 estimate2 statistic p.value parameter conf.low conf.high
+     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1    -55.3      693.      749.    -0.136   0.893      76.5    -868.      757.
+# ℹ 2 more variables: method &lt;chr&gt;, alternative &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>the results suggest that there is no statistically significant difference in the amount of money spent between the two groups (females and males). The high p-value and the confidence interval that includes zero imply that any observed difference in spending is likely due to chance rather than a real effect.</p>
+</section>
+</section>
+<section id="let-us-try-a-few-more-tests" class="level1">
+<h1>Let us try a few more tests</h1>
+<section id="the-density-plot" class="level2">
+<h2 class="anchored" data-anchor-id="the-density-plot">The Density Plot</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>money <span class="sc">%&gt;%</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_density</span>(</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">~</span> Money_spent,</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="sc">~</span> Gender,  </span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Money Spent Densities"</span>,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Females vs Males"</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index3_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
 </section>
 </section>
 
