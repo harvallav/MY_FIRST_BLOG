@@ -1,0 +1,281 @@
+---
+title: "CARTOONS(A3)"
+author: "harvallav"
+---
+
+# CARTOONS
+
+## Chhota Bheem vs Doraemon vs Dragon Tales
+
+### INTRODUCTION
+
+In a land where heroes play and roam,\
+Chhota Bheem munches laddus, calls them home.\
+Doraemon’s gadgets zip through the air,\
+While Dragon Tales breathe fire\
+let’s see who the SMI Kids declare! ![](cartoon.jpg)
+
+This dataset is based on research where SMI kids were interviewed to rate three popular cartoons: Doraemon, Chhota Bheem, and Dragon Tales. A total of 90 observations were collected, with each cartoon rated by 30 children on a scale of 1 to 10.
+
+### Setting up the packages
+
+```{r}
+library(tidyverse)
+library(mosaic)
+library(skimr)
+library(ggformula)
+library(crosstable)
+library(readr)
+library(DescTools)
+library(supernova)
+```
+
+### Reading the data
+
+```{r}
+cdd <-read_csv("../../data /cdd.csv")
+cdd
+```
+
+### Glimpsing and skimming through the data
+
+```{r}
+glimpse(cdd)
+```
+
+```{r}
+skim(cdd)
+```
+
+The dataset consists of 90 rows and 4 columns, providing insights into children's ratings of three cartoons: Chhota Bheem, Doraemon, and Dragon Tales.
+
+# Hypothesis
+
+Let us see if Cartoons effect the rating and if Doraeomon \>\> Dragon Tales \>\> Chhota Bheem!
+
+## Let's Make a Histogram for this dataset first
+
+```{r}
+gf_histogram(~Rating,
+  fill = ~Cartoon,
+  data = cdd, alpha = 0.5
+) %>%
+  gf_vline(xintercept = ~ mean(Rating), color = "red") %>%
+  gf_labs(
+    title = "Histograms of Cartoon Ratings",
+    x = "Rating (out of 10)", y = "Count"
+  ) %>%
+  gf_text(7 ~ (mean(Rating) + 0.5),
+    label = "Overall Mean"
+  ) %>%
+  gf_refine(guides(fill = guide_legend(title = "Cartoon")))
+```
+
+This graph shows the distribution of ratings (out of 10) for three cartoons.
+
+I want to see this graph with separate graph . we can do that by the gf_facet_wrap because it is visually easier to read :D
+
+```{r}
+gf_histogram(~Rating,
+  fill = ~Cartoon,
+  data = cdd, alpha = 0.5,
+  position = "dodge", bins = 10  # Adjust bins as needed
+)  %>%
+  gf_labs(
+    title = "Histograms of Cartoon Ratings",
+    x = "Rating (out of 10)",
+    y = "Count"
+  ) %>%
+  gf_facet_wrap(~Cartoon) %>%  # Create separate plots for each cartoon
+  gf_refine(theme_minimal())
+```
+
+So,
+
+### What does this graph suggest us ?
+
+**Chhota Bheem (Red Bars)**: Peaks around 6 and 7, suggesting an average to slightly above-average rating. There are also minor ratings around 4 and 5.
+
+**Doraemon (Green Bars):** Peaks at 7, indicating a generally positive reception, with most viewers rating it solidly. Smaller clusters around 5 and 6.
+
+**Dragon Tales (Blue Bars):** Peaks at 8, showing higher ratings on average than the others. This suggests it’s the most favorably rated cartoon, with many viewers giving it an 8. which is pretty suprising because I have hardly watched dragon tales and finding people who had watched it was also a tough job for the other group.
+
+But this graph doesnt really tell us enough. A higher peak for Doraemon at 7 doesn't necessarily mean it is rated better overall than Dragon Tales, which peaks at 8 but with a smaller spread in lower ratings
+
+The graph does not provide numerical summary statistics (e.g., mean, median, standard deviation) for each cartoon, making it hard to definitively rank them SO LETS DO THAT !
+
+## Making a CROSS TABLE
+
+```{r}
+cdd %>% crosstable(Rating~Cartoon ) %>% as_flextable
+```
+
+well, Dragon Tales appears to be the most liked show based on the cross table. With a mean rating of 7.3, Dragon Tales outperforms the other two cartoons, indicating that, on average, viewers rated it more favorably.
+
+The cross table does support the inference that Doraemon is rated higher than Dragon Tales, which is in turn rated higher than Chhota Bheem.
+
+## ANOVA
+
+```{r}
+library(supernova)
+```
+
+```{r}
+cartoons<- aov(Rating ~ Cartoon, data = cdd)
+```
+
+```{r}
+supernova::pairwise(cartoons,
+  correction = "Bonferroni",
+  alpha = 0.05, 
+  var_equal = TRUE, 
+  plot = TRUE
+)
+```
+
+so here, there is a message that popped up. So I had to break down what it really means and it suggest that , the analysis is checking if the ratings for the three cartoons are different. Because we are comparing multiple cartoons, the Bonferroni correction makes us more cautious about claiming any differences exist. The family-wise error rate tells you that there's a small chance (4.9%) that we might mistakenly think one cartoon is rated differently than another when they actually aren’t.
+
+now What is the Bonferroni Correction? The Bonferroni correction is a way to be careful when comparing multiple groups to avoid mistakes.
+
+The Problem It Solves: When you compare multiple groups (like in your case, three cartoons), you make multiple comparisons Each comparison has a chance of showing a false positive (Type I error) The more comparisons you make, the higher the chance of getting at least one false positive.
+
+**From this visualization, since the confidence intervals appear to overlap with the zero line (dashed vertical line), it suggests that there might not be statistically significant differences in ratings between these cartoons at the 95.1% confidence level.**
+
+## Let's make a Linear equation for out data
+
+```{r}
+supernova::equation(cartoons)
+```
+
+### What is This Equation?
+
+This equation is a way to predict how people rate different cartoons based on which cartoon they are watching. It helps us understand how much each cartoon is liked compared to a reference cartoon.
+
+### Why Did We Do It?
+
+We created this equation to see how the ratings for different cartoons compare to each other. By looking at the ratings, we can tell which cartoons are more popular or liked.
+
+| Part of the Equation | Meaning | What It Represents |
+|----|----|----|
+| **6.67** | This is the starting point (intercept) of the ratings. | Represents the baseline rating for Chota Bheem (the reference category).Means when all other variables are 0, the expected rating is 6.67 |
+| **CartoonDoraemon** | A variable that tells if the cartoon is Doraemon. | Equals **1** if the cartoon is **Doraemon**, **0** otherwise. |
+| **0.58** | This is how much the rating goes up if it’s Doraemon. | If the cartoon is **Doraemon**, the average rating is **6.67 + 0.58 = 7.25**. |
+| **CartoonDragon Tales** | A variable that tells if the cartoon is Dragon Tales. | Equals **1** if the cartoon is **Dragon Tales**, **0** otherwise. |
+| **0.5966667** | This shows how much the rating increases for Dragon Tales. | If the cartoon is **Dragon Tales**, the average rating is **6.67 + 0.60 ≈ 7.27**. |
+| **e** | The error term, which captures other factors affecting ratings. | It accounts for things not included in the equation that might change the rating. |
+
+## Let's do a Shapiro-Wilk test
+
+```{r}
+library(dplyr)
+library(broom)
+
+cdd %>%
+  group_by(Cartoon) %>%
+  group_modify(~ .x %>%       #.x represents the current subset of data here(for my reference)
+    select(Rating) %>% 
+    pull() %>%  
+    shapiro.test() %>%  
+    broom::tidy())  
+```
+
+### What do we understand from this data ?
+
+Chota Bheem's ratings appear to be normally distributed. Doraemon and Dragon Tales' ratings do not follow a normal distribution, as indicated by their low p-values.
+
+This is particularly interesting because Chota Bheem, being an Indian cartoon, shows more consistent/predictable rating patterns compared to the international cartoons (Doraemon and Dragon Tales) The most intriguing factor is that despite being from different cultural backgrounds (Indian, Japanese, and American), all three cartoons maintained relatively high ratings (as seen in our previous analysis where ratings were around 6.67-7.27)
+
+```{r}
+
+cartoons$residuals %>%
+  as_tibble() %>%
+  gf_dhistogram(~value, data = .) %>%
+  gf_fitdistr()
+
+
+cartoons$residuals %>%
+  as_tibble() %>%
+  gf_qq(~value, data = .) %>%
+  gf_qqstep() %>%
+  gf_qqline()
+
+
+shapiro.test(cartoons$residuals)
+
+```
+
+Residuals refer to the differences between observed values and predicted values in statistical modeling.the residuals are also not normally distributed either here.
+
+If the residuals from a statistical model are not normally distributed, it signifies several potential issues and implications regarding the validity of the model and the results derived from it.
+
+To understand this even more simply, **Many statistical methods, particularly parametric tests like linear regression and ANOVA, assume that the residuals (the differences between observed and predicted values) are normally distributed. Non-normality indicates that this assumption is violated, which can lead to unreliable results.**
+
+## Let us do the Levene and Flinger-Killeen Test
+
+Imagine This: The Noise Test in the Classroom You’re a teacher, and you have three groups of students (let’s call them Cartoon A, Cartoon B, and Cartoon C) in different classrooms. You want to see if they are all equally noisy or if one classroom has wilder noise levels than the others. In stats terms, you’re testing if the variances (spread or consistency) of their noise levels are the same across the groups.
+
+To check this, you have two special "noise tests":
+
+1.  **The Levene Test – The “Average Noise Detector”** The Levene test is like a basic noise detector that checks if the average noise difference from the group’s center (mean) is roughly the same for all groups.
+
+How It Works: It calculates how far each student’s noise level is from their group’s mean, then compares this "noise spread" between the groups. Why It’s Helpful: If the detector shows the noise spread is pretty even across all groups, then we know no classroom is extra noisy. If not, one of the groups might be causing more chaos!
+
+2.  **The Fligner-Killeen Test – The “Robust Noise Detector”** The Fligner-Killeen test is a bit tougher and is like a noise detector that can handle extreme noisemakers without being thrown off.
+
+How It Works: It doesn’t just look at average noise spread; it uses a method that’s more robust to outliers (students who are really loud). This makes it a strong tool even if there are a few outliers in one group. Why It’s Helpful: If this detector says the noise levels are balanced, you can be extra confident there isn’t a big difference in noise. But if it finds a difference, it means some groups are likely louder or quieter overall, even when outliers are considered.
+
+Now, let us check for this dataset
+
+```{r}
+
+cdd %>%
+  group_by(Cartoon) %>%
+  summarise(variance = var(Rating))
+# Not too different...OK on with the test
+DescTools::LeveneTest(Rating ~ Cartoon, data = cdd)
+##
+fligner.test(Rating ~ Cartoon, data = cdd)
+```
+
+The cartoons have different levels of variability in ratings, with Doraemon showing the widest spread and Chota Bheem the most consistent. Dragon Tales could be the neutral ground, generally liked but not creating extreme reactions.
+
+**The results from Levene's Test and the Fligner-Killeen test both suggest that the variances across the different cartoon groups are not significantly different. This indicates that the assumption of homogeneity of variances, which is important for ANOVA, is likely met. The p-values for both tests are greater than 0.05, suggesting no significant variance differences among the groups. This supports the validity of using ANOVA for comparing the cartoon ratings.**
+
+## Let is conduct ANOVA using permutations
+
+```{r}
+library(infer)
+
+
+toons <- cdd %>%
+  specify(Rating ~ Cartoon) %>%
+  hypothesise(null = "independence") %>%
+  calculate(stat = "F")
+
+
+print(toons) 
+```
+
+```{r}
+null_dist_infer <- cdd %>%
+  specify(Rating ~ Cartoon) %>%
+  hypothesise(null = "independence") %>%
+  generate(reps = 4999, type = "permute") %>%
+  calculate(stat = "F")
+##
+null_dist_infer
+```
+
+```{r}
+null_dist_infer %>%
+  visualise(method = "simulation") +
+  shade_p_value(obs_stat = toons$stat, direction = "right") +
+  scale_x_continuous(trans = "log10", expand = c(0, 0)) +
+  coord_cartesian(xlim = c(0.2, 500), clip = "off") +
+  annotation_logticks(outside = FALSE)
+
+```
+
+## Result
+
+Since the observed statistic is not in the extreme tails of the distribution, it implies that there is no strong evidence against the null hypothesis. So we can conclude that **Cartoons do not influence the rating**. Based on this graph, it seems likely that the null hypothesis of independence (cartoons not influencing ratings) cannot be rejected. This suggests that the differences in ratings among cartoons might be due to random variation rather than a systematic effect of the cartoons themselves. Doraemon is the most liked show among the three, with higher average ratings and greater variability in opinions. Dragon Tales is rated better than Chhota Bheem, but not as high as Doraemon. Overall, we can summarize the ratings hierarchy as: Doraemon \> Dragon Tales \> Chhota Bheem.

@@ -1,0 +1,240 @@
+---
+title: "GRADES(A3)"
+author: "harvallav"
+---
+
+# GRADES
+
+## Art, Design, and Vocation are all diff-different
+
+### INTRODUCTION
+
+In this analysis, we collected data from three distinct academic programs: Bachelor of Design (B.Des), Bachelor of Vocational Studies (B.Voc), and Bachelor of Fine Arts (B.FA). The primary objective of this study is to explore and compare the grading patterns across these diverse courses. Understanding whether grades differ significantly among students in B.Voc, B.FA, and B.Des will provide valuable insights into the academic performance trends within these programs.
+
+![](grade.jpg)
+
+### Setting up the packages
+
+```{r}
+library(tidyverse)
+library(mosaic)
+library(skimr)
+library(ggformula)
+library(crosstable)
+library(readr)
+library(DescTools)
+library(supernova)
+```
+
+### Reading the data
+
+```{r}
+grades <-read_csv("../../data /grades.csv")
+grades
+```
+
+## HYPOTHESIS
+
+Let us see if scores in each degree group are normally distributed or not.
+
+## Let's Make a Histogram for this dataset first
+
+```{r}
+
+gf_histogram(~Score,
+  fill = ~Degree,
+  data = grades, alpha = 0.5
+) %>%
+  gf_vline(xintercept = mean_score, color = "red") %>%
+  gf_labs(
+    title = "Histograms of Grades",
+    x = "(out of 10)", y = "Count"
+  ) %>%
+  gf_text(7 ~ (mean_score + 0.5),
+    label = "Overall Mean"
+  ) %>%
+  gf_refine(guides(fill = guide_legend(title = "Grades")))
+
+```
+
+So,
+
+### What does this graph suggest us ?
+
+This histogram helps us see how grades are spread out for different degree groups and where most scores fall. Each color shows a different degree group, and the red line marks the overall average score. By looking at the bars and overlaps, we can tell if some degree groups usually score higher or lower than others and whether most scores are close to the average or spread out unevenly.
+
+## Making a CROSS TABLE
+
+This table compares scores across three degree groups: B.Des, B.FA, and B.Voc.
+
+**Range**: B.Des scores vary widely (3.0–10.0), while B.FA and B.Voc are more limited. **Median**: B.Des has the highest median score (9.0), followed by B.FA and B.Voc (both 8.0). **Mean & Spread**: B.Des has the highest mean (8.4) but also the most spread (std = 1.3), suggesting more score variation. B.FA has the lowest mean (7.6) with scores tightly grouped (std = 0.8).
+
+```{r}
+grades %>% crosstable(Score~Degree ) %>% as_flextable
+```
+
+This shows B.Des has the highest but most varied scores, while B.FA scores are consistently lower and tightly clustered.
+
+Let us see a cross table with the majors as well because I am just curious
+
+```{r}
+grades %>% crosstable(Score~Course ) %>% as_flextable
+```
+
+CE and CAC show high and consistent scores, while BSSD has more varied, lower scores.Interesting.
+
+## ANOVA
+
+```{r}
+marks<- aov(Score ~ Degree, data = grades)
+```
+
+```{r}
+supernova::pairwise(marks,
+  correction = "Bonferroni",
+  alpha = 0.05, 
+  var_equal = TRUE, 
+  plot = TRUE
+)
+```
+
+### What is this ?
+
+This displays a confidence intervals for pairwise t-tests with Bonferroni correction. The x-axis represents the 95.1% confidence interval, and the y-axis lists comparisons between different degree programs (B.FA, B.Des, B.Voc).
+
+B.FA - B.Des: The confidence interval crosses zero, suggesting no significant difference in scores between these two programs. B.Voc - B.Des: The confidence interval also crosses zero, indicating no significant difference. B.Voc - B.FA: The confidence interval crosses zero, suggesting no significant difference.
+
+Well, this suggests that there are no statistically significant differences in scores between the degree programs when using a Bonferroni correction. But let us try other tests to check our Hypothesis.
+
+## Let's make a Linear equation for out data
+
+```{r}
+supernova::equation(marks)
+```
+
+### Why Did We Do It?
+
+We created this equation to see how scores differ across degrees. By examining the coefficients, we can see whether certain degrees have higher or lower average scores compared to others.
+
+| Part of the Equation | Meaning | What It Represents |
+|----|----|----|
+| 8.373333 | The starting point (intercept) for scores. | Represents the baseline score for B.Des (the reference category). When all other variables are 0, the expected score is 8.37. |
+| DegreeB.FA | A variable indicating if the degree is B.FA. | Equals **1** if the student is in B.FA, **0** otherwise. |
+| -0.7566667 | This shows how much the score decreases for B.FA. | If the degree is **B.FA**, the average score is **8.37 - 0.76 ≈ 7.61**. |
+| DegreeB.Voc | A variable indicating if the degree is B.Voc. | Equals **1** if the student is in B.Voc, **0** otherwise. |
+| -0.1733333 | This shows how much the score decreases for B.Voc. | If the degree is **B.Voc**, the average score is **8.37 - 0.17 ≈ 8.20**. |
+| `e` | The error term, which captures other factors affecting scores. | It accounts for things not included in the equation that might change the score. |
+
+## Let's do a Shapiro-Wilk test
+
+```{r}
+library(dplyr)
+library(broom)
+
+grades %>%
+  group_by(Degree) %>%
+  group_modify(~ .x %>%      
+    select(Score) %>% 
+    pull() %>%  
+    shapiro.test() %>%  
+    broom::tidy()) 
+```
+
+### What do we understand from this data ?
+
+This is the Shapiro-Wilk test statistic, where values closer to 1 indicate that the data is more likely to be normally distributed.
+
+1)B.Des: 0.75 B.FA: 0.87 B.Voc: 0.89
+
+2)p-value: This indicates the probability that the data for each degree group comes from a normal distribution. B.Des has a very low p-value (0.00001), suggesting strong evidence against normality for B.Des scores. B.FA and B.Voc have low p-values (0.0021 and 0.0042, respectively), which also suggest evidence against normality, though less strongly than B.Des.
+
+Since all p-values are below a typical threshold of 0.05, we reject the null hypothesis of normality for each group. **This suggests that scores in each degree group are not normally distributed.\
+**
+
+```{r}
+marks$residuals %>%
+  as_tibble() %>%
+  gf_dhistogram(~value, data = .) %>%
+  gf_fitdistr()
+##
+marks$residuals %>%
+  as_tibble() %>%
+  gf_qq(~value, data = .) %>%
+  gf_qqstep() %>%
+  gf_qqline()
+##
+shapiro.test(marks$residuals)
+
+```
+
+```         
+**Test Statistic (W)**: The Shapiro-Wilk test statistic W=0.87869W = 0.87869W=0.87869. A value closer to 1 would indicate that the residuals are more likely to be normally distributed. Since 0.87869 is noticeably below 1, it suggests that the residuals may deviate from normality.
+
+**p-value**: The p-value =5.076×10−7= 5.076 \times 10^{-7}=5.076×10−7, which is far below the common significance level (e.g., 0.05). This very low p-value indicates strong evidence against the null hypothesis of normality.
+```
+
+## Let us do the Levene and Flinger-Killeen Test
+
+(to understand what these tests are refer to the cartoon(A3) blog)
+
+```{r}
+
+grades %>%
+  group_by(Degree) %>%
+  summarise(variance = var(Score))
+# Not too different...OK on with the test
+DescTools::LeveneTest( Score ~ Degree, data = grades)
+##
+fligner.test(Score ~ Degree, data = grades)
+```
+
+**Levene's Test**
+
+The p-value (0.4851) is greater than the common significance level (0.05). This means we fail to reject the null hypothesis that the variances are equal across the groups. In simpler terms, there is no significant difference in the variances of scores among the different degrees.
+
+**Fligner-Killeen Test**
+
+Similarly, the p-value (0.3213) is also greater than 0.05. Therefore, we fail to reject the null hypothesis of equal variances among the groups.
+
+Both tests suggest that there is **no significant evidence** to conclude that the variances of scores differ among the degrees (B.Des, B.FA, and B.Voc).
+
+## Let is conduct ANOVA using permutations
+
+```{r}
+filtered_data <- grades %>%
+  filter(Degree %in% c("B.Des", "B.FA"))
+
+# Specify and calculate the test statistic
+result <- filtered_data %>%
+  specify(Score ~ Degree) %>%
+  hypothesise(null = "point", mu = 0) %>%  # Specify a point hypothesis for the means
+  calculate(stat = "t", order = c("B.FA", "B.Des")) # Order to ensure B.Des is compared against B.FA
+
+print(result)
+```
+
+```{r}
+print(toons) 
+```
+
+```{r}
+null_dist_infer <- marks %>%
+```
+
+```{r}
+specify(Score ~ Degree) %>%
+  hypothesise(null = "independence") %>%
+  generate(reps = 4999, type = "permute") %>%
+  calculate(stat = "F")
+##
+null_dist_infer
+```
+
+```{r}
+null_dist_infer %>%
+  visualise(method = "simulation") +
+  shade_p_value(obs_stat = marks$stat, direction = "right") +
+  scale_x_continuous(trans = "log10", expand = c(0, 0)) +
+  coord_cartesian(xlim = c(0.2, 500), clip = "off") +
+  annotation_logticks(outside = FALSE)
+```

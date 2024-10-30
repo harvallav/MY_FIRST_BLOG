@@ -1,0 +1,88 @@
+---
+title: "POCKET MONEY(A3)"
+author: "harvallav"
+---
+
+# The Great Chick-Chang Showdown
+
+## Introduction
+
+In a world where digital wallets reign supreme, the age-old debate of who holds the purse strings—guys or gals—still ignites curiosity. So, let’s dive into the numbers and see if the guys really do have more “Chick-Chang” than the gals!
+
+![](money.jpg) \### Setting up the packages
+
+```{r}
+library(tidyverse)
+library(mosaic)
+library(skimr)
+library(ggformula)
+library(crosstable)
+library(readr)
+```
+
+### Reading the data
+
+```{r}
+money <-read_csv("../../data /money.csv")
+money
+```
+
+```{r}
+glimpse(money)
+```
+
+## Let's Make a Histogram for this dataset first
+
+```{r}
+gf_histogram(~ Money_spent | ~ Gender, data = money) %>%
+  gf_labs(title = "MONEY SPENT v/s GENDER", caption = "ggformula")
+
+```
+
+## Making a CROSS TABLE
+
+```{r}
+money%>% 
+  crosstable(Money_spent ~ Gender) %>% 
+  as_flextable()
+```
+
+### What is Happening Here?
+
+The data presents a cross table summarizing spending patterns among two groups: females and males. The table outlines the minimum, maximum, median, interquartile range (IQR), mean, and standard deviation of the money spent by each gender.
+
+### Inferences from This Data
+
+1)**Min / Max**: The minimum and maximum amounts spent are summarized as follows: Females: Minimum of 0 and a maximum of 13,000. Males: Minimum of 0 and a maximum of 10,000. This indicates that while both groups have spent nothing (0), females have a wider range of maximum spending compared to males.
+
+3)**Med \[IQR\]**: The median spending and IQR for each gender are as follows: Females: Median spending of 280.0 with an IQR ranging from 85.0 to 500.0. Males: Median spending of 250.0 with an IQR ranging from 150.0 to 842.0. Both groups have similar medians, with females spending slightly more. The IQR suggests that the middle 50% of female spenders have a smaller range than that of males.
+
+4)**Mean (std)**: The average spending and its variability are: Females: Mean spending of 693.3 with a standard deviation of 2,035.8. Males: Mean spending of 748.6 with a standard deviation of 1,636.5.
+
+**The average spending for males is slightly higher than for females. The higher standard deviation for females indicates more variability in spending, meaning that while the average is lower, there may be some individuals who spend significantly more, skewing the mean.**
+
+## Let's do the T-test
+
+(to understand this test refer to the tips(a3) blog)
+
+```{r}
+mosaic::t.test(Money_spent ~ Gender, data = money) %>% 
+  broom::tidy()
+```
+
+the results suggest that there is no statistically significant difference in the amount of money spent between the two groups (females and males). The high p-value and the confidence interval that includes zero imply that any observed difference in spending is likely due to chance rather than a real effect.
+
+# Let us try a few more tests
+
+## The Density Plot
+
+```{r}
+money %>%
+  gf_density(
+    ~ Money_spent,
+    fill = ~ Gender,  
+    alpha = 0.5,
+    title = "Money Spent Densities",
+    subtitle = "Females vs Males"
+  )
+```

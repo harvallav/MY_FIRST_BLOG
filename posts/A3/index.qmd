@@ -11,6 +11,8 @@ author: "harvallav"
 
 In this data set we are exploring if vegetarians the real kanjoos, or do the meat-eaters hold the crown? To settle it, we’ll dive into those Swiggy, Zomato, and Dining Out bills and pull out the ultimate truth .
 
+![](veg.jpg)
+
 ### Setting up the packages
 
 ```{r}
@@ -96,11 +98,9 @@ So, just as a good chai highlights the right balance of flavors, a t-test helps 
 
 *The results suggest that there is no strong evidence to support the claim that non-vegetarians give higher average tips than vegetarians. The lack of statistical significance (high p-value and confidence interval including zero) indicates that any observed differences in average tips could be due to random chance rather than a true effect related to dietary preference. Thus, dietary preference does not appear to have a meaningful impact on tipping behavior based on this dataset.*
 
+# Let us try a few more tests
 
-
-# Let us try a few more tests 
-
-## The Density Plot 
+## The Density Plot
 
 ```{r}
 tip %>%
@@ -113,10 +113,8 @@ tip %>%
   ) 
   
 ```
+
 ## Let's do a Shapiro-Wilk test
-
-
-
 
 ```{r}
 veg_tip <- tip %>%
@@ -127,7 +125,105 @@ shapiro.test(veg_tip$Tip)
 
 ```
 
+```{r}
+tip2 %>% filter(Preferance == "Non-veg") %>% select(Tip) -> NonVeg
+tip2 %>% filter(Preferance == "Veg") %>% select(Tip) -> Veg
+NonVeg
+Veg
+
+shapiro.test(NonVeg$Tip)
+shapiro.test(Veg$Tip)
+```
+
+```{r}
+lm(rank(Tip) ~ Preferance, 
+   data = tip) %>% 
+  broom::tidy(conf.int = TRUE,
+              conf.level = 0.95)
+```
+
+```{r}
+null_dist_amas <- 
+  do(4999) * diffmean(data = tip, Tip ~ shuffle(Preferance))
+null_dist_amas
+```
+
+```{r}
+
+obs_diff_tips <- tip %>%
+  group_by(Preferance) %>%
+  summarise(mean_tip = mean(Tip)) %>%
+  summarise(obs_diff = diff(mean_tip)) %>%
+  pull(obs_diff)
+
+null_dist_tips <- data.frame(diffmean = rnorm(1000, mean = 0, sd = 1))  # Replace with your permutation distribution
 
 
-## Lets do the Permutation test 
+gf_histogram(data = null_dist_tips, ~ diffmean, bins = 25) %>%
+  gf_vline(xintercept = obs_diff_tips, 
+           colour = "red", linewidth = 1,
+           title = "Null Distribution by Permutation", 
+           subtitle = "Histogram") %>% 
+  gf_labs(x = "Difference in Means")
 
+
+gf_ecdf(data = null_dist_tips, ~ diffmean, 
+        linewidth = 1) %>%
+  gf_vline(xintercept = obs_diff_tips, 
+           colour = "red", linewidth = 1,
+           title = "Null Distribution by Permutation", 
+           subtitle = "Cumulative Density") %>% 
+  gf_labs(x = "Difference in Means")
+
+```
+
+```{r}
+glimpse( tip)
+```
+
+```{r}
+proportion_tips <- 1 - prop1(~ diffmean <= obs_diff_tips, data = null_dist_tips)
+
+print(proportion_tips)
+```
+
+```{r}
+library(mosaic)  
+library(broom)   
+library(gt)
+# T-test for Tip based on Gender
+mosaic::t_test(Tip ~ Gender, 
+               data = tip) %>% 
+  broom::tidy() %>% 
+  gt() %>%
+  tab_style(
+    style = list(cell_fill(color = "cyan"), cell_text(weight = "bold")),
+    locations = cells_body(columns = p.value)) %>% 
+  tab_header(title = "t.test for Tip by Gender")
+
+
+# Linear model for Tip based on Gender
+lm(Tip ~ Gender, 
+   data = tip) %>% 
+  broom::tidy(conf.int = TRUE,
+              conf.level = 0.95) %>% 
+  gt() %>%
+  tab_style(
+    style = list(cell_fill(color = "cyan"), cell_text(weight = "bold")),
+    locations = cells_body(columns = p.value)) %>% 
+  tab_header(title = "Linear Model for Tip by Gender")
+
+# Linear model with ranked data for Tip based on Gender
+lm(rank(Tip) ~ Gender, 
+   data = tip) %>% 
+  broom::tidy(conf.int = TRUE,
+              conf.level = 0.95) %>% 
+  gt() %>%
+  tab_style(
+    style = list(cell_fill(color = "cyan"), cell_text(weight = "bold")),
+    locations = cells_body(columns = p.value)) %>% 
+  tab_header(title = "Linear Model with Ranked Tip by Gender")
+
+```
+
+## Result
