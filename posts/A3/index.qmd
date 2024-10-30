@@ -196,12 +196,12 @@ For vegetarian preference, the range (-8.83 to 7.09) includes zero. This means i
 
 Happy Happy 
 
-## Permutation Test
+## Lets do the Permutation Test
 
 ```{r}
 null_dist_amas <- 
   do(4999) * diffmean(data = tip, Tip ~ shuffle(Preferance))
-null_dist_amas
+#null_dist_amas ( comment it out to see the results )
 ```
 The code runs a permutation test to check if there's a significant difference in tips between groups with different food preferences.
 The results show various mean differences calculated from random shuffles, which will help you determine if the observed difference in your data is statistically significant or could have happened by chance.
@@ -215,9 +215,7 @@ obs_diff_tips <- tip %>%
   summarise(obs_diff = diff(mean_tip)) %>%
   pull(obs_diff)
 
-null_dist_tips <- data.frame(diffmean = rnorm(1000, mean = 0, sd = 1))  # Replace with your permutation distribution
-
-
+null_dist_tips <- data.frame(diffmean = rnorm(1000, mean = 0, sd = 1)) 
 gf_histogram(data = null_dist_tips, ~ diffmean, bins = 25) %>%
   gf_vline(xintercept = obs_diff_tips, 
            colour = "red", linewidth = 1,

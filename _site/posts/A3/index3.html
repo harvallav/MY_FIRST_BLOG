@@ -177,12 +177,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-great-chick-chang-showdown" id="toc-the-great-chick-chang-showdown" class="nav-link active" data-scroll-target="#the-great-chick-chang-showdown">The Great Chick-Chang Showdown</a>
+  <li><a href="#the-great-money-showdown" id="toc-the-great-money-showdown" class="nav-link active" data-scroll-target="#the-great-money-showdown">The Great Money Showdown</a>
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
+  <li><a href="#setting-up-the-packages" id="toc-setting-up-the-packages" class="nav-link" data-scroll-target="#setting-up-the-packages">Setting up the packages</a></li>
   <li><a href="#reading-the-data" id="toc-reading-the-data" class="nav-link" data-scroll-target="#reading-the-data">Reading the data</a></li>
   </ul></li>
+  <li><a href="#data-dictionary" id="toc-data-dictionary" class="nav-link" data-scroll-target="#data-dictionary">Data Dictionary</a></li>
   <li><a href="#lets-make-a-histogram-for-this-dataset-first" id="toc-lets-make-a-histogram-for-this-dataset-first" class="nav-link" data-scroll-target="#lets-make-a-histogram-for-this-dataset-first">Let’s Make a Histogram for this dataset first</a></li>
   <li><a href="#making-a-cross-table" id="toc-making-a-cross-table" class="nav-link" data-scroll-target="#making-a-cross-table">Making a CROSS TABLE</a>
   <ul class="collapse">
@@ -191,9 +193,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#lets-do-the-t-test" id="toc-lets-do-the-t-test" class="nav-link" data-scroll-target="#lets-do-the-t-test">Let’s do the T-test</a></li>
   </ul></li>
-  <li><a href="#let-us-try-a-few-more-tests" id="toc-let-us-try-a-few-more-tests" class="nav-link" data-scroll-target="#let-us-try-a-few-more-tests">Let us try a few more tests</a>
+  <li><a href="#let-us-try-a-few-more-graphs" id="toc-let-us-try-a-few-more-graphs" class="nav-link" data-scroll-target="#let-us-try-a-few-more-graphs">Let us try a few more Graphs</a>
   <ul>
-  <li><a href="#the-density-plot" id="toc-the-density-plot" class="nav-link" data-scroll-target="#the-density-plot">The Density Plot</a></li>
+  <li><a href="#the-density-plot" id="toc-the-density-plot" class="nav-link" data-scroll-target="#the-density-plot">The Density Plot</a>
+  <ul class="collapse">
+  <li><a href="#what-does-this-tell-us" id="toc-what-does-this-tell-us" class="nav-link" data-scroll-target="#what-does-this-tell-us">What does this tell us ?</a></li>
+  </ul></li>
+  <li><a href="#lets-do-a-shapiro-wilk-test" id="toc-lets-do-a-shapiro-wilk-test" class="nav-link" data-scroll-target="#lets-do-a-shapiro-wilk-test">Let’s do a Shapiro-Wilk test</a>
+  <ul class="collapse">
+  <li><a href="#what-does-this-tell-us-1" id="toc-what-does-this-tell-us-1" class="nav-link" data-scroll-target="#what-does-this-tell-us-1">what does this tell us ?</a></li>
+  </ul></li>
+  <li><a href="#lets-do-a-wilcox-test" id="toc-lets-do-a-wilcox-test" class="nav-link" data-scroll-target="#lets-do-a-wilcox-test">lets do a Wilcox test</a></li>
+  <li><a href="#lets-do-the-permutation-test" id="toc-lets-do-the-permutation-test" class="nav-link" data-scroll-target="#lets-do-the-permutation-test">Let’s do the Permutation Test</a></li>
+  <li><a href="#result" id="toc-result" class="nav-link" data-scroll-target="#result">Result</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -205,12 +217,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<section id="the-great-chick-chang-showdown" class="level1">
-<h1>The Great Chick-Chang Showdown</h1>
+<section id="the-great-money-showdown" class="level1">
+<h1>The Great Money Showdown</h1>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>In a world where digital wallets reign supreme, the age-old debate of who holds the purse strings—guys or gals—still ignites curiosity. So, let’s dive into the numbers and see if the guys really do have more “Chick-Chang” than the gals!</p>
-<p><img src="money.jpg" class="img-fluid"> ### Setting up the packages</p>
+<p>In a world where digital wallets reign supreme, the age-old debate of who holds the purse strings—guys or gals—still ignites curiosity. So, let’s dive into the numbers and see if the guys really do have more money than the gals!</p>
+<p><img src="money.jpg" class="img-fluid"></p>
+<section id="setting-up-the-packages" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-the-packages">Setting up the packages</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -282,6 +296,7 @@ The following object is masked from 'package:purrr':
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 <section id="reading-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="reading-the-data">Reading the data</h3>
 <div class="cell">
@@ -328,6 +343,50 @@ $ ...5        &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 </div>
 </section>
 </section>
+<section id="data-dictionary" class="level2">
+<h2 class="anchored" data-anchor-id="data-dictionary">Data Dictionary</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 14%">
+<col style="width: 5%">
+<col style="width: 80%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Column Name</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Sr no</td>
+<td>Quan</td>
+<td>Serial number uniquely identifying each entry in the dataset.</td>
+</tr>
+<tr class="even">
+<td>Name</td>
+<td>Qual</td>
+<td>Name of the participant</td>
+</tr>
+<tr class="odd">
+<td>Gender</td>
+<td>Qual</td>
+<td>Gender of the participant</td>
+</tr>
+<tr class="even">
+<td>Money_spent</td>
+<td>Quan</td>
+<td>Amount of money spent by the participant, represented as a numeric value .</td>
+</tr>
+<tr class="odd">
+<td>…5</td>
+<td>NA</td>
+<td>An empty column with no data :/</td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="lets-make-a-histogram-for-this-dataset-first" class="level2">
 <h2 class="anchored" data-anchor-id="lets-make-a-histogram-for-this-dataset-first">Let’s Make a Histogram for this dataset first</h2>
 <div class="cell">
@@ -349,7 +408,7 @@ $ ...5        &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">crosstable</span>(Money_spent <span class="sc">~</span> Gender) <span class="sc">%&gt;%</span> </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_flextable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="tabwid"><style>.cl-3c7d5182{table-layout:auto;}.cl-3c79d016{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3c79d020{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-3c7b1976{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3c7b1977{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-3c7b27fe{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3c7b27ff{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3c7b2800{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3c7b2801{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-3c7b2802{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-3c7d5182"><thead><tr style="overflow-wrap:break-word;"><th rowspan="2" class="cl-3c7b27fe"><p class="cl-3c7b1976"><span class="cl-3c79d016">label</span></p></th><th rowspan="2" class="cl-3c7b27fe"><p class="cl-3c7b1976"><span class="cl-3c79d016">variable</span></p></th><th colspan="2" class="cl-3c7b27ff"><p class="cl-3c7b1976"><span class="cl-3c79d016">Gender</span></p></th></tr><tr style="overflow-wrap:break-word;"><th class="cl-3c7b2800"><p class="cl-3c7b1976"><span class="cl-3c79d016">Female</span></p></th><th class="cl-3c7b2800"><p class="cl-3c7b1976"><span class="cl-3c79d016">Male</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td rowspan="4" class="cl-3c7b2801"><p class="cl-3c7b1977"><span class="cl-3c79d020">Money_spent</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">Min / Max</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">0 / 1.3e+04</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">0 / 1.0e+04</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">Med [IQR]</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">280.0 [85.0;500.0]</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">250.0 [150.0;842.0]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">Mean (std)</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">693.3 (2035.8)</span></p></td><td class="cl-3c7b2802"><p class="cl-3c7b1977"><span class="cl-3c79d020">748.6 (1636.5)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-3c7b2801"><p class="cl-3c7b1977"><span class="cl-3c79d020">N (NA)</span></p></td><td class="cl-3c7b2801"><p class="cl-3c7b1977"><span class="cl-3c79d020">41 (0)</span></p></td><td class="cl-3c7b2801"><p class="cl-3c7b1977"><span class="cl-3c79d020">41 (0)</span></p></td></tr></tbody></table></div>
+<div class="tabwid"><style>.cl-51c2c434{table-layout:auto;}.cl-51bf70ea{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-51bf70f4{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-51c0a9ec{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-51c0a9f6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-51c0b8c4{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-51c0b8c5{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(0, 0, 0, 1.00);border-top: 1.5pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-51c0b8ce{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-51c0b8cf{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-51c0b8d0{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-51c2c434"><thead><tr style="overflow-wrap:break-word;"><th rowspan="2" class="cl-51c0b8c4"><p class="cl-51c0a9ec"><span class="cl-51bf70ea">label</span></p></th><th rowspan="2" class="cl-51c0b8c4"><p class="cl-51c0a9ec"><span class="cl-51bf70ea">variable</span></p></th><th colspan="2" class="cl-51c0b8c5"><p class="cl-51c0a9ec"><span class="cl-51bf70ea">Gender</span></p></th></tr><tr style="overflow-wrap:break-word;"><th class="cl-51c0b8ce"><p class="cl-51c0a9ec"><span class="cl-51bf70ea">Female</span></p></th><th class="cl-51c0b8ce"><p class="cl-51c0a9ec"><span class="cl-51bf70ea">Male</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td rowspan="4" class="cl-51c0b8cf"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">Money_spent</span></p></td><td class="cl-51c0b8d0"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">Min / Max</span></p></td><td class="cl-51c0b8d0"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">0 / 1.3e+04</span></p></td><td class="cl-51c0b8d0"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">0 / 1.0e+04</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-51c0b8d0"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">Med [IQR]</span></p></td><td class="cl-51c0b8d0"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">280.0 [85.0;500.0]</span></p></td><td class="cl-51c0b8d0"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">250.0 [150.0;842.0]</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-51c0b8d0"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">Mean (std)</span></p></td><td class="cl-51c0b8d0"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">693.3 (2035.8)</span></p></td><td class="cl-51c0b8d0"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">748.6 (1636.5)</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-51c0b8cf"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">N (NA)</span></p></td><td class="cl-51c0b8cf"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">41 (0)</span></p></td><td class="cl-51c0b8cf"><p class="cl-51c0a9f6"><span class="cl-51bf70f4">41 (0)</span></p></td></tr></tbody></table></div>
 </div>
 </div>
 <section id="what-is-happening-here" class="level3">
@@ -381,8 +440,8 @@ $ ...5        &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 <p>the results suggest that there is no statistically significant difference in the amount of money spent between the two groups (females and males). The high p-value and the confidence interval that includes zero imply that any observed difference in spending is likely due to chance rather than a real effect.</p>
 </section>
 </section>
-<section id="let-us-try-a-few-more-tests" class="level1">
-<h1>Let us try a few more tests</h1>
+<section id="let-us-try-a-few-more-graphs" class="level1">
+<h1>Let us try a few more Graphs</h1>
 <section id="the-density-plot" class="level2">
 <h2 class="anchored" data-anchor-id="the-density-plot">The Density Plot</h2>
 <div class="cell">
@@ -402,6 +461,197 @@ $ ...5        &lt;lgl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 </div>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>money <span class="sc">%&gt;%</span>   </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_boxplot</span>( Money_spent <span class="sc">~</span> Gender,     </span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="sc">~</span> Gender,     </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.5</span>,     </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">title =</span> <span class="st">"Expnses vs Gender"</span>,     </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">subtitle =</span> <span class="st">"Male vs Female"</span> )  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index3_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This yields a clearer visual of Money_spent distributions by gender, along with normal distribution fits for comparison.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>money <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_density</span>( <span class="sc">~</span> Money_spent ,</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill =</span> <span class="sc">~</span> Gender,</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">title =</span> <span class="st">"Tips across Veg and Non-Veg"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_facet_grid</span>(<span class="sc">~</span>Gender) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_fitdistr</span>(<span class="at">dist =</span> <span class="st">"dnorm"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index3_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>female_expenses <span class="ot">&lt;-</span> money <span class="sc">%&gt;%</span>    </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( Gender <span class="sc">==</span> <span class="st">"Female"</span>) <span class="sc">%&gt;%</span>    </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Money_spent) </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="do">##  </span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>male_expenses <span class="ot">&lt;-</span> money <span class="sc">%&gt;%</span>   </span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>( Gender <span class="sc">==</span> <span class="st">"Male"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Money_spent)</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>money <span class="sc">%&gt;%</span>    </span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_density</span>( <span class="sc">~</span> <span class="fu">log10</span>(Money_spent),             </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="sc">~</span> Gender,             </span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>              <span class="at">alpha =</span> <span class="fl">0.5</span>,             </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">title =</span> <span class="st">"Expenses across Male and Female"</span>) <span class="sc">%&gt;%</span>    </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_facet_grid</span>(<span class="sc">~</span>Gender) <span class="sc">%&gt;%</span>    </span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_fitdistr</span>(<span class="at">dist =</span> <span class="st">"dnorm"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 6 rows containing non-finite outside the scale range
+(`stat_density()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 6 rows containing non-finite outside the scale range
+(`stat_fitdistr()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index3_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="what-does-this-tell-us" class="level3">
+<h3 class="anchored" data-anchor-id="what-does-this-tell-us">What does this tell us ?</h3>
+<p>Together with the box plot, these graphs make it clear that the data doesn’t follow a perfect normal distribution. The density plot and QQ plot reveal the actual spread and shape of the data, confirming the insights from the box plot about how the data is distributed.</p>
+</section>
+</section>
+<section id="lets-do-a-shapiro-wilk-test" class="level2">
+<h2 class="anchored" data-anchor-id="lets-do-a-shapiro-wilk-test">Let’s do a Shapiro-Wilk test</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(female_expenses<span class="sc">$</span>Money_spent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  female_expenses$Money_spent
+W = 0.29606, p-value = 8.961e-13</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(male_expenses<span class="sc">$</span>Money_spent)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  male_expenses$Money_spent
+W = 0.40726, p-value = 1.136e-11</code></pre>
+</div>
+</div>
+<section id="what-does-this-tell-us-1" class="level3">
+<h3 class="anchored" data-anchor-id="what-does-this-tell-us-1">what does this tell us ?</h3>
+<p>1)<strong>W value</strong>: The test statistic (W) is far from 1 in both cases (0.29606 for females and 0.40726 for males). In a perfectly normal distribution, W would be closer to 1. 2) <strong>P-value</strong>: Both p-values (8.961e-13 for females and 1.136e-11 for males) are extremely low, much lower than the typical significance level (like 0.05). This low p-value means we reject the null hypothesis of normality. What this suggests: These results strongly suggest that the spending data (Money_spent) for both males and females is not normally distributed.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(<span class="fu">rank</span>(Money_spent) <span class="sc">~</span> Gender, </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>   <span class="at">data =</span> money) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>(<span class="at">conf.int =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 7
+  term        estimate std.error statistic  p.value conf.low conf.high
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1 (Intercept)    39.2       3.72    10.5   9.30e-17    31.8       46.6
+2 GenderMale      4.63      5.27     0.880 3.81e- 1    -5.84      15.1</code></pre>
+</div>
+</div>
+<p>we conclude that gender does not have a statistically significant impact on the amount spent—the observed difference is likely due to random chance.</p>
+</section>
+</section>
+<section id="lets-do-a-wilcox-test" class="level2">
+<h2 class="anchored" data-anchor-id="lets-do-a-wilcox-test">lets do a Wilcox test</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(Money_spent<span class="sc">~</span>Gender, <span class="at">data =</span> money,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">conf.int =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">conf.level =</span> <span class="fl">0.95</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  broom<span class="sc">::</span><span class="fu">tidy</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wilcox.test.default(x = DATA[[1L]], y = DATA[[2L]], ...): cannot
+compute exact p-value with ties</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in wilcox.test.default(x = DATA[[1L]], y = DATA[[2L]], ...): cannot
+compute exact confidence intervals with ties</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  estimate statistic p.value conf.low conf.high method               alternative
+     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;                &lt;chr&gt;      
+1    -55.0      746.   0.381    -180.      70.0 Wilcoxon rank sum t… two.sided  </code></pre>
+</div>
+</div>
+</section>
+<section id="lets-do-the-permutation-test" class="level2">
+<h2 class="anchored" data-anchor-id="lets-do-the-permutation-test">Let’s do the Permutation Test</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>null_dist_money <span class="ot">&lt;-</span> </span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">do</span>(<span class="dv">4999</span>) <span class="sc">*</span> <span class="fu">diffmean</span>(<span class="at">data =</span> money, </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                      Money_spent <span class="sc">~</span> <span class="fu">shuffle</span>(Gender))</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="co">#null_dist_money</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>obs_mean <span class="ot">&lt;-</span> money <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Gender) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">mean_money =</span> <span class="fu">mean</span>(Money_spent)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">obs_mean =</span> <span class="fu">diff</span>(mean_money)) <span class="sc">%&gt;%</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">pull</span>(obs_mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop1</span>(<span class="sc">~</span> diffmean <span class="sc">&lt;=</span> obs_mean, <span class="at">data =</span> null_dist_money)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>prop_TRUE 
+   0.5572 </code></pre>
+</div>
+</div>
+<p>A prop_TRUE value of 0.566 suggests that 56.6% of the permuted mean differences are less than or equal to the observed difference (obs_mean). This indicates that the observed difference is quite common under the null hypothesis, providing little evidence against it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">gf_histogram</span>(<span class="at">data =</span> null_dist_money, <span class="sc">~</span> diffmean, </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">bins =</span> <span class="dv">25</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_vline</span>(<span class="at">xintercept =</span> obs_mean, </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>,</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">title =</span> <span class="st">"Null Distribution by Permutation"</span>, </span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">subtitle =</span> <span class="st">"Histogram"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_labs</span>(<span class="at">x =</span> <span class="st">"Difference in Means"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index3_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>null_dist_money<span class="sc">%&gt;%</span>  </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_ecdf</span>( <span class="sc">~</span> diffmean,          </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span>   </span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_vline</span>(<span class="at">xintercept =</span> obs_mean,             </span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">colour =</span> <span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>,            </span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">title =</span> <span class="st">"Null Distribution by Permutation"</span>,             </span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">subtitle =</span> <span class="st">"Cumulative Density"</span>) <span class="sc">%&gt;%</span>    </span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gf_labs</span>(<span class="at">x =</span> <span class="st">"Difference in Means"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index3_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="result" class="level2">
+<h2 class="anchored" data-anchor-id="result">Result</h2>
+<p>This result suggests that the observed difference in spending between males and females is not statistically significant. Since the observed mean difference falls well within the range of differences generated by random permutations, it implies that this difference could likely occur by chance alone. Consequently, there is insufficient evidence to claim a real or meaningful difference in spending between the genders in this dataset.</p>
 
 
 </section>

@@ -3,11 +3,11 @@ title: "POCKET MONEY(A3)"
 author: "harvallav"
 ---
 
-# The Great Chick-Chang Showdown
+# The Great Money Showdown
 
 ## Introduction
 
-In a world where digital wallets reign supreme, the age-old debate of who holds the purse strings—guys or gals—still ignites curiosity. So, let’s dive into the numbers and see if the guys really do have more “Chick-Chang” than the gals!
+In a world where digital wallets reign supreme, the age-old debate of who holds the purse strings—guys or gals—still ignites curiosity. So, let’s dive into the numbers and see if the guys really do have more money than the gals!
 
 ![](money.jpg) 
 
@@ -85,7 +85,7 @@ mosaic::t.test(Money_spent ~ Gender, data = money) %>%
 
 the results suggest that there is no statistically significant difference in the amount of money spent between the two groups (females and males). The high p-value and the confidence interval that includes zero imply that any observed difference in spending is likely due to chance rather than a real effect.
 
-# Let us try a few more tests
+# Let us try a few more Graphs
 
 ## The Density Plot
 
@@ -99,3 +99,140 @@ money %>%
     subtitle = "Females vs Males"
   )
 ```
+
+```{r}
+money %>%   
+  gf_boxplot( Money_spent ~ Gender,     
+              fill = ~ Gender,     
+              alpha = 0.5,     
+              title = "Expnses vs Gender",     
+              subtitle = "Male vs Female" )  
+```
+
+
+
+
+This yields a clearer visual of Money_spent distributions by gender, along with normal distribution fits for comparison.
+```{r}
+money %>% 
+  gf_density( ~ Money_spent ,
+            fill = ~ Gender,
+            alpha = 0.5,
+            title = "Tips across Veg and Non-Veg") %>% 
+  gf_facet_grid(~Gender) %>% 
+  gf_fitdistr(dist = "dnorm")
+```
+```{r}
+female_expenses <- money %>%    
+  filter( Gender == "Female") %>%    
+  select(Money_spent) 
+##  
+male_expenses <- money %>%   
+  filter( Gender == "Male") %>% 
+  select(Money_spent)
+
+money %>%    
+  gf_density( ~ log10(Money_spent),             
+              fill = ~ Gender,             
+              alpha = 0.5,             
+              title = "Expenses across Male and Female") %>%    
+  gf_facet_grid(~Gender) %>%    
+  gf_fitdistr(dist = "dnorm") 
+```
+
+### What does this tell us ?
+
+Together with the box plot, these graphs make it clear that the data doesn’t follow a perfect normal distribution. The density plot and QQ plot reveal the actual spread and shape of the data, confirming the insights from the box plot about how the data is distributed.
+
+
+
+## Let's do a Shapiro-Wilk test
+
+```{r}
+shapiro.test(female_expenses$Money_spent)
+shapiro.test(male_expenses$Money_spent)
+```
+### what does this tell us ?
+
+1)**W value**: The test statistic (W) is far from 1 in both cases (0.29606 for females and 0.40726 for males). In a perfectly normal distribution, W would be closer to 1.
+2) **P-value**: Both p-values (8.961e-13 for females and 1.136e-11 for males) are extremely low, much lower than the typical significance level (like 0.05). This low p-value means we reject the null hypothesis of normality.
+What this suggests:
+These results strongly suggest that the spending data (Money_spent) for both males and females is not normally distributed.
+
+
+```{r}
+lm(rank(Money_spent) ~ Gender, 
+   data = money) %>% 
+  broom::tidy(conf.int = TRUE,
+              conf.level = 0.95)
+```
+
+we conclude that gender does not have a statistically significant impact on the amount spent—the observed difference is likely due to random chance.
+
+
+
+## lets do a Wilcox test
+
+```{r}
+wilcox.test(Money_spent~Gender, data = money,
+            conf.int = TRUE,
+            conf.level = 0.95) %>% 
+  broom::tidy()
+```
+
+
+## Let's do the Permutation Test
+
+```{r}
+null_dist_money <- 
+  do(4999) * diffmean(data = money, 
+                      Money_spent ~ shuffle(Gender))
+#null_dist_money
+
+```
+
+```{r}
+obs_mean <- money %>%
+  group_by(Gender) %>%
+  summarise(mean_money = mean(Money_spent)) %>%
+  summarise(obs_mean = diff(mean_money)) %>%
+pull(obs_mean)
+
+```
+
+```{r}
+prop1(~ diffmean <= obs_mean, data = null_dist_money)
+```
+
+A prop_TRUE value of 0.566 suggests that 56.6% of the permuted mean differences are less than or equal to the observed difference (obs_mean). This indicates that the observed difference is quite common under the null hypothesis, providing little evidence against it.
+
+```{r}
+gf_histogram(data = null_dist_money, ~ diffmean, 
+             bins = 25) %>%
+  gf_vline(xintercept = obs_mean, 
+           colour = "blue", linewidth = 1,
+           title = "Null Distribution by Permutation", 
+           subtitle = "Histogram") %>% 
+  gf_labs(x = "Difference in Means")
+```
+
+
+
+```{r}
+null_dist_money%>%  
+  gf_ecdf( ~ diffmean,          
+           linewidth = 1) %>%   
+  gf_vline(xintercept = obs_mean,             
+           colour = "blue", linewidth = 1,            
+           title = "Null Distribution by Permutation",             
+           subtitle = "Cumulative Density") %>%    
+  gf_labs(x = "Difference in Means")
+```
+
+
+## Result 
+
+This result suggests that the observed difference in spending between males and females is not statistically significant. Since the observed mean difference falls well within the range of differences generated by random permutations, it implies that this difference could likely occur by chance alone. Consequently, there is insufficient evidence to claim a real or meaningful difference in spending between the genders in this dataset.
+
+
+
