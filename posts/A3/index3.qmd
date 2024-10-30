@@ -9,7 +9,9 @@ author: "harvallav"
 
 In a world where digital wallets reign supreme, the age-old debate of who holds the purse strings—guys or gals—still ignites curiosity. So, let’s dive into the numbers and see if the guys really do have more “Chick-Chang” than the gals!
 
-![](money.jpg) \### Setting up the packages
+![](money.jpg) 
+
+### Setting up the packages
 
 ```{r}
 library(tidyverse)
@@ -30,6 +32,17 @@ money
 ```{r}
 glimpse(money)
 ```
+## Data Dictionary 
+
+| Column Name     | Type | Description                                                                                     |
+|-----------------|------|-------------------------------------------------------------------------------------------------|
+| Sr no           | Quan | Serial number uniquely identifying each entry in the dataset.                                   |
+| Name            | Qual | Name of the participant                                              |
+| Gender          | Qual | Gender of the participant                                              |
+| Money_spent     | Quan | Amount of money spent by the participant, represented as a numeric value . |
+| ...5            | NA   | An empty column with no data :/  |
+
+
 
 ## Let's Make a Histogram for this dataset first
 

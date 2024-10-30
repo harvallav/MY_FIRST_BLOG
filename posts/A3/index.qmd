@@ -1,5 +1,5 @@
 ---
-title: "TIPS (A3)"
+title: "TIPS(A3)"
 author: "harvallav"
 ---
 
@@ -33,10 +33,25 @@ tip
 
 This data provides information on individuals' names, genders, dietary preferences (veg or non-veg), and the tips they’ve given.
 
+```{r}
+glimpse(tip)
+```
+
+## Data dictionary
+
+| Column Name | Type | Description |
+|-----------|-----------|--------------------------------------------------|
+| Name | Qual | Name of the participant. |
+| Gender | Qual | Gender of the participant. |
+| Preferance | Qual | Dietary preference of the participant, such as vegetarian or non-vegetarian. |
+| Tip | Quan | Tip amount given by the participant, represented as a numeric value. |
+
+
+
 ## Let's Make a Histogram for this dataset first
 
 ```{r}
-gf_histogram(~ Tip| ~ Preferance, data = tip2)%>%
+gf_histogram(~ Tip| ~ Preferance, data = tip)%>%
   gf_labs(title = "TIP v/s PREFERANCE", caption="ggformula")
 ```
 
@@ -113,27 +128,48 @@ tip %>%
   ) 
   
 ```
+```{r}
+tip %>%
+  gf_boxplot(
+    Tip ~ Preferance,
+    fill = ~ Preferance,
+    alpha = 0.5,
+    title = "Tips Score Box Plots",
+    subtitle = "Veg vs Non-Veg"
+  ) 
+```
+```{r}
+tip %>% 
+  gf_density( ~ Tip,
+            fill = ~ Preferance,
+            alpha = 0.5,
+            title = "Tips across Veg and Non-Veg") %>% 
+  gf_facet_grid(~Preferance) %>% 
+  gf_fitdistr(dist = "dnorm")
+```
+The data we collected for both the Vegetarian and Non-Vegetarian groups doesn’t match what we would expect based on our theory. This difference suggests that the sample data is not normally distributed, which means it doesn’t follow the typical bell-shaped curve that we often see in statistics. So it isnt normal for sure !
+
 
 ## Let's do a Shapiro-Wilk test
 
-```{r}
-veg_tip <- tip %>%
-filter (Preferance== "Veg") %>%
-select (Tip)
-
-shapiro.test(veg_tip$Tip)
-
-```
 
 ```{r}
-tip2 %>% filter(Preferance == "Non-veg") %>% select(Tip) -> NonVeg
-tip2 %>% filter(Preferance == "Veg") %>% select(Tip) -> Veg
+tip %>% filter(Preferance == "Non-veg") %>% select(Tip) -> NonVeg
+tip %>% filter(Preferance == "Veg") %>% select(Tip) -> Veg
 NonVeg
 Veg
 
 shapiro.test(NonVeg$Tip)
 shapiro.test(Veg$Tip)
 ```
+### What does this tell us ?
+
+**NonVeg Group**:W = 0.71661: A value less than 1 indicates deviation from normality.
+p-value = 2.747e-06 (or 0.000002747): This p-value is very low (much lower than 0.05), meaning we reject the null hypothesis of normality.
+
+**Veg Group**:W = 0.6286: Again, a value far from 1, suggesting the data is not normally distributed.
+p-value = 1.661e-07 (or 0.0000001661): An extremely low p-value, indicating strong evidence against normality.
+
 
 ```{r}
 lm(rank(Tip) ~ Preferance, 
@@ -141,12 +177,35 @@ lm(rank(Tip) ~ Preferance,
   broom::tidy(conf.int = TRUE,
               conf.level = 0.95)
 ```
+### What is happening here ?
+
+1)**Intercept (30.93)**:
+Think of the intercept as a starting point. If someone didn’t choose vegetarian or non-vegetarian (let’s say they’re just neutral), we would expect their happiness score to be around 30.93. This is a baseline score
+
+2)**Vegetarian Preference (-0.87)**:
+Now, if someone prefers vegetarian food, the happiness score is expected to be about 0.87 points lower than the baseline (30.93). So, if they choose vegetarian, their score would be roughly 30.93 - 0.87 = 30.06.
+However, the uncertainty in this estimate is high. The number we see (-0.87) has a high standard error (3.98), which means that we are not very sure about this number. It's like saying, “We think choosing vegetarian makes you a little less happy, but we’re not very confident about it.”
+
+3)**P-value (0.83)**:
+The p-value tells us how strong our evidence is. A p-value of 0.83 means there's a high chance that the difference we see (the -0.87) could just be due to random chance. In simple terms, we can’t confidently say that being vegetarian actually lowers happiness because this number is much higher than the common threshold (0.05) we use to decide if something is significant.
+
+
+4)**Confidence Intervals**:
+For the intercept (30.93), we are 95% confident that the true baseline happiness score is between 25.30 and 36.56.
+For vegetarian preference, the range (-8.83 to 7.09) includes zero. This means it’s possible that being vegetarian has no effect at all on happiness.
+
+Happy Happy 
+
+## Permutation Test
 
 ```{r}
 null_dist_amas <- 
   do(4999) * diffmean(data = tip, Tip ~ shuffle(Preferance))
 null_dist_amas
 ```
+The code runs a permutation test to check if there's a significant difference in tips between groups with different food preferences.
+The results show various mean differences calculated from random shuffles, which will help you determine if the observed difference in your data is statistically significant or could have happened by chance.
+
 
 ```{r}
 
@@ -176,21 +235,25 @@ gf_ecdf(data = null_dist_tips, ~ diffmean,
   gf_labs(x = "Difference in Means")
 
 ```
-
-```{r}
-glimpse( tip)
-```
+The first graph compares the observed difference in mean tips from our permutation test to the distribution of those permuted differences. Since the observed difference falls within the range of these permuted means, it indicates that **we don’t have enough evidence to say there’s a real difference in the tips given by Vegetarians and Non-Vegetarians.**
 
 ```{r}
 proportion_tips <- 1 - prop1(~ diffmean <= obs_diff_tips, data = null_dist_tips)
 
 print(proportion_tips)
 ```
+Again, 0.005994006 suggests that there is very little evidence to support the idea that there’s a meaningful difference in tips based on food preference. 
+
 
 ```{r}
 library(mosaic)  
 library(broom)   
 library(gt)
+
+
+```
+
+```{r}
 # T-test for Tip based on Gender
 mosaic::t_test(Tip ~ Gender, 
                data = tip) %>% 
@@ -200,8 +263,12 @@ mosaic::t_test(Tip ~ Gender,
     style = list(cell_fill(color = "cyan"), cell_text(weight = "bold")),
     locations = cells_body(columns = p.value)) %>% 
   tab_header(title = "t.test for Tip by Gender")
+```
+**Based on these results:**
 
-
+There is no statistically significant difference in tips between genders (p-value = 0.6679).
+The average tip difference is relatively small ($2), and the confidence interval includes zero, suggesting that any observed difference could be due to random chance rather than a real effect.
+```{r}
 # Linear model for Tip based on Gender
 lm(Tip ~ Gender, 
    data = tip) %>% 
@@ -212,7 +279,14 @@ lm(Tip ~ Gender,
     style = list(cell_fill(color = "cyan"), cell_text(weight = "bold")),
     locations = cells_body(columns = p.value)) %>% 
   tab_header(title = "Linear Model for Tip by Gender")
+```
+**Based on these results:**
 
+The average tip for Females is estimated to be $12.17.
+Males are estimated to tip $2.00 less than Females, but this difference is not statistically significant (p-value = 0.6679).
+The confidence interval for the gender effect includes zero, which means we cannot confidently say that there is a difference in tipping behavior based on gender.
+
+```{r}
 # Linear model with ranked data for Tip based on Gender
 lm(rank(Tip) ~ Gender, 
    data = tip) %>% 
@@ -225,5 +299,15 @@ lm(rank(Tip) ~ Gender,
   tab_header(title = "Linear Model with Ranked Tip by Gender")
 
 ```
+**Based on these results:**
 
-## Result
+The average rank for Females is estimated to be 32.1.
+Males are estimated to have a rank that is 3.2 units lower than Females, but this difference is not statistically significant (p-value = 0.4219).
+The confidence interval for the gender effect includes zero, reinforcing that we cannot conclude there is a significant difference in rankings based on gender.
+
+
+## Result 
+
+The average tips and their ranks do not support a conclusion that gender influences the amount tipped in this dataset.
+The observed differences in tips and ranks could likely be attributed to random chance rather than a true effect of gender.
+Overall, this suggests that, at least in this dataset, gender does not appear to be a significant factor influencing tipping behavior.

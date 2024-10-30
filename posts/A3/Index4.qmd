@@ -35,6 +35,22 @@ grades <-read_csv("../../data /grades.csv")
 grades
 ```
 
+```{r}
+glimpse(grades)
+```
+
+## Data Dictionary
+
+| Column Name | Type | Description |
+|----|----|----|
+| SN | Quan | Serial number, uniquely identifying each entry in the dataset. |
+| Degree | Qual | Academic degree pursued by the student |
+| Course | Qual | Course enrolled in by the student |
+| Year | Quan | Year of study, represented as a numeric value |
+| Letter Grade | Qual | Letter grade received by the student |
+| Score | Quan | Numeric score achieved by the student, corresponding to the letter grade |
+| Gender | Qual | Gender of the student |
+
 ## HYPOTHESIS
 
 Let us see if scores in each degree group are normally distributed or not.

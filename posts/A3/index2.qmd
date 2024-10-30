@@ -49,6 +49,15 @@ skim(cdd)
 
 The dataset consists of 90 rows and 4 columns, providing insights into children's ratings of three cartoons: Chhota Bheem, Doraemon, and Dragon Tales.
 
+## Data Dictionary
+
+| Column Name | Type | Description |
+|----|----|----|
+| Participant ID | Qual | Unique identifier for each participant |
+| Gender | Qual | Gender of the participant |
+| Cartoon | Qual | Name of the cartoon being rated |
+| Rating | Quan | Rating given by the participant for the cartoon, on a scale |
+
 # Hypothesis
 
 Let us see if Cartoons effect the rating and if Doraeomon \>\> Dragon Tales \>\> Chhota Bheem!
@@ -100,7 +109,7 @@ So,
 
 **Dragon Tales (Blue Bars):** Peaks at 8, showing higher ratings on average than the others. This suggests it’s the most favorably rated cartoon, with many viewers giving it an 8. which is pretty suprising because I have hardly watched dragon tales and finding people who had watched it was also a tough job for the other group.
 
-But this graph doesnt really tell us enough. A higher peak for Doraemon at 7 doesn't necessarily mean it is rated better overall than Dragon Tales, which peaks at 8 but with a smaller spread in lower ratings
+But this graph doesnt really tell us enough. A higher peak for Doraemon at 7 doesn't necessarily mean it is rated better overall than Dragon Tales, which peaks at 8 but with a smaller spread in lower ratings.
 
 The graph does not provide numerical summary statistics (e.g., mean, median, standard deviation) for each cartoon, making it hard to definitively rank them SO LETS DO THAT !
 
@@ -156,7 +165,7 @@ This equation is a way to predict how people rate different cartoons based on wh
 We created this equation to see how the ratings for different cartoons compare to each other. By looking at the ratings, we can tell which cartoons are more popular or liked.
 
 | Part of the Equation | Meaning | What It Represents |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | **6.67** | This is the starting point (intercept) of the ratings. | Represents the baseline rating for Chota Bheem (the reference category).Means when all other variables are 0, the expected rating is 6.67 |
 | **CartoonDoraemon** | A variable that tells if the cartoon is Doraemon. | Equals **1** if the cartoon is **Doraemon**, **0** otherwise. |
 | **0.58** | This is how much the rating goes up if it’s Doraemon. | If the cartoon is **Doraemon**, the average rating is **6.67 + 0.58 = 7.25**. |
