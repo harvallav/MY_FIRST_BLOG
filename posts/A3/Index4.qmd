@@ -24,6 +24,8 @@ library(crosstable)
 library(readr)
 library(DescTools)
 library(supernova)
+library(dplyr)
+library(infer)
 ```
 
 ### Reading the data
@@ -40,21 +42,19 @@ Let us see if scores in each degree group are normally distributed or not.
 ## Let's Make a Histogram for this dataset first
 
 ```{r}
-
 gf_histogram(~Score,
   fill = ~Degree,
   data = grades, alpha = 0.5
 ) %>%
-  gf_vline(xintercept = mean_score, color = "red") %>%
+  gf_vline(xintercept = ~ mean(Score), color = "red") %>%
   gf_labs(
     title = "Histograms of Grades",
     x = "(out of 10)", y = "Count"
   ) %>%
-  gf_text(7 ~ (mean_score + 0.5),
+  gf_text(7 ~ (mean(Score) + 0.5) , 
     label = "Overall Mean"
   ) %>%
   gf_refine(guides(fill = guide_legend(title = "Grades")))
-
 ```
 
 So,
@@ -62,6 +62,24 @@ So,
 ### What does this graph suggest us ?
 
 This histogram helps us see how grades are spread out for different degree groups and where most scores fall. Each color shows a different degree group, and the red line marks the overall average score. By looking at the bars and overlaps, we can tell if some degree groups usually score higher or lower than others and whether most scores are close to the average or spread out unevenly.
+
+How about we make another histogram but for all majors.
+
+```{r}
+gf_histogram(~Score,
+  fill = ~Course,
+  data = grades, alpha = 0.5
+) %>%
+  gf_vline(xintercept = ~ mean(Score), color = "red") %>%
+  gf_labs(
+    title = "Histograms of Grades",
+    x = "(out of 10)", y = "Count"
+  ) %>%
+  gf_text(7 ~ (mean(Score) + 0.5) , 
+    label = "Overall Mean"
+  ) %>%
+  gf_refine(guides(fill = guide_legend(title = "Grades")))
+```
 
 ## Making a CROSS TABLE
 
@@ -201,34 +219,30 @@ Both tests suggest that there is **no significant evidence** to conclude that th
 ## Let is conduct ANOVA using permutations
 
 ```{r}
-filtered_data <- grades %>%
-  filter(Degree %in% c("B.Des", "B.FA"))
+library(infer)
 
-# Specify and calculate the test statistic
-result <- filtered_data %>%
+
+marks <- grades %>%
   specify(Score ~ Degree) %>%
-  hypothesise(null = "point", mu = 0) %>%  # Specify a point hypothesis for the means
-  calculate(stat = "t", order = c("B.FA", "B.Des")) # Order to ensure B.Des is compared against B.FA
+  hypothesise(null = "independence") %>%
+  calculate(stat = "F")
 
-print(result)
+
+print(marks) 
+
 ```
 
 ```{r}
-print(toons) 
-```
-
-```{r}
-null_dist_infer <- marks %>%
-```
-
-```{r}
-specify(Score ~ Degree) %>%
+null_dist_infer <- grades%>%
+  specify(Score ~ Degree) %>%
   hypothesise(null = "independence") %>%
   generate(reps = 4999, type = "permute") %>%
   calculate(stat = "F")
 ##
 null_dist_infer
 ```
+
+this generates 4,999 permutations of the data, randomly shuffling the Degree values to create a null distribution where any observed relationships are purely by chance.
 
 ```{r}
 null_dist_infer %>%
@@ -238,3 +252,13 @@ null_dist_infer %>%
   coord_cartesian(xlim = c(0.2, 500), clip = "off") +
   annotation_logticks(outside = FALSE)
 ```
+
+## Result
+
+If the observed F-statistic (red line) falls far into the tail of the null distribution, this suggests that the observed differences in scores between groups are unlikely to occur by chance, supporting the rejection of the null hypothesis.
+
+Because the observed test statistic is still within the range of the null distribution, we fail to reject the null hypothesis of independence. This means that we don't have strong evidence to conclude that Scores differ significantly across the degree programs.
+
+**The permutation test examines whether there is a relationship between Degree and Score. The Shapiro-Wilk test indicates that the score data in each group is not normally distributed.**
+
+In simple words: based on this data, we can’t say that students' scores are really different among B.Des, B.FA, and B.Voc.

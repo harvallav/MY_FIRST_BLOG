@@ -156,7 +156,7 @@ This equation is a way to predict how people rate different cartoons based on wh
 We created this equation to see how the ratings for different cartoons compare to each other. By looking at the ratings, we can tell which cartoons are more popular or liked.
 
 | Part of the Equation | Meaning | What It Represents |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **6.67** | This is the starting point (intercept) of the ratings. | Represents the baseline rating for Chota Bheem (the reference category).Means when all other variables are 0, the expected rating is 6.67 |
 | **CartoonDoraemon** | A variable that tells if the cartoon is Doraemon. | Equals **1** if the cartoon is **Doraemon**, **0** otherwise. |
 | **0.58** | This is how much the rating goes up if it’s Doraemon. | If the cartoon is **Doraemon**, the average rating is **6.67 + 0.58 = 7.25**. |
@@ -278,4 +278,4 @@ null_dist_infer %>%
 
 ## Result
 
-Since the observed statistic is not in the extreme tails of the distribution, it implies that there is no strong evidence against the null hypothesis. So we can conclude that **Cartoons do not influence the rating**. Based on this graph, it seems likely that the null hypothesis of independence (cartoons not influencing ratings) cannot be rejected. This suggests that the differences in ratings among cartoons might be due to random variation rather than a systematic effect of the cartoons themselves. Doraemon is the most liked show among the three, with higher average ratings and greater variability in opinions. Dragon Tales is rated better than Chhota Bheem, but not as high as Doraemon. Overall, we can summarize the ratings hierarchy as: Doraemon \> Dragon Tales \> Chhota Bheem.
+Since the observed statistic is not in the extreme tails of the distribution, it implies that there is no strong evidence against the null hypothesis. So we can conclude that **Cartoons do not influence the rating**. Based on this graph, it seems likely that the null hypothesis of independence (cartoons not influencing ratings) cannot be rejected. This suggests that the differences in ratings among cartoons might be due to random variation rather than a systematic effect of the cartoons themselves. Doraemon is the most liked show among the three, with higher average ratings and greater variability in opinions. Dragon Tales is rated better than Chhota Bheem, but not as high as Doraemon.
